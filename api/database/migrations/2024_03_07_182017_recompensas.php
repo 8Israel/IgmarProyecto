@@ -9,16 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        //
+        Schema::create('recompensas', function (Blueprint $table) {
+            $table->id();
+            $table->string('tipo');
+            $table->string('descripcion');
+            $table->integer('valor');
+            $table->timestamps();
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        //
-    }
+        Schema::dropIfExists('recompensas');
+    }
 };
