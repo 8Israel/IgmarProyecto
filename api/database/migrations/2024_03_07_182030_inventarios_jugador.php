@@ -11,7 +11,8 @@ return new class extends Migration
         Schema::create('inventarios_jugador', function (Blueprint $table) {
             $table->id();
             $table->foreignId('jugador_id')->constrained('jugadores');
-            $table->foreignId('item_id')->constrained(['armas', 'heroes']);
+            $table->foreignId('arma_id')->constrained('armas');
+            $table->foreignId('heroe_id')->constrained('heroes');
             $table->integer('cantidad');
             $table->timestamps();
         });
