@@ -35,14 +35,21 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function login()
+    public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        return $this->respondWithToken($token);
+        $user = User::where('email', $request->email)->first();
+        if(!$user){
+            return response()->json(["msg" => "Usuario no encontrado"], 404);
+        }
+        // if (!$user['status'])
+        //     return response()->json(['msg'=>'El usuario no esta activo'],401);
+
+        return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 
     public function me()
