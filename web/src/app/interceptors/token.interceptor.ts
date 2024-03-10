@@ -3,7 +3,7 @@ import { LoginService } from '../services/login.service';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
-  let token: string|null = LoginService.getInstance().getToken();
+  let token: string|null = localStorage.getItem('token');;
 
   let headers = req.headers
 

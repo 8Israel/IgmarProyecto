@@ -1,0 +1,12 @@
+.contenedor {
+    width: 80%;
+    height: 100vh;
+    background-color: wheat;
+    margin: auto;
+}
+
+.usuario {
+    width: 100%;
+    height: 25%;
+    background-color: white;
+}
