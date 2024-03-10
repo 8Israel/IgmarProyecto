@@ -37,7 +37,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->input('password')),
             'role_id' => Role::where('name', 'user')->first()->id,
         ]);
-        $token = auth()->login($user);
+        $token = JWTAuth::fromUser($user);
 
         $signedroute = URL::temporarySignedRoute(
             'activate',
@@ -46,7 +46,7 @@ class AuthController extends Controller
             ['token' => $token]
         );
         Mail::to($request->email)->send(new ValidatorMail($signedroute));
-        return $this->respondWithToken($token);
+        return response()->json(['msg' => 'Usuario creado exitosamente', 'data' => $user]);
     }
 
     public function login(Request $request)
@@ -60,8 +60,8 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
-        // if (!$user['status'])
-        //     return response()->json(['msg'=>'El usuario no esta activo'],401);
+        if (!$user->activate)
+            return response()->json(['msg'=>'El usuario no esta activo'],401);
 
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
