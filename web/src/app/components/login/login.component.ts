@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { Login } from '../../interfaces/login';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,9 @@ import { User } from '../../interfaces/user';
 })
 export class LoginComponent {
 
-  constructor(private ls: LoginService) { }
+  constructor(private title: Title, private ls: LoginService, private router: Router) { 
+    this.title.setTitle("Iniciar sesión")
+  }
 
   public message: string|null = null;
   public login: Login = {
@@ -43,8 +46,12 @@ export class LoginComponent {
 
         localStorage.setItem('token', response.token)
 
+        this.router.navigate(['dashboard'])
+
       }
     )
   } 
+
+
 
 }

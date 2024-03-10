@@ -5,6 +5,7 @@ import { Register } from '../../interfaces/register';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user';
 import { LoginService } from '../../services/login.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,9 @@ import { LoginService } from '../../services/login.service';
 })
 export class RegisterComponent {
 
-  constructor(private rs: RegisterService, private ls: LoginService) { }
+  constructor(private rs: RegisterService, private ls: LoginService, private title: Title) {
+    this.title.setTitle("Registarse")
+  }
 
   message: string|null = null;
 

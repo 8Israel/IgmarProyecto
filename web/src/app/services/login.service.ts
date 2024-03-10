@@ -35,5 +35,10 @@ export class LoginService {
     return this.http.post<User>(this.loginURL, user)
   }
 
+  Verificar(): Observable<any> {
+    let url = 'http://127.0.0.1:8000/api/auth/me'
+    return this.http.post<any>(url, null)
+  }
+
 
 }

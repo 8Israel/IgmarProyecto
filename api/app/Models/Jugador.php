@@ -30,4 +30,9 @@ class Jugador extends Model
     {
         return $this->hasOne(Clan::class, 'lider_id');
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }
