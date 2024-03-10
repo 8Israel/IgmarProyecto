@@ -40,6 +40,18 @@ Route::group([
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
+
+
+    Route::resource('jugadores', JugadorController::class);
+    Route::resource('armas', ArmaController::class);
+    Route::resource('heroes', HeroeController::class);
+    Route::resource('misiones', MisionController::class);
+    Route::resource('recompensas', RecompensaController::class);
+    Route::resource('amigos', AmigoController::class);
+    Route::resource('inventarios-jugador', InventarioJugadorController::class);
+    Route::resource('misiones-completadas', MisionesCompletadasController::class);
+    Route::resource('clanes', ClanController::class);
+    Route::resource('clan-miembros', ClanMiembroController::class);
 });
 
 
@@ -60,23 +72,4 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
 
-
-    //Rutas para guest
-
-<<<<<<< HEAD
 });
-
-=======
-    Route::resource('jugadores', JugadorController::class);
-    Route::resource('armas', ArmaController::class);
-    Route::resource('heroes', HeroeController::class);
-    Route::resource('misiones', MisionController::class);
-    Route::resource('recompensas', RecompensaController::class);
-    Route::resource('amigos', AmigoController::class);
-    Route::resource('inventarios-jugador', InventarioJugadorController::class);
-    Route::resource('misiones-completadas', MisionesCompletadasController::class);
-    Route::resource('clanes', ClanController::class);
-    Route::resource('clan-miembros', ClanMiembroController::class);
-
-});
->>>>>>> 3594ccf99aaa5352d33fa79658beba7d1e91507e
