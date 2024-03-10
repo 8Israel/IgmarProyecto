@@ -18,16 +18,14 @@ use App\Http\Controllers\cosas;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class,'login']);
-
-
+Route::get('activate/{user}', [AuthController::class, 'activate'])->name('activate');
 
 Route::group([
-    'middleware' => ['api', 'check.role:user,admin'],
+    'middleware' => ['api', 'check.role:user,admin','activate'],
     'prefix' => 'auth'
 ], function ($router) {
 
     // Rutas para administrador y user
-
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
@@ -55,3 +53,4 @@ Route::group([
     //Rutas para guest
 
 });
+

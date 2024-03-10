@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\ValidatorMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class AuthController extends Controller
 {
@@ -30,10 +33,17 @@ class AuthController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
-            'role_id' => Role::where('name', 'user')->first()->id, // Asigna el rol 'user' al usuario
+            'role_id' => Role::where('name', 'user')->first()->id,
         ]);
         $token = auth()->login($user);
 
+        $signedroute = URL::temporarySignedRoute(
+            'activate',
+
+            now()->addMinutes(10),
+            ['user' => $user->id]
+        );
+        Mail::to($request->email)->send(new ValidatorMail($signedroute));
         return $this->respondWithToken($token);
     }
 
@@ -41,11 +51,11 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         $user = User::where('email', $request->email)->first();
-        if(!$user){
+        if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
         // if (!$user['status'])
@@ -70,7 +80,7 @@ class AuthController extends Controller
     {
         return $this->respondWithToken(auth()->refresh());
     }
-    
+
     protected function respondWithToken($token)
     {
         return response()->json([
@@ -78,5 +88,15 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+
+
+    public function activate(Request $request, User $user)
+    {
+        if (!URL::hasValidSignature($request)) {
+            abort(403, 'Invalid signature');
+        }
+        $user->update(['activate' => true]);
+        return response()->json(['message' => 'Usuario activado correctamente'], 200);
     }
 }
