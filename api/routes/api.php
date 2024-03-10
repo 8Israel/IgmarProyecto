@@ -28,19 +28,42 @@ use App\Http\Controllers\ClanMiembroController;
 */
 
 Route::post('/register', [AuthController::class, 'register']);
-//Route::post('/register', [cosas::class, 'register']);
+Route::post('login', [AuthController::class,'login']);
+
+
 
 Route::group([
-
-    'middleware' => 'api',
+    'middleware' => ['api', 'check.role:user,admin'],
     'prefix' => 'auth'
-
 ], function ($router) {
 
-    Route::post('login', [AuthController::class,'login']);
+    // Rutas para administrador y user
+
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
+});
+
+
+
+Route::group([
+    'middleware' => ['api', 'check.role:admin'],
+    'prefix' => 'auth'
+], function ($router) {
+
+    //Rutas solo para administrador
+
+});
+
+
+
+Route::group([
+    'middleware' => ['api', 'check.role:guest'],
+    'prefix' => 'auth'
+], function ($router) {
+
+
+    //Rutas para guest
 
     Route::resource('jugadores', JugadorController::class);
     Route::resource('armas', ArmaController::class);
