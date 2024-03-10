@@ -29,7 +29,7 @@ use App\Http\Controllers\ClanMiembroController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class,'login']);
-Route::get('activate/{user}', [AuthController::class, 'activate'])->name('activate');
+Route::get('activate/{token}', [AuthController::class, 'activate'])->name('activate');
 
 Route::group([
     'middleware' => ['api', 'check.role:user,admin','activate'],
@@ -60,13 +60,7 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
 
-
-    //Rutas para guest
-
-<<<<<<< HEAD
-});
-
-=======
+    // Rutas para guest
     Route::resource('jugadores', JugadorController::class);
     Route::resource('armas', ArmaController::class);
     Route::resource('heroes', HeroeController::class);
@@ -79,4 +73,3 @@ Route::group([
     Route::resource('clan-miembros', ClanMiembroController::class);
 
 });
->>>>>>> 3594ccf99aaa5352d33fa79658beba7d1e91507e

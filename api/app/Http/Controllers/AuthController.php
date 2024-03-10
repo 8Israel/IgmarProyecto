@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Mail\ValidatorMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -41,7 +43,7 @@ class AuthController extends Controller
             'activate',
 
             now()->addMinutes(10),
-            ['user' => $user->id]
+            ['token' => $token]
         );
         Mail::to($request->email)->send(new ValidatorMail($signedroute));
         return $this->respondWithToken($token);
@@ -90,13 +92,26 @@ class AuthController extends Controller
         ]);
     }
 
+    public function getIDbyToken($token){
+        $payload = JWTAuth::parseToken($token);
+        return $payload->getPayload()['sub'];
+    }
 
-    public function activate(Request $request, User $user)
+
+    public function activate($token)
     {
-        if (!URL::hasValidSignature($request)) {
-            abort(403, 'Invalid signature');
+        $url='http://127.0.0.1:8000/api/resendemail/'.$token;
+        try{
+            JWTAuth::parseToken($token)->authenticate();
+        }catch(JWTException $e){
+            return response()->view('ErrorEmail',['reenviar_email'=>$url]);
         }
-        $user->update(['activate' => true]);
-        return response()->json(['message' => 'Usuario activado correctamente'], 200);
+        $user=User::find($this->getIDbyToken($token));
+        if(!$user)
+            return response()->view('mails.ErrorEmail',['reenviar_email'=>$url]);
+        $user->activate=true;
+        $user->save();
+        return response()->view('mails.AcceptedEmail');
+
     }
 }
