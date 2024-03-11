@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Validator;
 use App\Mail\ValidatorMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
+use App\Mail\TwoFactorCodeMail;
+use PragmaRX\Google2FA\Google2FA;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+
 
 class AuthController extends Controller
 {
@@ -35,13 +42,17 @@ class AuthController extends Controller
             'password' => Hash::make($request->input('password')),
             'role_id' => Role::where('name', 'user')->first()->id,
         ]);
+        $code = $user->generateTwoFactorCode();
+        $user->two_factor_secret = $code;
+        $user->save();
+
         $token = auth()->login($user);
 
         $signedroute = URL::temporarySignedRoute(
             'activate',
 
             now()->addMinutes(10),
-            ['user' => $user->id]
+            ['token' => $token]
         );
         Mail::to($request->email)->send(new ValidatorMail($signedroute));
         return $this->respondWithToken($token);
@@ -54,12 +65,18 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
         $user = User::where('email', $request->email)->first();
+
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
-        // if (!$user['status'])
-        //     return response()->json(['msg'=>'El usuario no esta activo'],401);
+
+        if ($user->two_factor_secret) {
+            $this->sendTwoFactorCodeByEmail($user);
+
+            return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', 'data' => $user, 'token' => $token, 'two_factor' => true], 200);
+        }
 
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
@@ -90,13 +107,49 @@ class AuthController extends Controller
         ]);
     }
 
-
-    public function activate(Request $request, User $user)
+    public function getIDbyToken($token)
     {
-        if (!URL::hasValidSignature($request)) {
-            abort(403, 'Invalid signature');
+        $payload = JWTAuth::parseToken($token);
+        return $payload->getPayload()['sub'];
+    }
+
+
+    public function activate($token)
+    {
+        $url = 'http://127.0.0.1:8000/api/resendemail/' . $token;
+        try {
+            JWTAuth::parseToken($token)->authenticate();
+        } catch (JWTException $e) {
+            return response()->view('ErrorEmail', ['reenviar_email' => $url]);
         }
-        $user->update(['activate' => true]);
-        return response()->json(['message' => 'Usuario activado correctamente'], 200);
+        $user = User::find($this->getIDbyToken($token));
+        if (!$user)
+            return response()->view('mails.ErrorEmail', ['reenviar_email' => $url]);
+        $user->activate = true;
+        $user->save();
+        return response()->view('mails.AcceptedEmail');
+    }
+
+    protected function sendTwoFactorCodeByEmail($user)
+    {
+        $code = $user->generateTwoFactorCode();
+        $email = $user->email;
+        Mail::to($email)->send(new TwoFactorCodeMail($code));
+    }
+
+    public function verifyTwoFactorCode(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'two_factor_code' => 'required|digits:6',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+        $user = Auth::user();
+        if ($user->two_factor_secret == $request->input('two_factor_code')) {
+            $token = JWTAuth::fromUser($user);
+            return response()->json(['message' => 'Código de autenticación válido','data' => $user, 'token' =>$token], 200);
+        }
+        return response()->json(['error' => 'Código de autenticación incorrecto'], 401);
     }
 }

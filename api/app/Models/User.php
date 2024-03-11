@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use PragmaRX\Google2FA\Google2FA;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -19,11 +21,15 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'role_id',
         'activate',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
     ];
 
     public function role()
@@ -41,7 +47,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
-    
+
     public function getJWTCustomClaims()
     {
         return [];
@@ -51,4 +57,21 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Jugador::class);
     }
+
+    public function twoFactorOptions()
+    {
+        return [
+            'recovery_codes' => true,
+        ];
+    }
+
+    public function generateTwoFactorCode()
+    {
+        $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        $this->two_factor_secret = $code;
+        $this->save();
+        return $code;
+    }
+
+
 }

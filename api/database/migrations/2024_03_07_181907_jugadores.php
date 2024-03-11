@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('nivel');
             $table->integer('experiencia');
             $table->integer('puntuacion');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

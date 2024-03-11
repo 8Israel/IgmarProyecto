@@ -15,6 +15,7 @@ class JugadoresSeeder extends Seeder
             'nivel' => 1,
             'experiencia' => 0,
             'puntuacion' => 0,
+            'user_id' => 1
         ]);
 
         Jugador::create([
@@ -22,6 +23,7 @@ class JugadoresSeeder extends Seeder
             'nivel' => 2,
             'experiencia' => 100,
             'puntuacion' => 500,
+            'user_id' => 2
         ]);
 
         

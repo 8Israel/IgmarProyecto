@@ -20,10 +20,18 @@ class ValidatorMail extends Mailable
         $this->subject('Activa tu cuenta');
         
     }
-    public function build()
-    {
-        return $this->view('mails.validate');
+    public function envelope(){
+        return new Envelope(
+            subject: 'Validator Mail'
+        );
     }
+    public function content()
+    {
+        return new Content(
+            view: 'mails.validate'
+        );
+    }
+
     public function attachments(): array
     {
         return [];
