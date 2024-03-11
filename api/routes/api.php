@@ -55,8 +55,9 @@ Route::group([
 
 
 
+
 Route::group([
-    'middleware' => ['api', 'check.role:guest'],
+    'middleware' => ['api', 'user'],
     'prefix' => 'auth'
 ], function ($router) {
 
