@@ -55,7 +55,7 @@ class AuthController extends Controller
             ['token' => $token]
         );
         Mail::to($request->email)->send(new ValidatorMail($signedroute));
-        return $this->respondWithToken($token);
+        return response()->json(['msg' => 'Usuario creado con exito', 'body_message' => 'Recibar en tu correo electronico para activar la cuenta']);
     }
 
     public function login(Request $request)

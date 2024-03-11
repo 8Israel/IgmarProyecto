@@ -5,6 +5,7 @@ import { Login } from '../../interfaces/login';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user';
 import { Title } from '@angular/platform-browser';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class LoginComponent {
 
-  constructor(private title: Title, private ls: LoginService, private router: Router) { 
+  constructor(private title: Title, private ls: LoginService, private router: Router, private us: UserService) { 
     this.title.setTitle("Iniciar sesión")
   }
 
@@ -43,6 +44,8 @@ export class LoginComponent {
         this.user.data.email = response.data.email
         this.user.data.id = response.data.id
         this.user.token = response.token
+
+        this.us.setUser(this.user)
 
         localStorage.setItem('token', response.token)
 

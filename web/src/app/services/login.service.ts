@@ -10,7 +10,7 @@ import { User } from '../interfaces/user';
 export class LoginService {
 
   // Declaración de variables y endpoints
-  private loginURL = "http://127.0.0.1:8000/api/auth/login";
+  private loginURL = "http://127.0.0.1:8000/api/login";
   private token: string|null = null;
   private static instance: LoginService
 
