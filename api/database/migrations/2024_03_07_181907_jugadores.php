@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jugadores', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->integer('nivel');
-            $table->integer('experiencia');
-            $table->integer('puntuacion');
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->timestamps();
-        });
+       Schema::create('jugadores', function (Blueprint $table) {
+        $table->id();
+        $table->string('nombre');
+        $table->integer('nivel');
+        $table->integer('experiencia');
+        $table->integer('puntuacion');
+        $table->foreignId('user_id')->nullable()->references('id')->on('users');
+        $table->timestamps();
+    });
     }
 
     /**
