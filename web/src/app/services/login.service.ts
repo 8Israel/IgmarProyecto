@@ -31,9 +31,11 @@ export class LoginService {
   }
 
   // Hacer petición a api
-  LogIn(user: Login): Observable<User> {
-    return this.http.post<User>(this.loginURL, user)
+  LogIn(user: Login): Observable<any> {
+    return this.http.post<any>(this.loginURL, user)
   }
+
+  
 
   Verificar(): Observable<any> {
     let url = 'http://127.0.0.1:8000/api/auth/me'

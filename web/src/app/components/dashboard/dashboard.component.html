@@ -9,8 +9,26 @@
         <app-navbar></app-navbar>
         <div class="contenedor">
             <div class="usuario">
-                <h1 class="username">Bienvenido Hola</h1>
+                <h1 class="username">Bienvenido {{ jugador.nombre }}</h1>
+                <div class="datosJugador">
+                    <div class="nivel">
+                        <h3>Tu nivel: {{ jugador.nivel }}</h3>
+                    </div>
+                    <div class="experiencia">
+                        <h3>Experiencia: {{ jugador.experiencia }} </h3>
+                    </div>
+                    <div class="puntuacion">
+                        <h3>Puntuacion: {{ jugador.puntuacion }}</h3>
+                    </div>
+                </div>
             </div>
+            <div *ngFor="let mision of misiones" class="misiones">
+                <h3>Nombre {{ mision.nombre }}</h3>
+                <p>Tipo: {{ mision.tipo }}</p>
+                <p>Recompensa: {{ mision.recompensa_xp }}xp</p>
+                <p>item: {{ mision.recompensa_items }}</p>
+            </div>
+
         </div>
 </body>
 </html>
