@@ -34,6 +34,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('activate/{token}', [AuthController::class, 'activate'])->name('activate');
 Route::post('/verify-two-factor-code', [AuthController::class, 'verifyTwoFactorCode'])->middleware(['activate']);
 Route::post('login', [AuthController::class,'login'])->middleware(['activate2']);
+Route::post('jugadores', [JugadorController::class, 'store']);
+
 
 Route::group([
     'middleware' => ['api', 'activate', 'check.role:user', 'verificado'],
