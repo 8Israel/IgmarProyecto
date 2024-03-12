@@ -62,15 +62,12 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['msg' => 'Credenciales incorrectas', 'error' => $credentials], 401);
         }
         $user = auth()->user(); 
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
-<<<<<<< HEAD
-        $this->sendTwoFactorCodeByEmail($user);
-=======
 
         if ($user->two_factor_secret) {
             $this->sendTwoFactorCodeByEmail($user);
@@ -78,7 +75,6 @@ class AuthController extends Controller
             return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
         }
 
->>>>>>> b5475c7b8c764899d151d56cb9627dbd7c233375
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 
