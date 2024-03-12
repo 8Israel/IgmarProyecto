@@ -25,14 +25,6 @@ export class LoginComponent {
     email: "",
     password: ""
   }
-  public user: User = {
-    data: {
-      id: 0,
-      name: "",
-      email: ""
-    },
-    token: ""
-  }
 
   onSubmit(event: Event) {
     event.preventDefault();
@@ -40,12 +32,6 @@ export class LoginComponent {
     this.ls.LogIn(this.login).subscribe(
       (response) => {
         console.log(response)
-        this.user.data.name = response.data.name
-        this.user.data.email = response.data.email
-        this.user.data.id = response.data.id
-        this.user.token = response.token
-
-        this.us.setUser(this.user)
 
         localStorage.setItem('token', response.token)
 

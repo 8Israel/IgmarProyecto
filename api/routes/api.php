@@ -45,28 +45,6 @@ Route::group([
     Route::post('login', [AuthController::class,'login']);
     Route::post('/verify-two-factor-code', [AuthController::class, 'verifyTwoFactorCode']);
 
-
-<<<<<<< HEAD
-
-Route::group([
-    'middleware' => ['api', 'check.role:admin'],
-    'prefix' => 'auth'
-], function ($router) {
-
-    //Rutas solo para administrador
-
-});
-
-
-
-Route::group([
-    'middleware' => ['api', 'check.role:user'],
-    'prefix' => 'auth'
-], function ($router) {
-
-    // Rutas para guest
-=======
->>>>>>> 1537f44b0d1b39104720c03fd745b88d9fdf49d5
     Route::resource('jugadores', JugadorController::class);
     Route::resource('armas', ArmaController::class);
     Route::resource('heroes', HeroeController::class);
