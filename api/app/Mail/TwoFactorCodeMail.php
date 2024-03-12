@@ -29,7 +29,6 @@ class TwoFactorCodeMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mails.two-factor-code')
-                    ->with(['code' => $this->code]);
+        return $this->markdown('mails.two-factor-code')->with(['code' => $this->code]);
     }
 }

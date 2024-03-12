@@ -55,12 +55,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
-    public function jugador()
-    {
-        return $this->belongsTo(Jugador::class);
-    }
-
+    
     public function twoFactorOptions()
     {
         return [

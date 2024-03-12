@@ -25,39 +25,6 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    public function register(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'role_id' => Role::where('name', 'guest')->first()->id,
-        ]);
-        $code = $user->generateTwoFactorCode();
-        $user->two_factor_secret = $code;
-        $user->save();
-
-        $token = auth()->login($user);
-
-        $signedroute = URL::temporarySignedRoute(
-            'activate',
-
-            now()->addMinutes(10),
-            ['token' => $token]
-        );
-        Mail::to($request->email)->send(new ValidatorMail($signedroute));
-        return response()->json(['msg' => 'Usuario creado con exito', 'body_message' => 'Revisar tu correo electronico para activar la cuenta']);
-    }
-
     public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
@@ -67,22 +34,8 @@ class AuthController extends Controller
         $user = auth()->user(); 
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
-        }
-<<<<<<< HEAD
+        }           
         $this->sendTwoFactorCodeByEmail($user);
-=======
-
-        $this->sendTwoFactorCodeByEmail($user);
-
-
-        if ($user->two_factor_secret) {
-            $this->sendTwoFactorCodeByEmail($user);
-
-            return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
-        }
-
-
->>>>>>> b23f244348bee0c387e26d1824fe1bf40ffe0d18
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 
@@ -163,19 +116,4 @@ class AuthController extends Controller
         }
         return response()->json(['error' => 'Código de autenticación incorrecto'], 401);
     }
-
-
-    public function delete($user_id) {
-        $user = User::findOrFail($user_id);
-        if(!$user) {
-            return response()->json(["msg" => "Usuario no encontrado"], 404);
-        }
-
-        $user->activate = 0;
-        $user->save();
-
-        return response()->json(['msg' => 'Usuario deshabilitado correctamente'], 200);
-    }
-
-
 }

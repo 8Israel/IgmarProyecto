@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -30,13 +31,13 @@ use PragmaRX\Google2FA\Google2FA;
 |
 */
 
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [UserController::class, 'register']);
 Route::get('activate/{token}', [AuthController::class, 'activate'])->name('activate');
 Route::post('/verify-two-factor-code', [AuthController::class, 'verifyTwoFactorCode'])->middleware(['activate']);
 Route::post('login', [AuthController::class,'login'])->middleware(['activate2']);
 
 Route::group([
-    'middleware' => ['api', 'activate', 'check.role:user', 'verificado'],
+    'middleware' => ['api', 'activate', 'check.role:user,admin', 'verificado'],
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('logout', [AuthController::class,'logout']);
@@ -55,18 +56,13 @@ Route::group([
     Route::resource('clan-miembros', ClanMiembroController::class);
 });
 
-
-
-
-
 Route::group([
-    'middleware' => ['api', 'activate', 'check.role:user', 'verificado'],
-    'prefix' => 'auth'
+    'middleware' => ['api', 'activate', 'check.role:admin', 'verificado'],
+    'prefix' => 'user'
 ], function ($router) {
-
+    Route::post('/edit/{id}', [UserController::class, 'edit']);
+    Route::post('/delete/{id}', [UserController::class, 'delete']);
 });
-
-
 
 Route::group([
     'middleware' => ['api', 'activate', 'check.role:user', 'verificado'],
