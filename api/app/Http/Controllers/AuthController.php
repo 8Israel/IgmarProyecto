@@ -68,7 +68,21 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
+<<<<<<< HEAD
         $this->sendTwoFactorCodeByEmail($user);
+=======
+
+        $this->sendTwoFactorCodeByEmail($user);
+
+
+        if ($user->two_factor_secret) {
+            $this->sendTwoFactorCodeByEmail($user);
+
+            return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
+        }
+
+
+>>>>>>> b23f244348bee0c387e26d1824fe1bf40ffe0d18
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 
@@ -79,7 +93,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $user = auth()->user();
+        $user = JWTAuth::user();
         $user->codigoVerificado = false;
         $user->save();
         auth()->logout();
@@ -88,7 +102,7 @@ class AuthController extends Controller
 
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(JWTAuth::refresh());
     }
 
     protected function respondWithToken($token)
@@ -96,7 +110,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
         ]);
     }
 
@@ -138,8 +152,8 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-        $user = Auth::user();
-        if ($user->two_factor_secret == $request->input('two_factor_code')) {
+        $user = JWTAuth::user();
+        if ($user->two_factor_secret == $request->two_factor_code) {
             $user->codigoVerificado = true;
             $user->save();
             JWTAuth::parseToken()->invalidate();
@@ -149,5 +163,19 @@ class AuthController extends Controller
         }
         return response()->json(['error' => 'Código de autenticación incorrecto'], 401);
     }
+
+
+    public function delete($user_id) {
+        $user = User::findOrFail($user_id);
+        if(!$user) {
+            return response()->json(["msg" => "Usuario no encontrado"], 404);
+        }
+
+        $user->activate = 0;
+        $user->save();
+
+        return response()->json(['msg' => 'Usuario deshabilitado correctamente'], 200);
+    }
+
 
 }

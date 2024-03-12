@@ -11,11 +11,10 @@ class JugadorController extends Controller
 {
     public function index()
     {
-        $jugadores = DB::table('jugadores')
-                        ->join('users', 'users.id', '=', 'jugadores.user_id')
-                        ->where('users.activate', true)
-                        ->select('jugadores.*')
-                        ->get();
+        $jugadores = Jugador::join('users', 'users.id', '=', 'jugadores.user_id')
+                              ->where('users.activate', true)
+                              ->select('jugadores.*')
+                              ->get();
         return response()->json($jugadores);
     }
 

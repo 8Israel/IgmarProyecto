@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
       id: 0,
       name: "",
       email: "",
+      role_id: 0
     },
     token: ""
   }

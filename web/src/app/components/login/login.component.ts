@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../../interfaces/user';
 import { Title } from '@angular/platform-browser';
 import { UserService } from '../../services/user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, FormsModule],
+  imports: [RouterOutlet, RouterModule, FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -20,40 +21,31 @@ export class LoginComponent {
     this.title.setTitle("Iniciar sesión")
   }
 
-  public message: string|null = null;
+  public errorMessage: string|null = null;
   public login: Login = {
-    email: "",
-    password: ""
-  }
-  public user: User = {
-    data: {
-      id: 0,
-      name: "",
-      email: ""
-    },
+    msg: "",
     token: ""
   }
+  email: string = ""
+  password: string = ""
 
   onSubmit(event: Event) {
     event.preventDefault();
 
-    this.ls.LogIn(this.login).subscribe(
+    this.ls.LogIn(this.email, this.password).subscribe(
       (response) => {
         console.log(response)
-        this.user.data.name = response.data.name
-        this.user.data.email = response.data.email
-        this.user.data.id = response.data.id
-        this.user.token = response.token
-
-        this.us.setUser(this.user)
-
+        this.login.msg = response.msg
+        this.login.token = response.token
+        
         localStorage.setItem('token', response.token)
 
         this.router.navigate(['verificar'])
 
       },
       (error) => {
-        this.message = error.msg
+        
+        this.errorMessage = error.msg
       }
     )
   } 

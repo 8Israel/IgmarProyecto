@@ -13,7 +13,7 @@ export class authGuard implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean | UrlTree> {
     try {
-      const isAuth = await this.ls.Verificar().toPromise()
+      const isAuth = await this.ls.VerificarAutenticacion().toPromise()
       return isAuth
     } catch (error) {
       return this.router.createUrlTree([''])

@@ -15,11 +15,14 @@
                 <form class="form" (submit)="onSubmit($event)">
                     <div class="mb-3">
                         <label for="">Correo</label>
-                        <input type="email" [(ngModel)]="login.email" name="email" id="email" class="form-control">
+                        <input type="email" [(ngModel)]="email" name="email" id="email" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label for="">Contraseña</label>
-                        <input type="password" [(ngModel)]="login.password" name="password" id="password" class="form-control">
+                        <input type="password" [(ngModel)]="password" name="password" id="password" class="form-control">
+                    </div>
+                    <div *ngIf="errorMessage" class="alert alert-warning">
+                        {{ errorMessage }}
                     </div>
 
                     <button type="submit" class="btn">INICIAR SESIÓN</button>

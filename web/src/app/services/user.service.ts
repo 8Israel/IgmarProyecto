@@ -10,7 +10,8 @@ export class UserService {
     data: {
       id: 0,
       name: "",
-      email: ""
+      email: "",
+      role_id: 0
     },
     token: ""
   }
