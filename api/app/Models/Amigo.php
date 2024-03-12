@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Amigo extends Model
 {
     protected $table = 'amigos';
-    protected $fillable = ['jugador_id', 'nombre_amigo'];
+    protected $fillable = ['user_id', 'amigo'];
 
     public function jugador()
     {
-        return $this->belongsTo(Jugador::class, 'jugador_id');
+        return $this->belongsTo(Jugador::class, 'user_id');
     }
 }

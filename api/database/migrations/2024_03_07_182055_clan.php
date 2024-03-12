@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('clan', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->foreignId('lider_id')->constrained('jugadores');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users');;
             $table->integer('nivel_clan');
             $table->timestamps();
         });

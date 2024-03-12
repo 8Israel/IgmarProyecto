@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('amigos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jugador_id')->constrained('jugadores');
-            $table->string('nombre_amigo');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users');;
+            $table->foreignId('amigo')->nullable()->references('id')->on('users');
             $table->timestamps();
         });
     }
