@@ -44,6 +44,7 @@ export class VerficarLoginComponent {
             this.user.token = response.token;
             this.user_id = response.data.id;
             this.us.setUser(this.user);
+            localStorage.setItem('token', response.token)
             
             this.ps.getPlayerData(this.user_id).subscribe(
               (playerResponse) => {

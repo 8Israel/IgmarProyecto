@@ -6,7 +6,7 @@ import { RegistrarJugadorComponent } from './components/registrar-jugador/regist
 
 
 export const routes: Routes = [
-    {path: '', loadComponent: () => import('./components/login/login.component').then(l => l.LoginComponent)},
+    {path: '', loadComponent: () => import('./components/view-usuarios/view-usuarios.component').then(l => l.ViewUsuariosComponent)},
     {path: 'verificar', loadComponent: () => import('./components/verficar-login/verficar-login.component').then(v => v.VerficarLoginComponent)},
     {path: 'registrar-jugador', loadComponent: () => import('./components/registrar-jugador/registrar-jugador.component').then(rj => rj.RegistrarJugadorComponent)},
     {path: 'registrar', loadComponent: () => import('./components/register/register.component').then(r => r.RegisterComponent) },
