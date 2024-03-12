@@ -61,23 +61,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
-
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        $user = User::where('email', $request->email)->first();
-
+        $user = auth()->user(); 
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
-
-        if ($user->two_factor_secret) {
-            $this->sendTwoFactorCodeByEmail($user);
-
-            return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', 'data' => $user, 'token' => $token, 'two_factor' => true], 200);
-        }
-
+        $this->sendTwoFactorCodeByEmail($user);
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 
@@ -88,8 +79,10 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $user = auth()->user();
+        $user->codigoVerificado = false;
+        $user->save();
         auth()->logout();
-
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -147,9 +140,14 @@ class AuthController extends Controller
         }
         $user = Auth::user();
         if ($user->two_factor_secret == $request->input('two_factor_code')) {
+            $user->codigoVerificado = true;
+            $user->save();
+            JWTAuth::parseToken()->invalidate();
             $token = JWTAuth::fromUser($user);
-            return response()->json(['message' => 'Código de autenticación válido','data' => $user, 'token' =>$token], 200);
+
+            return response()->json(['message' => 'Código de autenticación válido','data' => $user, 'token' => $token], 200);
         }
         return response()->json(['error' => 'Código de autenticación incorrecto'], 401);
     }
+
 }

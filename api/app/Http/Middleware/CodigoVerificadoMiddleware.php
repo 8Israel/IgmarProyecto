@@ -5,9 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\User;
 
-class ActivateMiddleware
+class CodigoVerificadoMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,7 +15,7 @@ class ActivateMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && $request->user()->activate) {
+        if ($request->user() && $request->user()->codigoVerificado) {
             return $next($request);
         }
 
