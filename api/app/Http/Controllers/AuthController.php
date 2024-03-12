@@ -152,4 +152,16 @@ class AuthController extends Controller
         }
         return response()->json(['error' => 'Código de autenticación incorrecto'], 401);
     }
+
+    public function delete($user_id) {
+        $user = User::findOrFail($user_id);
+        if(!$user) {
+            return response()->json(["msg" => "Usuario no encontrado"], 404);
+        }
+
+        $user->activate = 0;
+        $user->save();
+
+        return response()->json(['msg' => 'Usuario deshabilitado correctamente'], 200);
+    }
 }
