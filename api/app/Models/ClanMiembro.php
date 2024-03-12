@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClanMiembro extends Model
 {
     protected $table = 'clan_miembros';
-    protected $fillable = ['clan_id', 'jugador_id', 'rango'];
+    protected $fillable = ['clan_id', 'user_id', 'rango'];
 
     public function clan()
     {
@@ -17,6 +17,6 @@ class ClanMiembro extends Model
 
     public function jugador()
     {
-        return $this->belongsTo(Jugador::class, 'jugador_id');
+        return $this->belongsTo(Jugador::class, 'user_id');
     }
 }

@@ -17,14 +17,14 @@ class InventariosJugadorSeeder extends Seeder
             'jugador_id' => 1,
             'armas_id' => 1,
             'heroes_id' => 1,
-            'cantidad' => 3,
         ]);
 
-        InventarioJugador::create([
-            'jugador_id' => 2,
-            'armas_id' => 2,
-            'heroes_id' => 2,
-            'cantidad' => 2,
-        ]);
+        // InventarioJugador::create([
+        //     'jugador_id' => 2,
+        //     'armas_id' => 2,
+        //     'heroes_id' => 2,
+        //     'cantidad' => 2,
+        // ]);
+
     }
 }

@@ -18,9 +18,9 @@ class AmigosSeeder extends Seeder
             'nombre_amigo' => 'Amigo 1',
         ]);
 
-        Amigo::create([
-            'jugador_id' => 2,
-            'nombre_amigo' => 'Amigo 2',
-        ]);
+        // Amigo::create([
+        //     'jugador_id' => 2,
+        //     'nombre_amigo' => 'Amigo 2',
+        // ]);
     }
 }
