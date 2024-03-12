@@ -61,16 +61,16 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
-
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        $user = User::where('email', $request->email)->first();
-
+        $user = auth()->user(); 
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
+<<<<<<< HEAD
+        $this->sendTwoFactorCodeByEmail($user);
+=======
 
         if ($user->two_factor_secret) {
             $this->sendTwoFactorCodeByEmail($user);
@@ -78,6 +78,7 @@ class AuthController extends Controller
             return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
         }
 
+>>>>>>> b5475c7b8c764899d151d56cb9627dbd7c233375
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 
@@ -88,8 +89,10 @@ class AuthController extends Controller
 
     public function logout()
     {
+        $user = auth()->user();
+        $user->codigoVerificado = false;
+        $user->save();
         auth()->logout();
-
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -147,12 +150,17 @@ class AuthController extends Controller
         }
         $user = Auth::user();
         if ($user->two_factor_secret == $request->input('two_factor_code')) {
+            $user->codigoVerificado = true;
+            $user->save();
+            JWTAuth::parseToken()->invalidate();
             $token = JWTAuth::fromUser($user);
-            return response()->json(['message' => 'Código de autenticación válido','data' => $user, 'token' =>$token], 200);
+
+            return response()->json(['message' => 'Código de autenticación válido','data' => $user, 'token' => $token], 200);
         }
         return response()->json(['error' => 'Código de autenticación incorrecto'], 401);
     }
 
+<<<<<<< HEAD
     public function delete($user_id) {
         $user = User::findOrFail($user_id);
         if(!$user) {
@@ -164,4 +172,6 @@ class AuthController extends Controller
 
         return response()->json(['msg' => 'Usuario deshabilitado correctamente'], 200);
     }
+=======
+>>>>>>> 5749a89dc800438c3b3353ff1ffbd29f28a88508
 }

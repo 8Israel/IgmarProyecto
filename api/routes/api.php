@@ -32,19 +32,22 @@ use PragmaRX\Google2FA\Google2FA;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('activate/{token}', [AuthController::class, 'activate'])->name('activate');
+Route::post('/verify-two-factor-code', [AuthController::class, 'verifyTwoFactorCode'])->middleware(['activate']);
+Route::post('login', [AuthController::class,'login'])->middleware(['activate2']);
 
 Route::group([
-    'middleware' => ['api'],
+    'middleware' => ['api', 'activate', 'check.role:user', 'verificado'],
     'prefix' => 'auth'
 ], function ($router) {
-
-    // Rutas para administrador y user
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
+<<<<<<< HEAD
     Route::post('login', [AuthController::class,'login']);
     Route::post('delete/:user_id', [AuthController::class, 'delete']);
     Route::post('/verify-two-factor-code', [AuthController::class, 'verifyTwoFactorCode']);
+=======
+>>>>>>> 5749a89dc800438c3b3353ff1ffbd29f28a88508
 
     Route::resource('jugadores', JugadorController::class);
     Route::resource('armas', ArmaController::class);
@@ -60,8 +63,10 @@ Route::group([
 
 
 
+
+
 Route::group([
-    'middleware' => ['api', 'check.role:admin'],
+    'middleware' => ['api', 'activate', 'check.role:user', 'verificado'],
     'prefix' => 'auth'
 ], function ($router) {
 
@@ -70,7 +75,7 @@ Route::group([
 
 
 Route::group([
-    'middleware' => ['api', 'check.role:guest'],
+    'middleware' => ['api', 'activate', 'check.role:user', 'verificado'],
     'prefix' => 'auth'
 ], function ($router) {
 

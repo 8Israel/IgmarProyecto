@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 
-class ActivateMiddleware
+class Activate2
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,9 @@ class ActivateMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && $request->user()->activate) {
+        $user = User::where('email', $request->input('email'))->first();
+
+        if ($user && $user->activate) {
             return $next($request);
         }
 

@@ -10,7 +10,8 @@ import { User } from '../interfaces/user';
 export class LoginService {
 
   // Declaración de variables y endpoints
-  private loginURL = "http://127.0.0.1:8000/api/login";
+  private loginURL = "http://127.0.0.1:8000/api/auth/login";
+  private verificationCodeURL = "http://127.0.0.1:8000/api/auth/verify-two-factor-code"
   private token: string|null = null;
   private static instance: LoginService
 
@@ -35,7 +36,9 @@ export class LoginService {
     return this.http.post<any>(this.loginURL, user)
   }
 
-  
+  VerificarCodigo(two_factor_code: Number): Observable<User> {
+    return this.http.post<User>(this.verificationCodeURL, {two_factor_code: two_factor_code})
+  }
 
   Verificar(): Observable<any> {
     let url = 'http://127.0.0.1:8000/api/auth/me'
