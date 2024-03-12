@@ -23,6 +23,7 @@ class User extends Authenticatable implements JWTSubject
         'activate',
         'two_factor_secret',
         'two_factor_recovery_codes',
+        'codigoVerificado'
     ];
 
     protected $hidden = [
@@ -30,6 +31,7 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
         'two_factor_secret',
         'two_factor_recovery_codes',
+        'codigoVerificado'
     ];
 
     public function role()
@@ -41,6 +43,7 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'activate' => 'boolean',
+        'codigoVerificado'=> 'boolean',
     ];
 
     public function getJWTIdentifier()
