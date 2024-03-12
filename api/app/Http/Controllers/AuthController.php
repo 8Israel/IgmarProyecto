@@ -55,7 +55,7 @@ class AuthController extends Controller
             ['token' => $token]
         );
         Mail::to($request->email)->send(new ValidatorMail($signedroute));
-        return response()->json(['msg' => 'Usuario creado con exito', 'body_message' => 'Recibar en tu correo electronico para activar la cuenta']);
+        return response()->json(['msg' => 'Usuario creado con exito', 'body_message' => 'Revisar tu correo electronico para activar la cuenta']);
     }
 
     public function login(Request $request)
@@ -68,7 +68,17 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
+<<<<<<< HEAD
         $this->sendTwoFactorCodeByEmail($user);
+=======
+
+        if ($user->two_factor_secret) {
+            $this->sendTwoFactorCodeByEmail($user);
+
+            return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
+        }
+
+>>>>>>> b5475c7b8c764899d151d56cb9627dbd7c233375
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 

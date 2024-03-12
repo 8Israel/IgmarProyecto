@@ -9,7 +9,7 @@ class Jugador extends Model
 {
     protected $table = 'jugadores'; // Nombre correcto de la tabla
 
-    protected $fillable = ['nombre', 'nivel', 'experiencia', 'puntuacion'];
+    protected $fillable = ['nombre', 'nivel', 'experiencia', 'puntuacion', 'user_id'];
 
     public function inventario()
     {

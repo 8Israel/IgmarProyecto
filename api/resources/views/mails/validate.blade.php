@@ -5,6 +5,6 @@
     <title>EMAIL EN ACTIVACION</title>
 </head>
 <body>
-    <p> {{$signedroute}}</p>
+ <href> {{$signedroute}}</href>
 </body>
 </html>

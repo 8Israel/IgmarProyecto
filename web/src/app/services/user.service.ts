@@ -6,14 +6,21 @@ import { User } from '../interfaces/user';
 })
 export class UserService {
 
-  private user: User|null = null
+  private user: User = {
+    data: {
+      id: 0,
+      name: "",
+      email: ""
+    },
+    token: ""
+  }
   constructor() { }
 
   setUser(user: User){
     this.user = user
   }
 
-  getUser(): User | null {
+  getUser(): User {
     return this.user
   }
 

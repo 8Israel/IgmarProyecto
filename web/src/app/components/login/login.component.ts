@@ -49,8 +49,11 @@ export class LoginComponent {
 
         localStorage.setItem('token', response.token)
 
-        this.router.navigate(['dashboard'])
+        this.router.navigate(['verificar'])
 
+      },
+      (error) => {
+        this.message = error.msg
       }
     )
   } 
