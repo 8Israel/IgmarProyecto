@@ -42,6 +42,12 @@ Route::group([
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
+<<<<<<< HEAD
+    Route::post('login', [AuthController::class,'login']);
+    Route::post('delete/:user_id', [AuthController::class, 'delete']);
+    Route::post('/verify-two-factor-code', [AuthController::class, 'verifyTwoFactorCode']);
+=======
+>>>>>>> 5749a89dc800438c3b3353ff1ffbd29f28a88508
 
     Route::resource('jugadores', JugadorController::class);
     Route::resource('armas', ArmaController::class);
