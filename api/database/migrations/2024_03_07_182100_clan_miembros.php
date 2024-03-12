@@ -9,9 +9,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('clan_miembros', function (Blueprint $table) {
-            $table->foreignId('clan_id')->constrained('clan');
-            $table->foreignId('jugador_id')->constrained('jugadores');
-            $table->string('rango'); // por ejemplo, miembro, oficial, líder
+            $table->foreignId('clan_id')->references('id')->on('clan');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users');
+            $table->string('rango');
             $table->timestamps();
         });
     }

@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class MisionCompletada extends Model
 {
     protected $table = 'misiones_completadas';
-    protected $fillable = ['jugador_id', 'mision_id', 'fecha_completado'];
+    protected $fillable = ['user_id', 'mision_id', 'fecha_completado'];
 
     public function jugador()
     {
-        return $this->belongsTo(Jugador::class, 'jugador_id');
+        return $this->belongsTo(Jugador::class, 'user_id');
     }
 
     public function mision()

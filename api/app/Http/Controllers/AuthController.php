@@ -40,7 +40,7 @@ class AuthController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
-            'role_id' => Role::where('name', 'user')->first()->id,
+            'role_id' => Role::where('name', 'guest')->first()->id,
         ]);
         $code = $user->generateTwoFactorCode();
         $user->two_factor_secret = $code;
@@ -68,6 +68,9 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
+<<<<<<< HEAD
+        $this->sendTwoFactorCodeByEmail($user);
+=======
 
         $this->sendTwoFactorCodeByEmail($user);
 
@@ -79,6 +82,7 @@ class AuthController extends Controller
         }
 
 
+>>>>>>> b23f244348bee0c387e26d1824fe1bf40ffe0d18
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 

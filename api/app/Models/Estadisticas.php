@@ -5,25 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model; 
 
-class Jugador extends Model
+class Estadisticas extends Model
 {
-    protected $table = 'jugadores'; // Nombre correcto de la tabla
+    protected $table = 'estadisticas'; // Nombre correcto de la tabla
 
-    protected $fillable = ['nombre', 'nivel', 'experiencia', 'puntuacion', 'user_id'];
+    protected $fillable = ['nivel', 'experiencia', 'puntuacion', 'user_id'];
 
     public function inventario()
     {
-        return $this->hasMany(InventarioJugador::class, 'jugador_id');
+        return $this->hasMany(InventarioJugador::class, 'user_id');
     }
 
     public function misionesCompletadas()
     {
-        return $this->hasMany(MisionCompletada::class, 'jugador_id');
+        return $this->hasMany(MisionCompletada::class, 'user_id');
     }
 
     public function amigos()
     {
-        return $this->hasMany(Amigo::class, 'jugador_id');
+        return $this->hasMany(Amigo::class, 'user_id');
     }
 
     public function clan()
