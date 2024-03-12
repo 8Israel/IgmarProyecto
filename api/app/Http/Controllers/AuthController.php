@@ -62,18 +62,22 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['msg' => 'Credenciales incorrectas', 'error' => $credentials], 401);
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
         $user = auth()->user(); 
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
 
+        $this->sendTwoFactorCodeByEmail($user);
+
+
         if ($user->two_factor_secret) {
             $this->sendTwoFactorCodeByEmail($user);
 
             return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
         }
+
 
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
@@ -85,7 +89,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $user = auth()->user();
+        $user = JWTAuth::user();
         $user->codigoVerificado = false;
         $user->save();
         auth()->logout();
@@ -94,7 +98,7 @@ class AuthController extends Controller
 
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(JWTAuth::refresh());
     }
 
     protected function respondWithToken($token)
@@ -102,7 +106,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
         ]);
     }
 
@@ -144,8 +148,8 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-        $user = Auth::user();
-        if ($user->two_factor_secret == $request->input('two_factor_code')) {
+        $user = JWTAuth::user();
+        if ($user->two_factor_secret == $request->two_factor_code) {
             $user->codigoVerificado = true;
             $user->save();
             JWTAuth::parseToken()->invalidate();
@@ -155,6 +159,7 @@ class AuthController extends Controller
         }
         return response()->json(['error' => 'Código de autenticación incorrecto'], 401);
     }
+
 
     public function delete($user_id) {
         $user = User::findOrFail($user_id);
@@ -167,4 +172,6 @@ class AuthController extends Controller
 
         return response()->json(['msg' => 'Usuario deshabilitado correctamente'], 200);
     }
+
+
 }
