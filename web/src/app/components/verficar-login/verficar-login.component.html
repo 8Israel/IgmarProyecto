@@ -18,6 +18,9 @@
             </div>
             <form (submit)="onSubmit(codigo.value)">
                 <input type="text" placeholder="Ingrese el codigo: ######" name="codigo" id="codigo" class="form-control" #codigo>
+                <div class="alert alert-warning" *ngIf="message">
+                    {{ message }}
+                </div>
                 <button  class="btn">Verificar</button>
             </form>
         </div>

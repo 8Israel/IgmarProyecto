@@ -10,9 +10,11 @@ return new class extends Migration
     {
         Schema::create('clan', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('lider')->nullable()->references('id')->on('users');
             $table->string('nombre');
             $table->integer('nivel_clan');
             $table->timestamps();
+            $table->boolean('activate')->default(true);
         });
     }
 
