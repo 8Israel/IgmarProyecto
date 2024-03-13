@@ -70,6 +70,9 @@ class User extends Authenticatable implements JWTSubject
         $this->save();
         return $code;
     }
-
+    public function clanMiembro()
+    {
+        return $this->hasOne(ClanMiembro::class, 'user_id');
+    }
 
 }

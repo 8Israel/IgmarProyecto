@@ -13,8 +13,22 @@ use App\Mail\ValidatorMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 
+use App\Models\InventarioJugador;
+use App\Models\Estadisticas;
+
 class UserController extends Controller
 {
+    public function index($id = null)
+    {
+        if ($id) {
+            $user = User::find($id);
+            return response()->json(['message' => 'usuarios', 'users' => $user], 200);
+        } else {
+            $users = User::where('activate', true)->get();
+            return response()->json(['message' => 'usuarios', 'users' => $users], 200);
+        }
+
+    }
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -32,9 +46,17 @@ class UserController extends Controller
             'password' => Hash::make($request->input('password')),
             'role_id' => Role::where('name', 'guest')->first()->id,
         ]);
-        $code = $user->generateTwoFactorCode();
-        $user->two_factor_secret = $code;
-        $user->save();
+        InventarioJugador::create([
+            'user_id' => $user->id,
+            'armas_id' => 1,
+            'heroes_id' => 1,
+        ]);
+        Estadisticas::create([
+            'user_id' => $user->id,
+            'nivel' => 0,
+            'experiencia' => 0,
+            'puntuacion' => 0,
+        ]);
 
         $token = auth()->login($user);
 
@@ -48,10 +70,11 @@ class UserController extends Controller
         return response()->json(['msg' => 'Usuario creado con exito', 'body_message' => 'Revisar tu correo electronico para activar la cuenta']);
     }
 
-    public function edit(Request $request, $user_id) {
+    public function edit(Request $request, $user_id)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'string|max:255',
-            'email' => 'string|email|unique:users,email,'.$user_id,
+            'email' => 'string|email|unique:users,email,' . $user_id,
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
@@ -71,9 +94,10 @@ class UserController extends Controller
         return response()->json(['msg' => 'Usuario editado con éxito', 'data' => $user], 200);
     }
 
-    public function delete($user_id) {
+    public function delete($user_id)
+    {
         $user = User::findOrFail($user_id);
-        if(!$user) {
+        if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
 
