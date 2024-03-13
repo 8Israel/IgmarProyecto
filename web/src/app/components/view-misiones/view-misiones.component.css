@@ -43,3 +43,13 @@
     margin: 5px;
 }
 
+.contenedorBoton {
+    width: 50%;
+    margin: auto;
+}
+
+.btn-block {
+    width: 100%;
+    font-size: 20px;
+    /* margin: auto; */
+}

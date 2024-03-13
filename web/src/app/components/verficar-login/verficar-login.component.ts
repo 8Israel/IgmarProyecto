@@ -47,7 +47,8 @@ export class VerficarLoginComponent {
 
             this.us.setUser(this.user);
             localStorage.setItem('token', response.token)
-            
+
+            this.router.navigate(['dashboard'])
 
         },
         (error) => {
