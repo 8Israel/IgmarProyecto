@@ -45,7 +45,7 @@ Route::group([
 ], function ($router) {
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
-    Route::post('me', [AuthController::class,'me']);
+    Route::get('me', [AuthController::class,'me']);
 
 
     Route::resource('armas', ArmaController::class);
@@ -61,14 +61,14 @@ Route::group([
     'middleware' => ['api', 'activate', 'check.role:user,admin', 'verificado'],
     'prefix' => 'user'
 ], function ($router) {
-    Route::post('/friends', [AmigoController::class,'show']);
-    Route::post('/friends/delete/{id}', [AmigoController::class,'destroy']);
+    Route::get('/friends', [AmigoController::class,'show']);
+    Route::put('/friends/delete/{id}', [AmigoController::class,'destroy']);
     Route::post('/friends/agregate/{id}', [AmigoController::class,'store']);
 
-    Route::post('/inventario', [InventarioJugadorController::class,'index']);
+    Route::get('/inventario', [InventarioJugadorController::class,'index']);
     Route::post('/inventario/update', [InventarioJugadorController::class,'update']);
     
-    Route::post('/estadisticas', [EstadisticasController::class,'index']);
+    Route::get('/estadisticas', [EstadisticasController::class,'index']);
 
 
 });
@@ -78,6 +78,9 @@ Route::group([
     'prefix' => 'user'
 ], function ($router) {
     Route::post('/edit/{id}', [UserController::class, 'edit']);
-    Route::post('/delete/{id}', [UserController::class, 'delete']);
-    Route::get('/index', [UserController::class,'index']);
+    Route::put('/delete/{id}', [UserController::class, 'delete']);
+    Route::get('/index/{id?}', [UserController::class,'index']);
+
+    Route::get('/estadisticas/{id}', [EstadisticasController::class,'index']);
+    Route::get('/inventario/{id}', [InventarioJugadorController::class,'index']);
 });

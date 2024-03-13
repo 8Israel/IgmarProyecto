@@ -15,8 +15,8 @@ class ClanController extends Controller
 
     public function store(Request $request)
     {
-        $clan = Clan::create($request->all());
-        return response()->json($clan, 201);
+        $user = auth()->user()->id;
+
     }
 
     public function show($id)
