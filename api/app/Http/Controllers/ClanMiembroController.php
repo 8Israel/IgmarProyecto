@@ -80,14 +80,25 @@ class ClanMiembroController extends Controller
     public function destroy($id, $userId = null)
     {
         $userId = $userId ?: auth()->id();
-        $clanMiembro = ClanMiembro::where('clan_id',$id)->where('user_id', $userId)->first();
+        $clanMiembro = ClanMiembro::where('clan_id', $id)->where('user_id', $userId)->first();
         if (!$clanMiembro) {
-            return response()->json(['error'=> 'El usuario no pertenece a este clan'], 404);
+            return response()->json(['error' => 'El usuario no pertenece a este clan'], 404);
         }
         if ($clanMiembro->user_id != $userId) {
             return response()->json(['error' => 'No tienes permiso para eliminar este miembro del clan'], 403);
         }
         $clanMiembro->delete();
         return response()->json(['error' => 'Usuario eliminado correctamente del clan'], 200);
+    }
+    public function getUserClans($userId=null)
+    {
+        $userId = $userId ?: auth()->id();
+        $clanMiembros = ClanMiembro::where('user_id', $userId)->get();
+        if (!$clanMiembros) {
+            return response()->json(['error'=> 'el usuario no pertenece a ningun clan'],404);
+        }
+        $clanIds = $clanMiembros->pluck('clan_id');
+        $clans = Clan::whereIn('id', $clanIds)->get();
+        return response()->json(['clanes' => $clans], 200);
     }
 }

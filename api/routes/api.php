@@ -59,6 +59,7 @@ Route::group([
     Route::post('/clan/create', [ClanController::class, 'store']);
     Route::get('/clan/show/misclanes', [ClanController::class, 'show']);
     Route::put('/clan/delete/{id}', [ClanController::class, 'delete']);
+    Route::get('/clan/userClans', [ClanMiembroController::class,'getUserClans']);
 
     Route::post('/clan/miembros/join/{id}', [ClanMiembroController::class,'store']);
     Route::post('/clan/miembros/delete/{id}', [ClanMiembroController::class,'destroy']);
@@ -80,6 +81,10 @@ Route::group([
     Route::post('/clan/create/{id}', [ClanController::class, 'store']);
     Route::get('/clan/show/clanesUsuario/{id}', [ClanController::class, 'show']);
     Route::put('/clan/delete/{id}', [ClanController::class, 'deleteAdmin']);
+    Route::get('/clan/userClans/{idUser}', [ClanMiembroController::class,'getUserClans']);
+    Route::post('/clan/miembros/update/{id}/{idUser}', [ClanMiembroController::class,'update']);
+    Route::post('/clan/miembros/join/{id}/{idUser}', [ClanMiembroController::class,'store']);
+    Route::post('/clan/miembros/delete/{id}/{idUser}', [ClanMiembroController::class,'destroy']);
 
     Route::post('/armas/create', [ArmaController::class, 'store']);
     Route::post('/armas/delete/{id}', [ArmaController::class, 'destroy']);
@@ -87,11 +92,6 @@ Route::group([
 
     Route::post('/heroes/create', [HeroeController::class, 'store']);
     Route::post('/heroes/delete/{id}', [HeroeController::class, 'destroy']);
-
-    Route::post('/clan/miembros/update/{id}/{idUser}', [ClanMiembroController::class,'update']);
-    Route::post('/clan/miembros/join/{id}/{idUser}', [ClanMiembroController::class,'store']);
-    Route::post('/clan/miembros/delete/{id}/{idUser}', [ClanMiembroController::class,'destroy']);
-
 });
 
 //  ADMIN Y USERS

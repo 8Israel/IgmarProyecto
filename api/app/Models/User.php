@@ -72,7 +72,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function clanMiembro()
     {
-        return $this->hasOne(ClanMiembro::class, 'user_id');
+        return $this->hasMany(ClanMiembro::class, 'user_id');
     }
 
 }
