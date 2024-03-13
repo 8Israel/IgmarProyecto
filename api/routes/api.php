@@ -137,11 +137,6 @@ Route::group([
     Route::get('/armas/index/{id?}', [ArmaController::class, 'index']);// Muestra todas las armas y puedes filtrar por el arma indicada en la ruta
     Route::get('/heroes/index/{id?}', [HeroeController::class, 'index']);// Muestra todoslos herores y puedes filtrar por el heroe indicado en la ruta
     Route::get('/misiones/show', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> 6a1ed0a1301ef170938b9f47c743d7329b30a437
 });
 //BASURA
 Route::resource('misiones', MisionController::class);
