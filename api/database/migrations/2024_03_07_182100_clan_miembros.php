@@ -9,6 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('clan_miembros', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('clan_id')->references('id')->on('clan');
             $table->foreignId('user_id')->nullable()->references('id')->on('users');
             $table->string('rango');

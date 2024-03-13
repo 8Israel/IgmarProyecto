@@ -33,20 +33,21 @@ use PragmaRX\Google2FA\Google2FA;
 */
 
 Route::post('/register', [UserController::class, 'register']);
-Route::get('activate/{token}', [AuthController::class, 'activate'])->name('activate');
+Route::get('/activate/{token}', [AuthController::class, 'activate'])->name('activate');
 Route::post('/verify-two-factor-code', [AuthController::class, 'verifyTwoFactorCode'])->middleware(['activate']);
-Route::post('login', [AuthController::class,'login'])->middleware(['activate2']);
-Route::post('jugadores', [JugadorController::class, 'store']);
+Route::post('/login', [AuthController::class,'login'])->middleware(['activate2']);
+Route::post('/jugadores', [JugadorController::class, 'store']);
 
 
 Route::group([
     'middleware' => ['api', 'activate', 'verificado'],
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('logout', [AuthController::class,'logout']);
-    Route::post('refresh', [AuthController::class,'refresh']);
-    Route::get('me', [AuthController::class,'me']);
+    Route::post('/logout', [AuthController::class,'logout']);
+    Route::post('/refresh', [AuthController::class,'refresh']);
+    Route::get('/me', [AuthController::class,'me']);
 
+    Route::post('/createClan', [ClanController::class,'store']);
 
     Route::resource('armas', ArmaController::class);
     Route::resource('heroes', HeroeController::class);
@@ -70,6 +71,10 @@ Route::group([
     
     Route::get('/estadisticas', [EstadisticasController::class,'index']);
 
+    Route::post('/clan/create', [ClanController::class,'store']);
+    Route::get('/clan/show/misclanes', [ClanController::class,'show']);
+    Route::put('/clan/delete/{id}', [ClanController::class,'delete']);
+    
 
 });
 
@@ -83,4 +88,27 @@ Route::group([
 
     Route::get('/estadisticas/{id}', [EstadisticasController::class,'index']);
     Route::get('/inventario/{id}', [InventarioJugadorController::class,'index']);
+
+    Route::post('/clan/create/{id}', [ClanController::class,'store']);
+    Route::get('/clan/show/clanesUsuario/{id}', [ClanController::class,'show']);
+    Route::put('/clan/delete/{id}', [ClanController::class,'deleteAdmin']);
+
+});
+
+Route::group([
+    'middleware' => ['api', 'activate', 'check.role:admin,user', 'verificado'],
+    'prefix' => 'user'
+], function ($router) {
+
+    Route::post('/clan/update/{id}', [ClanController::class,'update']);
+    
+});
+
+Route::group([
+    'middleware' => ['api', 'activate', 'check.role:admin,guest,user', 'verificado'],
+    'prefix' => 'user'
+], function ($router) {
+
+    Route::get('/clan/show/all/{id?}', [ClanController::class,'index']);
+    
 });
