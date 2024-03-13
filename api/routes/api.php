@@ -54,7 +54,6 @@ Route::group([
     Route::resource('misiones', MisionController::class);
     Route::resource('recompensas', RecompensaController::class);
     Route::resource('misiones-completadas', MisionesCompletadasController::class);
-    Route::resource('clanes', ClanController::class);
     Route::resource('clan-miembros', ClanMiembroController::class);
 });
 
@@ -93,6 +92,10 @@ Route::group([
     Route::get('/clan/show/clanesUsuario/{id}', [ClanController::class,'show']);
     Route::put('/clan/delete/{id}', [ClanController::class,'deleteAdmin']);
 
+    Route::post('/armas/create', [ArmaController::class,'store']);
+    Route::post('/armas/delete/{id}', [ArmaController::class,'destroy']);
+    Route::post('/armas/update/{id}', [ArmaController::class,'update']);
+
 });
 
 Route::group([
@@ -110,5 +113,7 @@ Route::group([
 ], function ($router) {
 
     Route::get('/clan/show/all/{id?}', [ClanController::class,'index']);
+
+    Route::get('/armas/index/{id?}', [ArmaController::class,'index']);
     
 });
