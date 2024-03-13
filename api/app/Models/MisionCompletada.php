@@ -12,7 +12,7 @@ class MisionCompletada extends Model
 
     public function jugador()
     {
-        return $this->belongsTo(Jugador::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function mision()

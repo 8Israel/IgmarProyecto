@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class InventarioJugador extends Model
 {
-    protected $table = 'inventarios_jugador';
+    protected $table = 'inventarios_users';
     protected $fillable = ['user_id', 'armas_id', 'heroes_id', 'cantidad'];
 
     public function jugador()
     {
-        return $this->belongsTo(Jugador::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function arma()

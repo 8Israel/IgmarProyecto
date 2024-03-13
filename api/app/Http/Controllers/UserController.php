@@ -13,6 +13,9 @@ use App\Mail\ValidatorMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 
+use App\Models\InventarioJugador;
+use App\Models\Estadisticas;
+
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -32,10 +35,13 @@ class UserController extends Controller
             'password' => Hash::make($request->input('password')),
             'role_id' => Role::where('name', 'guest')->first()->id,
         ]);
-        $code = $user->generateTwoFactorCode();
-        $user->two_factor_secret = $code;
-        $user->save();
-
+        InventarioJugador::create([
+            'user_id'=> $user->id,
+        ]);
+        Estadisticas::create([
+            'user_id'=> $user->id,
+        ]);
+        
         $token = auth()->login($user);
 
         $signedroute = URL::temporarySignedRoute(

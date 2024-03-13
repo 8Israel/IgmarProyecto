@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('inventarios_users', function (Blueprint $table) {
             $table->id();
+<<<<<<< HEAD
 
            
 
@@ -17,6 +18,11 @@ return new class extends Migration
             $table->foreignId('armas_id')->references('id')->on('armas');
             $table->foreignId('heroes_id')->references('id')->on('heroes');
 
+=======
+            $table->foreignId('user_id')->nullable()->references('id')->on('users');
+            $table->foreignId('armas_id')->nullable()->references('id')->on('armas');
+            $table->foreignId('heroes_id')->nullable()->references('id')->on('heroes');
+>>>>>>> 45f4548c779ea3f9148ae3017d43a31caa16ea14
             $table->timestamps();
         });
     }

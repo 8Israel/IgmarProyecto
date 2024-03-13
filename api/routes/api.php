@@ -39,23 +39,33 @@ Route::post('jugadores', [JugadorController::class, 'store']);
 
 
 Route::group([
-    'middleware' => ['api', 'activate', 'check.role:user,admin', 'verificado'],
+    'middleware' => ['api', 'activate', 'verificado'],
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('logout', [AuthController::class,'logout']);
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
 
-    Route::resource('jugadores', JugadorController::class);
+
     Route::resource('armas', ArmaController::class);
     Route::resource('heroes', HeroeController::class);
     Route::resource('misiones', MisionController::class);
     Route::resource('recompensas', RecompensaController::class);
-    Route::resource('amigos', AmigoController::class);
-    Route::resource('inventarios-jugador', InventarioJugadorController::class);
     Route::resource('misiones-completadas', MisionesCompletadasController::class);
     Route::resource('clanes', ClanController::class);
     Route::resource('clan-miembros', ClanMiembroController::class);
+});
+
+Route::group([
+    'middleware' => ['api', 'activate', 'check.role:user,admin', 'verificado'],
+    'prefix' => 'user'
+], function ($router) {
+    Route::post('/friends', [AmigoController::class,'show']);
+    Route::post('/friends/delete/{id}', [AmigoController::class,'destroy']);
+    Route::post('/friends/agregate/{id}', [AmigoController::class,'store']);
+
+    Route::post('/inventario', [InventarioJugadorController::class,'index']);
+    Route::post('/inventario/update', [InventarioJugadorController::class,'update']);
 });
 
 Route::group([
@@ -64,11 +74,4 @@ Route::group([
 ], function ($router) {
     Route::post('/edit/{id}', [UserController::class, 'edit']);
     Route::post('/delete/{id}', [UserController::class, 'delete']);
-});
-
-Route::group([
-    'middleware' => ['api', 'activate', 'check.role:user', 'verificado'],
-    'prefix' => 'auth'
-], function ($router) {
-
 });
