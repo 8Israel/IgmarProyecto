@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +6,11 @@ import { Injectable } from '@angular/core';
 })
 export class JugadoresService {
 
-  constructor() { }
+  private getJugadoresURL = "http://127.0.0.1:8000/api/auth/"
+
+  constructor(private http: HttpClient) { }
+
+  getAllPlayers()  {
+    return this.http.get(this.getJugadoresURL)
+  }
 }
