@@ -12,7 +12,7 @@ class Clan extends Model
 
     public function lider()
     {
-        return $this->belongsTo(Jugador::class, 'lider_id');
+        return $this->belongsTo(User::class, 'lider_id');
     }
 
     public function miembros()

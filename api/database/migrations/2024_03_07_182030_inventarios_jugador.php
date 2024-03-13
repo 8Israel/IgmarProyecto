@@ -10,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('inventarios_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('armas_id')->references('id')->on('armas');
-            $table->foreignId('heroes_id')->references('id')->on('heroes');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users');
+            $table->foreignId('armas_id')->nullable()->references('id')->on('armas');
+            $table->foreignId('heroes_id')->nullable()->references('id')->on('heroes');
             $table->timestamps();
         });
     }

@@ -13,9 +13,9 @@ return new class extends Migration
     {
        Schema::create('estadisticas', function (Blueprint $table) {
         $table->id();
-        $table->integer('nivel');
-        $table->integer('experiencia');
-        $table->integer('puntuacion');
+        $table->integer('nivel')->nullable();
+        $table->integer('experiencia')->nullable();
+        $table->integer('puntuacion')->nullable();
         $table->foreignId('user_id')->nullable()->references('id')->on('users');
         $table->timestamps();
     });

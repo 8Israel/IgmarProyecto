@@ -51,7 +51,6 @@ Route::group([
     Route::resource('heroes', HeroeController::class);
     Route::resource('misiones', MisionController::class);
     Route::resource('recompensas', RecompensaController::class);
-    Route::resource('inventarios-jugador', InventarioJugadorController::class);
     Route::resource('misiones-completadas', MisionesCompletadasController::class);
     Route::resource('clanes', ClanController::class);
     Route::resource('clan-miembros', ClanMiembroController::class);
@@ -64,6 +63,9 @@ Route::group([
     Route::post('/friends', [AmigoController::class,'show']);
     Route::post('/friends/delete/{id}', [AmigoController::class,'destroy']);
     Route::post('/friends/agregate/{id}', [AmigoController::class,'store']);
+
+    Route::post('/inventario', [InventarioJugadorController::class,'index']);
+    Route::post('/inventario/update', [InventarioJugadorController::class,'update']);
 });
 
 Route::group([
