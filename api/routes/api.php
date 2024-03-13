@@ -32,88 +32,91 @@ use PragmaRX\Google2FA\Google2FA;
 |
 */
 
-Route::post('/register', [UserController::class, 'register']);
-Route::get('/activate/{token}', [AuthController::class, 'activate'])->name('activate');
-Route::post('/verify-two-factor-code', [AuthController::class, 'verifyTwoFactorCode'])->middleware(['activate']);
-Route::post('/login', [AuthController::class,'login'])->middleware(['activate2']);
-Route::post('/jugadores', [JugadorController::class, 'store']);
-
-
+//  RUTAS SIN SIN PROTECCION O MUY POCA
 Route::group([
-    'middleware' => ['api', 'activate', 'verificado'],
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('/logout', [AuthController::class,'logout']);
-    Route::post('/refresh', [AuthController::class,'refresh']);
-    Route::get('/me', [AuthController::class,'me']);
-
-    Route::post('/createClan', [ClanController::class,'store']);
-
-    Route::resource('armas', ArmaController::class);
-    Route::resource('heroes', HeroeController::class);
-    Route::resource('misiones', MisionController::class);
-    Route::resource('recompensas', RecompensaController::class);
-    Route::resource('misiones-completadas', MisionesCompletadasController::class);
-    Route::resource('clan-miembros', ClanMiembroController::class);
+    Route::post('/register', [UserController::class, 'register']);
+    Route::post('/verify-two-factor-code', [AuthController::class, 'verifyTwoFactorCode'])->middleware(['activate']);
+    Route::post('/login', [AuthController::class, 'login'])->middleware(['activate2']);
 });
+Route::get('/activate/{token}', [AuthController::class, 'activate'])->name('activate');
 
+//  USERS
 Route::group([
     'middleware' => ['api', 'activate', 'check.role:user,admin', 'verificado'],
     'prefix' => 'user'
 ], function ($router) {
-    Route::get('/friends', [AmigoController::class,'show']);
-    Route::put('/friends/delete/{id}', [AmigoController::class,'destroy']);
-    Route::post('/friends/agregate/{id}', [AmigoController::class,'store']);
+    Route::get('/friends', [AmigoController::class, 'show']);
+    Route::put('/friends/delete/{id}', [AmigoController::class, 'destroy']);
+    Route::post('/friends/agregate/{id}', [AmigoController::class, 'store']);
 
-    Route::get('/inventario', [InventarioJugadorController::class,'index']);
-    Route::post('/inventario/update', [InventarioJugadorController::class,'update']);
-    
-    Route::get('/estadisticas', [EstadisticasController::class,'index']);
+    Route::get('/inventario', [InventarioJugadorController::class, 'index']);
+    Route::post('/inventario/update', [InventarioJugadorController::class, 'update']);
 
-    Route::post('/clan/create', [ClanController::class,'store']);
-    Route::get('/clan/show/misclanes', [ClanController::class,'show']);
-    Route::put('/clan/delete/{id}', [ClanController::class,'delete']);
-    
+    Route::get('/estadisticas', [EstadisticasController::class, 'index']);
+
+    Route::post('/clan/create', [ClanController::class, 'store']);
+    Route::get('/clan/show/misclanes', [ClanController::class, 'show']);
+    Route::put('/clan/delete/{id}', [ClanController::class, 'delete']);
+
 
 });
 
+//  ADMIN
 Route::group([
     'middleware' => ['api', 'activate', 'check.role:admin', 'verificado'],
     'prefix' => 'user'
 ], function ($router) {
     Route::post('/edit/{id}', [UserController::class, 'edit']);
     Route::put('/delete/{id}', [UserController::class, 'delete']);
-    Route::get('/index/{id?}', [UserController::class,'index']);
+    Route::get('/index/{id?}', [UserController::class, 'index']);
 
-    Route::get('/estadisticas/{id}', [EstadisticasController::class,'index']);
-    Route::get('/inventario/{id}', [InventarioJugadorController::class,'index']);
+    Route::get('/estadisticas/{id}', [EstadisticasController::class, 'index']);
+    Route::get('/inventario/{id}', [InventarioJugadorController::class, 'index']);
 
-    Route::post('/clan/create/{id}', [ClanController::class,'store']);
-    Route::get('/clan/show/clanesUsuario/{id}', [ClanController::class,'show']);
-    Route::put('/clan/delete/{id}', [ClanController::class,'deleteAdmin']);
+    Route::post('/clan/create/{id}', [ClanController::class, 'store']);
+    Route::get('/clan/show/clanesUsuario/{id}', [ClanController::class, 'show']);
+    Route::put('/clan/delete/{id}', [ClanController::class, 'deleteAdmin']);
 
-    Route::post('/armas/create', [ArmaController::class,'store']);
-    Route::post('/armas/delete/{id}', [ArmaController::class,'destroy']);
-    Route::post('/armas/update/{id}', [ArmaController::class,'update']);
+    Route::post('/armas/create', [ArmaController::class, 'store']);
+    Route::post('/armas/delete/{id}', [ArmaController::class, 'destroy']);
+    Route::post('/armas/update/{id}', [ArmaController::class, 'update']);
+
+    Route::post('/heroes/create', [HeroeController::class, 'store']);
+    Route::post('/heroes/delete/{id}', [HeroeController::class, 'destroy']);
+    Route::post('/heroes/update/{id}', [HeroeController::class, 'update']);
 
 });
 
+//  ADMIN Y USERS
 Route::group([
     'middleware' => ['api', 'activate', 'check.role:admin,user', 'verificado'],
     'prefix' => 'user'
 ], function ($router) {
 
-    Route::post('/clan/update/{id}', [ClanController::class,'update']);
-    
+    Route::post('/clan/update/{id}', [ClanController::class, 'update']);
+
 });
 
+//  RUTAS GLOBALES
 Route::group([
     'middleware' => ['api', 'activate', 'check.role:admin,guest,user', 'verificado'],
     'prefix' => 'user'
 ], function ($router) {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/me', [AuthController::class, 'me']);
 
-    Route::get('/clan/show/all/{id?}', [ClanController::class,'index']);
+    Route::get('/clan/show/all/{id?}', [ClanController::class, 'index']);
+    Route::get('/armas/index/{id?}', [ArmaController::class, 'index']);
+    Route::get('/heroes/index/{id?}', [HeroeController::class, 'index']);
 
-    Route::get('/armas/index/{id?}', [ArmaController::class,'index']);
-    
 });
+
+
+//BASURA
+Route::resource('misiones', MisionController::class);
+Route::resource('recompensas', RecompensaController::class);
+Route::resource('misiones-completadas', MisionesCompletadasController::class);
+Route::resource('clan-miembros', ClanMiembroController::class);
