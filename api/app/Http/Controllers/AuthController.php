@@ -34,6 +34,11 @@ class AuthController extends Controller
         $user = auth()->user(); 
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
+        }
+        if ($user->codigoVerificado == false) {
+            $this->sendTwoFactorCodeByEmail($user);
+
+            return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
         }           
         $this->sendTwoFactorCodeByEmail($user);
         
@@ -106,7 +111,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
-        $user = JWTAuth::user();
+        $user = auth()->user();
         if ($user->two_factor_secret == $request->two_factor_code) {
             $user->codigoVerificado = true;
             $user->save();

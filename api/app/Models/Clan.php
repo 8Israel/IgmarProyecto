@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Clan extends Model
 {
     protected $table = 'clan';
-    protected $fillable = ['nombre', 'lider_id', 'nivel_clan'];
+    protected $fillable = ['nombre','lider','activate', 'nivel_clan'];
 
     public function lider()
     {

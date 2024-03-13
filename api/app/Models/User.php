@@ -22,7 +22,6 @@ class User extends Authenticatable implements JWTSubject
         'role_id',
         'activate',
         'two_factor_secret',
-        'two_factor_recovery_codes',
         'codigoVerificado'
     ];
 
@@ -65,7 +64,8 @@ class User extends Authenticatable implements JWTSubject
 
     public function generateTwoFactorCode()
     {
-        $code = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        $code = '5'.str_pad(rand(0, 999999), 5, '0', STR_PAD_LEFT);
+        $code = substr($code, 0, 6);
         $this->two_factor_secret = $code;
         $this->save();
         return $code;

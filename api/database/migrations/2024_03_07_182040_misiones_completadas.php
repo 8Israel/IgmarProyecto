@@ -9,6 +9,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('misiones_completadas', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->nullable()->references('id')->on('users');
             $table->foreignId('mision_id')->references('id')->on('misiones');;
             $table->timestamp('fecha_completado')->nullable();
