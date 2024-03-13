@@ -70,7 +70,7 @@ class UserController extends Controller
         return response()->json(['msg' => 'Usuario creado con exito', 'body_message' => 'Revisar tu correo electronico para activar la cuenta']);
     }
 
-    public function edit(Request $request, $user_id)
+    public function update(Request $request, $user_id)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|max:255',
