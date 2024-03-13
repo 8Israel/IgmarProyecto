@@ -34,23 +34,12 @@ class AuthController extends Controller
         $user = auth()->user(); 
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
-<<<<<<< HEAD
         }
-
-
-        $this->sendTwoFactorCodeByEmail($user);
-
-
         if ($user->two_factor_secret) {
             $this->sendTwoFactorCodeByEmail($user);
 
             return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
-        }
-=======
         }           
-        $this->sendTwoFactorCodeByEmail($user);
-        
->>>>>>> 45f4548c779ea3f9148ae3017d43a31caa16ea14
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 
