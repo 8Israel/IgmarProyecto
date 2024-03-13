@@ -9,7 +9,7 @@ import { User } from '../interfaces/user';
 })
 export class RegisterService {
 
-  private registerURL = 'http://127.0.0.1:8000/api/register'
+  private registerURL = 'http://127.0.0.1:8000/api/auth/register'
   constructor(private http: HttpClient) { }
 
   Register(user: Register){

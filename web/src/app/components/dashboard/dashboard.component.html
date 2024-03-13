@@ -9,7 +9,7 @@
         <app-navbar></app-navbar>
         <div class="contenedor">
             <div class="usuario">
-                <h1 class="username">Bienvenido {{ jugador.nombre }}</h1>
+                <h1 class="username">Bienvenido {{ user.data.name }}</h1>
                 <div class="datosJugador">
                     <div class="nivel">
                         <h3>Tu nivel: {{ jugador.nivel }}</h3>
@@ -22,11 +22,19 @@
                     </div>
                 </div>
             </div>
+            <h3>MISIONES</h3>
             <div *ngFor="let mision of misiones" class="misiones">
                 <h3>Nombre {{ mision.nombre }}</h3>
                 <p>Tipo: {{ mision.tipo }}</p>
                 <p>Recompensa: {{ mision.recompensa_xp }}xp</p>
                 <p>item: {{ mision.recompensa_items }}</p>
+            </div>
+
+            <h3 *ngIf="user.data.role_id == 2">AMIGOS</h3>
+            <div>
+                <div *ngFor="let amigo of amigos" class="amigos">
+
+                </div>
             </div>
 
         </div>
