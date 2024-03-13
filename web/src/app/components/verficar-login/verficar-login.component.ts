@@ -5,20 +5,21 @@ import { User } from '../../interfaces/user';
 import { LoginService } from '../../services/login.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { PlayerService } from '../../services/player.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-verficar-login',
   standalone: true,
-  imports: [RouterModule, FormsModule],
+  imports: [RouterModule, FormsModule, CommonModule],
   templateUrl: './verficar-login.component.html',
   styleUrl: './verficar-login.component.css'
 })
 export class VerficarLoginComponent {
 
-  constructor(private router: Router, private title: Title, private ls: LoginService, private us: UserService, private ps: PlayerService) { 
+  constructor(private router: Router, private title: Title, private ls: LoginService, private us: UserService) { 
     this.title.setTitle('Verificacion')
   }
+  public message: string|null = null
   codigo: Number = 0
   public user: User = {
     data: {
@@ -43,23 +44,14 @@ export class VerficarLoginComponent {
             this.user.data.role_id = response.data.role_id;
             this.user.token = response.token;
             this.user_id = response.data.id;
+
             this.us.setUser(this.user);
             localStorage.setItem('token', response.token)
             
-            this.ps.getPlayerData(this.user_id).subscribe(
-              (playerResponse) => {
-                console.log(playerResponse);
-                this.router.navigate(['/dashboard']);
-                localStorage.setItem('token', response.token);
-                },
-                (playerError) => {
-                  this.router.navigate(['/registrar-jugador']);
-                }
-            );
 
         },
         (error) => {
-            console.error(error);
+          this.message = error.message
         }
     );
 }

@@ -40,6 +40,8 @@ class AuthController extends Controller
 
             return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
         }           
+        $this->sendTwoFactorCodeByEmail($user);
+        
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 
