@@ -18,6 +18,10 @@ use App\Models\Estadisticas;
 
 class UserController extends Controller
 {
+    public function index(){
+        $users = User::where('activate', true)->get();
+        return response()->json(['message'=>'usuarios','users'=> $users],200);
+    }
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -37,9 +41,14 @@ class UserController extends Controller
         ]);
         InventarioJugador::create([
             'user_id'=> $user->id,
+            'armas_id'=> 1,
+            'heroes_id'=> 1,
         ]);
         Estadisticas::create([
             'user_id'=> $user->id,
+            'nivel' => 0,
+            'experiencia' => 0, 
+            'puntuacion' => 0,
         ]);
         
         $token = auth()->login($user);

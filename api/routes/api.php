@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,10 @@ Route::group([
 
     Route::post('/inventario', [InventarioJugadorController::class,'index']);
     Route::post('/inventario/update', [InventarioJugadorController::class,'update']);
+    
+    Route::post('/estadisticas', [EstadisticasController::class,'index']);
+
+
 });
 
 Route::group([
@@ -74,4 +79,5 @@ Route::group([
 ], function ($router) {
     Route::post('/edit/{id}', [UserController::class, 'edit']);
     Route::post('/delete/{id}', [UserController::class, 'delete']);
+    Route::get('/index', [UserController::class,'index']);
 });

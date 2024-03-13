@@ -9,8 +9,9 @@ class EstadisticasController extends Controller
 {
     public function index()
     {
-        $misiones = Estadisticas::all();
-        return response()->json($misiones);
+        $user = auth()->user()->id;
+        $estadisticas = Estadisticas::where('user_id', $user)->get();
+        return response()->json($estadisticas);
     }
 
     public function store(Request $request)
