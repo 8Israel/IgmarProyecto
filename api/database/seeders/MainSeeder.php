@@ -49,7 +49,6 @@ class MainSeeder extends Seeder
         $arma->tipo = 'smg';
         $arma->rareza = 'normal';
         $arma->danio_base = 20;
-        $arma->nivel_requerido = 5;
         $arma->save();
     }
 }

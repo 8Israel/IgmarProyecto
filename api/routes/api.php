@@ -99,13 +99,18 @@ Route::group([
     Route::delete('/heroes/delete/{id}', [HeroeController::class, 'destroy']);// Borra a el heroe indicado en la ruta
     Route::put('/heroes/update/{id}', [HeroeController::class, 'update']);// Actualiza a el heroe indicadp en la ruta
 
-    Route::get('/misiones/show', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
     Route::post('/misiones/create', [MisionController::class,'store']);//Crear misiones
     Route::put('/misiones/update', [MisionController::class,'update']);//actualizar misiones
     Route::delete('/misiones/delete', [MisionController::class,'destroy']);//Eliminar misiones
     
-    Route::post('/misiones/show/misionesCompletas/{id}', [MisionesCompletadasController::class,'index']);//Mostrar misiones completas por usuarios, Admin
-    Route::get('/misiones/show/misionesIncompletas/{id}', [MisionesCompletadasController::class,'index2']);//Mostrar misiones incompletas por usuarios, Admin
+    Route::get('/recompensas/index', [RecompensaController::class,'index']);// Muestra las recompensas
+    Route::post('/recompensas/create', [RecompensaController::class,'store']);// Crea recompensas
+    Route::put('/recompensas/update/{id}', [RecompensaController::class,'update']);// Actualiza recompensas
+    Route::delete('/recompensas/delete/{id}', [RecompensaController::class,'destroy']);// Borra recompensas
+
+
+    Route::post('/misiones/show/misionesCompletas/{id}', [MisionesCompletadasController::class,'showMisionesComplete']);//Mostrar misiones completas por usuarios, Admin
+    Route::get('/misiones/show/misionesIncompletas/{id}', [MisionesCompletadasController::class,'showMisionesInComplete']);//Mostrar misiones incompletas por usuarios, Admin
 });
 
 //  ADMIN Y USERS
@@ -130,10 +135,9 @@ Route::group([
     Route::get('/clan/show/all/{id?}', [ClanController::class, 'index']); // Muestra todos los clanes activos
     Route::get('/armas/index/{id?}', [ArmaController::class, 'index']);// Muestra todas las armas y puedes filtrar por el arma indicada en la ruta
     Route::get('/heroes/index/{id?}', [HeroeController::class, 'index']);// Muestra todoslos herores y puedes filtrar por el heroe indicado en la ruta
+    Route::get('/misiones/show', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
 
 });
-
-
 //BASURA
 Route::resource('misiones', MisionController::class);
 Route::resource('recompensas', RecompensaController::class);
