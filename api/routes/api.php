@@ -77,7 +77,6 @@ Route::group([
 ], function ($router) {
     Route::put('/update/{id}', [UserController::class, 'update']);// Actualiza la informacion del usuario indicado en la ruta
     Route::delete('/delete/{id}', [UserController::class, 'delete']);// Desactiva a el usuario indicado en la ruta
-    Route::get('/index/{id?}', [UserController::class, 'index']);// Muestra a todos los usuario con la oportunidad de diltrar por el usuario indicado en la ruta
 
     Route::get('/estadisticas/{id}', [EstadisticasController::class, 'index']);// Muestra las estadisticas del usuario indicado en la ruta
     Route::get('/inventario/{id}', [InventarioJugadorController::class, 'index']);// Muestra el inventario del usuario indicado en la ruta
@@ -99,7 +98,6 @@ Route::group([
     Route::delete('/heroes/delete/{id}', [HeroeController::class, 'destroy']);// Borra a el heroe indicado en la ruta
     Route::put('/heroes/update/{id}', [HeroeController::class, 'update']);// Actualiza a el heroe indicadp en la ruta
 
-    Route::get('/misiones/show', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
     Route::post('/misiones/create', [MisionController::class,'store']);//Crear misiones
     Route::put('/misiones/update', [MisionController::class,'update']);//actualizar misiones
     Route::delete('/misiones/delete', [MisionController::class,'destroy']);//Eliminar misiones
@@ -115,6 +113,8 @@ Route::group([
 ], function ($router) {
     Route::put('/clan/update/{id}', [ClanController::class, 'update']);//actualiza el nombre del clan
     Route::get('/clan/miembros/index/{id}', [ClanMiembroController::class,'index']);// Muestra a los miembros del clan indicado en la ruta
+    Route::get('/index/{id?}', [UserController::class, 'index']);// Muestra a todos los usuario con la oportunidad de diltrar por el usuario indicado en la ruta
+
 
 });
 
@@ -130,7 +130,8 @@ Route::group([
     Route::get('/clan/show/all/{id?}', [ClanController::class, 'index']); // Muestra todos los clanes activos
     Route::get('/armas/index/{id?}', [ArmaController::class, 'index']);// Muestra todas las armas y puedes filtrar por el arma indicada en la ruta
     Route::get('/heroes/index/{id?}', [HeroeController::class, 'index']);// Muestra todoslos herores y puedes filtrar por el heroe indicado en la ruta
-
+    Route::get('/misiones/show', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
+    
 });
 
 

@@ -82,12 +82,6 @@ export class RegisterComponent {
         });
           this.isNameError = true;
         }
-
-        if(error.error.password[0] == 'The password field confirmation does not match'){
-          this.passwordError = null
-          this.passwordConfirmationError = error.error.password[0];
-          this.ispasswordConfirmationError = true
-        }
       }
     );
   }

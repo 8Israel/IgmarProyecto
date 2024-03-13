@@ -39,16 +39,25 @@ export class DashboardComponent implements OnInit {
     user_id: 0
   }
   public misiones: Misiones[] = []
+  public amigos: User[] = []
 
   ngOnInit(): void {
     this.user = this.us.getUser()
 
     this.ms.getMisiones().subscribe(
       (response: Misiones[]) => {
+        console.log("RESPONSE MISIONES", response)
         this.misiones.push(...response)
       }
     )
-    console.log(this.misiones)
+    if(this.user.data.role_id != 3){
+      this.us.getUsers().subscribe(
+        (response) => {
+          console.log(response)
+        }
+      )
+    }
+    // console.log(this.misiones)
   }
 
 

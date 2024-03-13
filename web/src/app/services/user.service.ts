@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
-  private GetUsersURL = 'http://127.0.0.1:8000/api/auth/jugadores'
+  private GetUsersURL = 'http://127.0.0.1:8000/api/user/index'
 
   private user: User = {
     data: {

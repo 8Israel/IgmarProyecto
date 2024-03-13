@@ -8,7 +8,7 @@ import { Misiones } from '../interfaces/misiones';
 })
 export class MisionesService {
 
-  private getMisionesURL = 'http://127.0.0.1:8000/api/auth/misiones'
+  private getMisionesURL = 'http://127.0.0.1:8000/api/user/misiones/show'
   constructor(private http: HttpClient) { }
 
   getMisiones(): Observable<Misiones[]> {
