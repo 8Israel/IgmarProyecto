@@ -12,20 +12,25 @@
         <div class="login">
             <div class="form-container">
                 <h1 style="width: 50%; margin: auto; text-align: center;">BIENVENIDO</h1>
-                <form class="form" (submit)="onSubmit($event)">
+                <form class="form" [formGroup]="formGroup" (submit)="onSubmit($event)">
                     <div class="mb-3">
                         <label for="">Correo</label>
-                        <input type="email" [(ngModel)]="email" name="email" id="email" class="form-control">
+                        <input type="email" formControlName="email" name="email" id="email" class="form-control" [class.is-invalid]="email.invalid && (email.dirty || email.touched)">
+                        <div [hidden]="email.valid || email.pristine">
+                            <span class="text-danger" *ngIf="email.errors?.['required']">El correo es obligatorio</span>
+                            <span class="text-danger" *ngIf="email.errors?.['email']">El formato del correo no es valido</span>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="">Contraseña</label>
-                        <input type="password" [(ngModel)]="password" name="password" id="password" class="form-control">
-                    </div>
-                    <div *ngIf="errorMessage" class="alert alert-warning">
-                        {{ errorMessage }}
+                        <input type="password" formControlName="password" name="password" id="password" class="form-control" [class.is-invalid]="password.invalid && (password.dirty || password.touched)">
+                        <div [hidden]="password.valid || password.pristine">
+                            <span class="text-danger" *ngIf="password.errors?.['required']">El contraseña es obligatoria</span>
+                            <span class="text-danger" *ngIf="password.errors?.['minlength']">La contraseña debe ser de minimo 8 caracteres</span>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn">INICIAR SESIÓN</button>
+                    <button type="submit" class="btn" [disabled]="formGroup.invalid">INICIAR SESIÓN</button>
                     <p>No tienes cuenta? <a routerLink="/registrar">Registrate</a></p>
                 </form>
             </div>

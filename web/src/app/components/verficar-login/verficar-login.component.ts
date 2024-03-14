@@ -52,7 +52,7 @@ export class VerficarLoginComponent {
 
         },
         (error) => {
-          this.message = error.message
+          this.message = error.error.two_factor_code || error.error
         }
     );
 }
