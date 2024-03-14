@@ -1,0 +1,28 @@
+/* Estilos CSS para el formulario de nueva misión */
+.form-container {
+    max-width: 400px; /* Ancho máximo del formulario */
+    margin: 0 auto; /* Centrar horizontalmente */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 5px; /* Borde redondeado */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  .form-group {
+    margin-bottom: 20px; /* Espacio entre grupos de campos */
+  }
+  
+  /* Estilo para los botones */
+  .btn-primary {
+    background-color: #007bff; /* Color de fondo */
+    color: #fff; /* Color de texto */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 5px; /* Borde redondeado */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3; /* Cambio de color al pasar el mouse */
+  }
+  
