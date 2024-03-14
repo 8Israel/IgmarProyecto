@@ -2,15 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mision;
 use App\Models\MisionCompletada;
 use Illuminate\Http\Request;
 
 class MisionesCompletadasController extends Controller
 {
-    public function index()
+    public function showMisionesComplete($id = null)
     {
-        $misionesCompletadas = MisionCompletada::all();
-        return response()->json($misionesCompletadas);
+        $userId = $id ?: auth()->user()->id;
+        $misionesCompletadas = MisionCompletada::where('user_id', $userId)->get();
+        $misiones = Mision::with('recompensa')->whereIn('id', $misionesCompletadas->pluck('mision_id'))->get();
+
+        return response()->json($misiones);
+    }
+
+    public function showMisionesInComplete($id = null)
+    {
+        $userId = $id ?: auth()->user()->id;
+        $misionesCompletadas = MisionCompletada::where('user_id', $userId)->pluck('mision_id');
+        $misionesInCompletas = Mision::with('recompensa')->whereNotIn('id', $misionesCompletadas)->get();
+
+        return response()->json($misionesInCompletas);
     }
 
     public function store(Request $request)

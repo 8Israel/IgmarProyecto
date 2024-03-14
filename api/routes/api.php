@@ -65,8 +65,8 @@ Route::group([
     Route::delete('/clan/miembros/delete/{id}', [ClanMiembroController::class,'destroy']);// elimina al usuario logueado del clan indicado en la ruta
     
     Route::post('/misiones/completar/{id}', [MisionesCompletadasController::class,'Store']);//completar Misiones, User
-    Route::get('/misiones/show/misionesCompletas', [MisionesCompletadasController::class,'index']);//Mostrar misiones completas, User
-    Route::get('/misiones/show/misionesIncompletas', [MisionesCompletadasController::class,'index2']);//Mostrar misiones incompletas, User
+    Route::get('/misiones/show/misionesCompletas', [MisionesCompletadasController::class,'showMisionesComplete']);//Mostrar misiones completas, User
+    Route::get('/misiones/show/misionesIncompletas', [MisionesCompletadasController::class,'showMisionesInComplete']);//Mostrar misiones incompletas, User
 
 });
 
@@ -98,9 +98,10 @@ Route::group([
     Route::delete('/heroes/delete/{id}', [HeroeController::class, 'destroy']);// Borra a el heroe indicado en la ruta
     Route::put('/heroes/update/{id}', [HeroeController::class, 'update']);// Actualiza a el heroe indicadp en la ruta
 
+    Route::get('/misiones/index', [MisionController::class,'index']);
     Route::post('/misiones/create', [MisionController::class,'store']);//Crear misiones
-    Route::put('/misiones/update', [MisionController::class,'update']);//actualizar misiones
-    Route::delete('/misiones/delete', [MisionController::class,'destroy']);//Eliminar misiones
+    Route::put('/misiones/update/{id}', [MisionController::class,'update']);//actualizar misiones
+    Route::delete('/misiones/delete/{id}', [MisionController::class,'destroy']);//Eliminar misiones
     
     Route::get('/recompensas/index', [RecompensaController::class,'index']);// Muestra las recompensas
     Route::post('/recompensas/create', [RecompensaController::class,'store']);// Crea recompensas
@@ -120,8 +121,6 @@ Route::group([
     Route::put('/clan/update/{id}', [ClanController::class, 'update']);//actualiza el nombre del clan
     Route::get('/clan/miembros/index/{id}', [ClanMiembroController::class,'index']);// Muestra a los miembros del clan indicado en la ruta
     Route::get('/index/{id?}', [UserController::class, 'index']);// Muestra a todos los usuario con la oportunidad de diltrar por el usuario indicado en la ruta
-
-
 });
 
 //  RUTAS GLOBALES
@@ -137,8 +136,7 @@ Route::group([
     Route::get('/armas/index/{id?}', [ArmaController::class, 'index']);// Muestra todas las armas y puedes filtrar por el arma indicada en la ruta
     Route::get('/heroes/index/{id?}', [HeroeController::class, 'index']);// Muestra todoslos herores y puedes filtrar por el heroe indicado en la ruta
     Route::get('/misiones/show', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
+
 });
 //BASURA
-Route::resource('misiones', MisionController::class);
-Route::resource('recompensas', RecompensaController::class);
 Route::resource('misiones-completadas', MisionesCompletadasController::class);
