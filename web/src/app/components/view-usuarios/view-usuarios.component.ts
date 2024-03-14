@@ -55,6 +55,7 @@ export class ViewUsuariosComponent implements OnInit {
   }
 
   deleteUser(user_id: number): void {
+    this.deleteMessage = null
     this.us.deleteUser(user_id).subscribe(
       (response) => {
         console.log(response);
