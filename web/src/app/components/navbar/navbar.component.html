@@ -1,6 +1,6 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Dashboard</a>
+        <a class="navbar-brand" href="#">{{ titulo }}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,9 +14,18 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" routerLink="/dashboard">Dashboard</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" *ngIf="user.data.role_id == 1">
                         <a class="nav-link active" aria-current="page" routerLink="/ver-jugadores">Usuarios</a>
                     </li>
+                    <li class="nav-item dropdown" *ngIf="user.data.role_id == 2">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Agregar/Ver Amgigos
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" routerLink="/ver-jugadores">Agregar Amigos</a></li>
+                            <li><a class="dropdown-item" href="#">Ver Amigos</a></li>
+                        </ul>
+                        </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" routerLink="/ver-misiones">Misiones</a>
                     </li>

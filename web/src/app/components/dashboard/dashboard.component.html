@@ -6,9 +6,13 @@
         <title>Dashboard</title>
     </head>
     <body>
-        <app-navbar></app-navbar>
+        <app-navbar [titulo]="'Dashboard'"></app-navbar>
         <div class="contenedor">
-            <div class="usuario">
+            <div class="alert alert-info alert-dismissible fade show mt-2" role="alert" *ngIf="user.data.role_id == 3">
+                Para encontrar a otros jugadores contactate con el administrador
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div class="usuario" *ngIf="user.data.role_id != 1">
                 <h1 class="username">Bienvenido {{ user.data.name }}</h1>
                 <div class="datosJugador">
                     <div class="nivel">
@@ -22,18 +26,44 @@
                     </div>
                 </div>
             </div>
-            <h3>MISIONES</h3>
+            <div class="encabezado">
+                <h3>MISIONES</h3> 
+                <div class="contenedor-link">
+                    <a routerLink="/ver-misiones">Ver mas...</a>
+                </div>
+            </div>
             <div *ngFor="let mision of misiones" class="misiones">
                 <h3>Nombre {{ mision.nombre }}</h3>
                 <p>Tipo: {{ mision.tipo }}</p>
-                <p>Recompensa: {{ mision.recompensa_xp }}xp</p>
-                <p>item: {{ mision.recompensa_items }}</p>
+                <p>Recompensa: {{ mision.recompensa.xp }}xp</p>
             </div>
 
             <h3 *ngIf="user.data.role_id == 2">AMIGOS</h3>
             <div>
                 <div *ngFor="let amigo of amigos" class="amigos">
+                    <h3>{{ amigo.amigo.name }}</h3>
+                    <p>Nivel: {{ amigo.estadisticas.nivel }}</p>
+                    <p>Puntuacion: {{ amigo.estadisticas.puntuacion }}</p>
+                </div>
+            </div>
+            <h3 *ngIf="user.data.role_id == 1">USUARIOS</h3>
+            <div>
+                <div *ngFor="let amigo of amigos" class="amigos">
 
+                </div>
+            </div>
+
+            <div class="encabezado">
+                <h3>HEROES</h3> 
+                <div class="contenedor-link">
+                    <a routerLink="/ver-misiones">Ver mas...</a>
+                </div>
+            </div>
+            <div>
+                <div *ngFor="let heroe of heroes" class="heroes">
+                    <h4>{{ heroe.nombre }}</h4>
+                    <p>Rareza: {{ heroe.rareza }}</p>
+                    <p>Tipo: {{ heroe.tipo }}</p>
                 </div>
             </div>
 
