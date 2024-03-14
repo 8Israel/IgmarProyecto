@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Misiones } from '../interfaces/misiones';
+import { Misiones } from '../interfaces/misiones-recompensas';
 import { CreateMision } from '../interfaces/create-mision';
 import { MisionResponse } from '../interfaces/mision-response';
+
 
 @Injectable({
   providedIn: 'root'

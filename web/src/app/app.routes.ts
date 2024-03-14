@@ -19,5 +19,7 @@ export const routes: Routes = [
     {path: 'form-heroes', loadComponent: () => import('./components/form-heroes/form-heroes.component').then(fh => fh.FormHeroesComponent)},
     {path: 'form-inventario', loadComponent: () => import('./components/form-inventario/form-inventario.component').then(fi => fi.FormInventarioComponent)},
     {path: 'form-recompensas', loadComponent: () => import('./components/form-recompensas/form-recompensas.component').then(fr => fr.FormRecompensasComponent)},
-    {path: 'form-clanes', loadComponent: () => import('./components/form-clanes/form-clanes.component').then(fc => fc.FormClanesComponent)}
+    {path: 'form-clanes', loadComponent: () => import('./components/form-clanes/form-clanes.component').then(fc => fc.FormClanesComponent)},
+    {path: 'editar-inventario', loadComponent: () => import('./components/form-inventario/form-inventario.component').then(fi => fi.FormInventarioComponent)},
+    {path: 'editar-usuario/:id', loadComponent: () => import('./components/editar-usuario/editar-usuario.component').then(eu => eu.EditarUsuarioComponent)}
 ];

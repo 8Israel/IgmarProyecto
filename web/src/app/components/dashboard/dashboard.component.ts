@@ -5,20 +5,25 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user';
 import { Player } from '../../interfaces/player';
 import { MisionesService } from '../../services/misiones.service';
-import { Misiones } from '../../interfaces/misiones';
+import { Misiones } from '../../interfaces/misiones-recompensas';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HeroesService } from '../../services/heroes.service';
+import { Heroes } from '../../interfaces/heroes';
+import { RouterModule } from '@angular/router';
+import { FriendsService } from '../../services/friends.service';
+import { Friend } from '../../interfaces/friend';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [NavbarComponent, FormsModule, CommonModule],
+  imports: [NavbarComponent, FormsModule, CommonModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private title: Title, private us: UserService, private ms: MisionesService) {
+  constructor(private title: Title, private us: UserService, private ms: MisionesService, private hs: HeroesService, private fs: FriendsService) {
     this.title.setTitle("Dashboard")
   }
   public user: User = {
@@ -39,25 +44,35 @@ export class DashboardComponent implements OnInit {
     user_id: 0
   }
   public misiones: Misiones[] = []
-  public amigos: User[] = []
+  public heroes: Heroes[] = []
+  public amigos: Friend[] = []
 
   ngOnInit(): void {
     this.user = this.us.getUser()
 
+    console.log(this.us.getUser())
+
     this.ms.getMisiones().subscribe(
-      (response: Misiones[]) => {
-        console.log("RESPONSE MISIONES", response)
-        this.misiones.push(...response)
+      (response) => {
+        console.log("RESPONSE MISIONES", response);
+        this.misiones.push(...response.slice(0, 3)); // Limitando a las primeras 3 misiones
       }
-    )
-    if(this.user.data.role_id != 3){
-      this.us.getUsers().subscribe(
+    );
+    if(this.user.data.role_id == 2){
+      this.fs.getFriends().subscribe(
         (response) => {
-          console.log(response)
+          console.log("RESPONSE FRIENDS", response)
+          this.amigos.push(...response.slice(0,3))
         }
       )
     }
-    // console.log(this.misiones)
+
+    this.hs.getHeroes().subscribe(
+      (response) => {
+        console.log("RESPONSE HEROES", response)
+        this.heroes.push(...response.slice(0,3));
+      }
+    )
   }
 
 

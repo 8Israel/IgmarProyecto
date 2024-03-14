@@ -106,4 +106,14 @@ class UserController extends Controller
 
         return response()->json(['msg' => 'Usuario deshabilitado correctamente'], 200);
     }
+
+    public function getRoles() {
+        $roles = Role::all();
+
+        if($roles->isEmpty()){
+            return response()->json(["error" => "No se encontraron roles"], 404);
+        }
+
+        return response()->json($roles);
+    }
 }
