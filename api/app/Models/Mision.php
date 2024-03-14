@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Mision extends Model
-{
+{   
     protected $table = 'misiones';
     protected $fillable = ['nombre', 'tipo', 'recompensas_id'];
     public function recompensa()

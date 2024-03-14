@@ -74,5 +74,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(ClanMiembro::class, 'user_id');
     }
+    public function estadisticas()
+    {
+        return $this->hasOne(Estadisticas::class);
+    }
+    public function inventario()
+    {
+        return $this->hasOne(InventarioJugador::class);
+    }
 
 }

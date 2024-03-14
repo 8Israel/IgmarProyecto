@@ -9,4 +9,9 @@ class Recompensa extends Model
 {
     protected $table = 'recompensas';
     protected $fillable = ['tipo', 'xp'];
+
+    public function misiones()
+    {
+        return $this->hasMany(Mision::class);
+    }
 }

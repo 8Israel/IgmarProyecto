@@ -109,7 +109,7 @@ Route::group([
     Route::delete('/recompensas/delete/{id}', [RecompensaController::class,'destroy']);// Borra recompensas
 
 
-    Route::post('/misiones/show/misionesCompletas/{id}', [MisionesCompletadasController::class,'showMisionesComplete']);//Mostrar misiones completas por usuarios, Admin
+    Route::get('/misiones/show/misionesCompletas/{id}', [MisionesCompletadasController::class,'showMisionesComplete']);//Mostrar misiones completas por usuarios, Admin
     Route::get('/misiones/show/misionesIncompletas/{id}', [MisionesCompletadasController::class,'showMisionesInComplete']);//Mostrar misiones incompletas por usuarios, Admin
 });
 

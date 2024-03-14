@@ -11,28 +11,14 @@ class Estadisticas extends Model
 
     protected $fillable = ['nivel', 'experiencia', 'puntuacion', 'user_id'];
 
-    public function inventario()
-    {
-        return $this->hasMany(InventarioJugador::class, 'user_id');
-    }
 
     public function misionesCompletadas()
     {
         return $this->hasMany(MisionCompletada::class, 'user_id');
     }
 
-    public function amigos()
-    {
-        return $this->hasMany(Amigo::class, 'user_id');
-    }
-
-    public function clan()
-    {
-        return $this->hasOne(Clan::class, 'lider_id');
-    }
-
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }
