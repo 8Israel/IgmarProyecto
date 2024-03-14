@@ -28,7 +28,7 @@ class MisionesSeeder extends Seeder
         $re3 = new Recompensa();
         $re3->tipo = "nivel 3";
         $re3->xp = 15;
-        $re3->save();
+            $re3->save();
 
         $re4 = new Recompensa();
         $re4->tipo = "nivel 4";

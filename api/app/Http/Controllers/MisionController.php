@@ -7,7 +7,8 @@ use App\Models\User;
 use App\Models\Recompensa;
 use App\Models\MisionCompletada;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
+
 
 class MisionController extends Controller
 {
