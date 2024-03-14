@@ -53,7 +53,7 @@ class UserController extends Controller
         ]);
         Estadisticas::create([
             'user_id' => $user->id,
-            'nivel' => 0,
+            'nivel' => 1,
             'experiencia' => 0,
             'puntuacion' => 0,
         ]);

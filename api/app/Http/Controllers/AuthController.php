@@ -35,6 +35,7 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
+        $user->codigoVerificado = false;
         if ($user->codigoVerificado == false) {
             $this->sendTwoFactorCodeByEmail($user);
 
