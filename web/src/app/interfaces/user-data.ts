@@ -1,6 +1,6 @@
 export interface UserData {
-    id: Number;
+    id: number;
     name: string;
     email: string;
-    role_id: Number
+    role_id: number;
 }

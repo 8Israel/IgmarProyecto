@@ -77,6 +77,7 @@ Route::group([
 ], function ($router) {
     Route::put('/update/{id}', [UserController::class, 'update']);// Actualiza la informacion del usuario indicado en la ruta
     Route::delete('/delete/{id}', [UserController::class, 'delete']);// Desactiva a el usuario indicado en la ruta
+    Route::get('/roles', [UserController::class, 'getRoles']);// Obtiene a los roles 
 
     Route::get('/estadisticas/{id}', [EstadisticasController::class, 'index']);// Muestra las estadisticas del usuario indicado en la ruta
     Route::get('/inventario/{id}', [InventarioJugadorController::class, 'index']);// Muestra el inventario del usuario indicado en la ruta

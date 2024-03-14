@@ -16,6 +16,6 @@ export const routes: Routes = [
     {path: 'form-misiones', loadComponent: () => import('./components/nuevo-formulario-mision/nuevo-formulario-mision.component').then(fm => fm.NuevoFormularioMisionComponent)},
     {path: ' form-armas', loadComponent: () => import('./components/form-armas/form-armas.component').then(fa => fa.FormArmasComponent)},
     {path: 'form-heroes', loadComponent: () => import('./components/form-heroes/form-heroes.component').then(fh => fh.FormHeroesComponent)},
-    {path: 'editar-inventario', loadComponent: () => import('./components/form-inventario/form-inventario.component').then(fi => fi.FormInventarioComponent)}
-
+    {path: 'editar-inventario', loadComponent: () => import('./components/form-inventario/form-inventario.component').then(fi => fi.FormInventarioComponent)},
+    {path: 'editar-usuario/:id', loadComponent: () => import('./components/editar-usuario/editar-usuario.component').then(eu => eu.EditarUsuarioComponent)}
 ];

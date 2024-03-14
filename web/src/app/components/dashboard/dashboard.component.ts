@@ -8,11 +8,9 @@ import { MisionesService } from '../../services/misiones.service';
 import { Misiones } from '../../interfaces/misiones-recompensas';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { take } from 'rxjs/operators';
 import { HeroesService } from '../../services/heroes.service';
 import { Heroes } from '../../interfaces/heroes';
 import { RouterModule } from '@angular/router';
-import { UserData } from '../../interfaces/user-data';
 import { FriendsService } from '../../services/friends.service';
 import { Friend } from '../../interfaces/friend';
 
@@ -75,7 +73,6 @@ export class DashboardComponent implements OnInit {
         this.heroes.push(...response.slice(0,3));
       }
     )
-    // console.log(this.misiones)
   }
 
 

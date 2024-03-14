@@ -15,23 +15,9 @@
 }
 
 .nombre {
-    width: 20%;
-    text-align: center;
-    border-right: solid black 1px;
-}
-.nivel {
-    width: 20%;
-    text-align: center;
-    border-right: solid black 1px;
-}
-.experiencia {
-    width: 20%;
-    text-align: center;
-    border-right: solid black 1px;
-}
-.puntuacion {
-    width: 20%;
-    text-align: center;
+    width: 80%;
+    text-align: justify;
+    padding: 10px;
     border-right: solid black 1px;
 }
 .acciones {
