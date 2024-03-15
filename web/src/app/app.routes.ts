@@ -3,9 +3,6 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { authGuard } from './guards/auth.guard';
 
-
-
-
 export const routes: Routes = [
     {path: '', loadComponent: () => import('./components/login/login.component').then(l => l.LoginComponent)},
     {path: 'verificar', loadComponent: () => import('./components/verficar-login/verficar-login.component').then(v => v.VerficarLoginComponent)},
