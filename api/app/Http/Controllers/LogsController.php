@@ -12,7 +12,6 @@ class LogsController extends Controller
     public function index()
     {
         $logs = Logs::orderBy("created_at", "desc")->get();
-
         // Recuperar los datos del usuario correspondientes a cada log
         $logs->each(function ($log) {
             $user = User::find($log->user_id);
