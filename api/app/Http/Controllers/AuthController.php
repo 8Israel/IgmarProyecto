@@ -55,7 +55,8 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         $user = auth()->user();
-        $this->LogsMethod($request, $user);
+        $query = auth()->user()->toSql();
+        $this->LogsMethod($request, $user, $query);
         return response()->json(auth()->user());
     }
 
@@ -138,10 +139,15 @@ class AuthController extends Controller
     }
 
 
-    public function LogsMethod(Request $request, $user){
+    public function LogsMethod(Request $request, $user, $query = null){
+        if(!$query){
+            $data = $request->all();
+        }else{
+            $data = $query;
+        }
         Logs::create([
             "user_id"=> $user->id,
-            "data"=> $request->all(),
+            "data"=> $data,
             "verb"=>$request->method(),
         ]);
     }
