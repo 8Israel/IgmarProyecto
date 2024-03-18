@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EstadisticasController;
+use App\Http\Controllers\LogsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -111,6 +112,8 @@ Route::group([
 
     Route::get('/misiones/show/misionesCompletas/{id}', [MisionesCompletadasController::class,'showMisionesComplete']);//Mostrar misiones completas por usuarios, Admin
     Route::get('/misiones/show/misionesIncompletas/{id}', [MisionesCompletadasController::class,'showMisionesInComplete']);//Mostrar misiones incompletas por usuarios, Admin
+
+    Route::get('logs', [LogsController::class,'index']);
 });
 
 //  ADMIN Y USERS

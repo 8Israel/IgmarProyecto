@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Logs;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
@@ -16,10 +17,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\TwoFactorCodeMail;
 use PragmaRX\Google2FA\Google2FA;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\LogsController;
 
 
 class AuthController extends Controller
 {
+    
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
@@ -35,6 +38,9 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
+
+        $this->LogsMethod($request, $user);
+        
         $user->codigoVerificado = false;
         if ($user->codigoVerificado == false) {
             $this->sendTwoFactorCodeByEmail($user);
@@ -46,17 +52,21 @@ class AuthController extends Controller
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 
-    public function me()
+    public function me(Request $request)
     {
+        $user = auth()->user();
+        $this->LogsMethod($request, $user);
         return response()->json(auth()->user());
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         $user = JWTAuth::user();
         $user->codigoVerificado = false;
         $user->save();
         auth()->logout();
+        $this->LogsMethod($request, $user);
+        
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -119,8 +129,20 @@ class AuthController extends Controller
             JWTAuth::parseToken()->invalidate();
             $token = JWTAuth::fromUser($user);
 
+            $this->LogsMethod($request, $user);
+
             return response()->json(['message' => 'Código de autenticación válido','data' => $user, 'token' => $token], 200);
         }
+        $this->LogsMethod($request, $user);
         return response()->json(['error' => 'Código de autenticación incorrecto'], 401);
+    }
+
+
+    public function LogsMethod(Request $request, $user){
+        Logs::create([
+            "user_id"=> $user->id,
+            "data"=> $request->all(),
+            "verb"=>$request->method(),
+        ]);
     }
 }
