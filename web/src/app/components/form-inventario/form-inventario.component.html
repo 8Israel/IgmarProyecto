@@ -1,31 +1,25 @@
 <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="form-container">
-          <form (submit)="EditarInventario()">
-           
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="form-container">
+        <form (submit)="EditarInventario()">
+          <div class="form-group">
+            <label for="armas_id">Arma</label>
+            <select name="armaSelect" class="form-select" [(ngModel)]="armas_id">
+              <option *ngFor="let arma of armas" [value]="arma.id">{{ arma.nombre }}</option>
+            </select>
+          </div>
   
-            <div class="form-group">
-              <label for="armas_id">Arma</label>
-             <select name="armaSelect" id="" class="form-select" [(ngModel)]="armas_id">
-
-              <option *ngFor="let arma of armas"[value]="arma.id">
-                {{arma.nombre}}
-              </option>
-
-
-             </select>
-            </div>
+          <div class="form-group">
+            <label for="heroes_id">Héroe</label>
+            <select name="heroeSelect" class="form-select" [(ngModel)]="heroes_id">
+              <option *ngFor="let heroe of heroes" [value]="heroe.id">{{ heroe.nombre }}</option>
+            </select>
+          </div>
   
-            <div class="form-group">
-              <label for="heroes_id">ID de Héroe</label>
-              <input type="number" class="form-control" id="heroes_id" name="heroes_id" [(ngModel)]="heroes_id" >
-            </div>
-  
-            <button type="submit" class="btn btn-primary">Guardar</button>
-          </form>
-        </div>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
       </div>
     </div>
   </div>
-  
+</div>
