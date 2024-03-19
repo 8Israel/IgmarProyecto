@@ -51,6 +51,7 @@ export class RegisterComponent {
         this.router.navigate(['']);
       },
       (error) => {
+        console.log(error)
         this.emailError = []
         this.nameError = []
         this.passwordError = []
