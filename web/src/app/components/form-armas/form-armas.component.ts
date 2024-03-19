@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 export class FormArmasComponent implements OnInit {
   
   public message: string|null = null
+  public titulo: string = ""
   public updateMessage: string|null = null
   public redirectMessage: string|null = null
   arma_id: number = 0;
@@ -35,6 +36,7 @@ export class FormArmasComponent implements OnInit {
       this.arma_id = +params['id']; 
       this.as.getArmasById(this.arma_id).subscribe(
         (response) => {
+          this.titulo = "Editar " + response.nombre
           this.arma.id = response.id;
           this.arma.nombre = response.nombre;
           this.arma.tipo = response.tipo;
@@ -45,6 +47,9 @@ export class FormArmasComponent implements OnInit {
           this.message = error.error
         }
       )
+    }
+    else{
+      this.titulo = "Crear arma"
     }
   }
 

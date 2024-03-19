@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar [titulo]="'Armas'"></app-navbar>
 
 
 <div class="jugadorDiv">
@@ -47,7 +47,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" (click)="deleteWeapon(selectedArma.id)" data-bs-dismiss="modal">Save changes</button>
+            <button type="button" class="btn btn-danger" (click)="deleteWeapon(selectedArma.id)" data-bs-dismiss="modal">Eliminar</button>
           </div>
         </div>
       </div>

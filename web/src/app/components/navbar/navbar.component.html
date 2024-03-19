@@ -14,6 +14,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" routerLink="/dashboard">Dashboard</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" routerLink="/inventario" *ngIf="user.data.role_id != 3">Inventario</a>
+                    </li>
                     <li class="nav-item" *ngIf="user.data.role_id == 1">
                         <a class="nav-link active" aria-current="page" routerLink="/ver-jugadores">Usuarios</a>
                     </li>
