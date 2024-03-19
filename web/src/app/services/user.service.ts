@@ -7,6 +7,7 @@ import { UsersResponse } from '../interfaces/users-response';
 import { UserById } from '../interfaces/user-by-id';
 import { Roles } from '../interfaces/roles';
 import { UserUpdate } from '../interfaces/user-update';
+import { Me } from '../interfaces/me';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ import { UserUpdate } from '../interfaces/user-update';
 export class UserService {
 
   private GetUsersURL = 'http://127.0.0.1:8000/api/user/index'
+  private me = 'http://127.0.0.1:8000/api/user/me'
   private getUserURL = 'http://127.0.0.1:8000/api/user/index/'
   private updateUserURL = 'http://127.0.0.1:8000/api/user/update/'
   private deleteUserURL = 'http://127.0.0.1:8000/api/user/delete/'
@@ -41,6 +43,10 @@ export class UserService {
 
   getUserById(id: Number): Observable<UserById> {
     return this.http.get<UserById>(this.getUserURL + id)
+  }
+
+  getUserData(): Observable<Me> {
+    return this.http.get<Me>(this.me)
   }
 
   getUsers(): Observable<UsersResponse> {
