@@ -52,7 +52,7 @@ Route::group([
     Route::delete('/friends/delete/{id}', [AmigoController::class, 'destroy']);//Elimina amigos del usuario logueado indicando su usuario en la ruta
     Route::post('/friends/agregate/{id}', [AmigoController::class, 'store']);//Agrega al usario indicado en la ruta como amigo del usuario logueado
 
-    Route::get('/inventario', [InventarioJugadorController::class, 'index']);//Edita el inventario del usuario logueado
+    Route::get('/inventario/{id?}', [InventarioJugadorController::class, 'index']);//Edita el inventario del usuario logueado
     Route::put('/inventario/update', [InventarioJugadorController::class, 'update']);//Muestra el inventario del usuario logueado
 
     Route::get('/estadisticas', [EstadisticasController::class, 'index']);//Muestra las estadisticas del usuario logueado
@@ -138,7 +138,7 @@ Route::group([
     Route::get('/clan/show/all/{id?}', [ClanController::class, 'index']); // Muestra todos los clanes activos
     Route::get('/armas/index/{id?}', [ArmaController::class, 'index']);// Muestra todas las armas y puedes filtrar por el arma indicada en la ruta
     Route::get('/heroes/index/{id?}', [HeroeController::class, 'index']);// Muestra todoslos herores y puedes filtrar por el heroe indicado en la ruta
-    Route::get('/misiones/show', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
+    Route::get('/misiones/show/{id?}', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
 
 });
 //BASURA

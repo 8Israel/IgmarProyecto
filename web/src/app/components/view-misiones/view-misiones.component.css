@@ -12,6 +12,9 @@
     border-radius: 15px;
     background-color: #343a64;
     color: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    /* padding: 10px; */
 }
 
 .nombre {

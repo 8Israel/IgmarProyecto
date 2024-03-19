@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Logs;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
@@ -21,14 +22,20 @@ class UserController extends Controller
     public function index($id = null)
     {
         if ($id) {
-            $user = User::find($id);
-            return response()->json(['message' => 'usuarios', 'users' => $user], 200);
+            $query = User::where('id', $id);
+            $sqlQuery = $query->toSql();
+            $user = $query->first();
+            $this->LogsMethod(request(), auth()->user(), $sqlQuery);
+            return response()->json(['message' => 'Usuario encontrado', 'user' => $user], 200);
         } else {
-            $users = User::where('activate', true)->get();
-            return response()->json(['message' => 'usuarios', 'users' => $users], 200);
+            $query = User::where('activate', true);
+            $sqlQuery = $query->toSql();
+            $users = $query->get();
+            $this->LogsMethod(request(), auth()->user(), $sqlQuery);
+            return response()->json(['message' => 'Usuarios activos', 'users' => $users], 200);
         }
-
     }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -67,6 +74,7 @@ class UserController extends Controller
             ['token' => $token]
         );
         Mail::to($request->email)->send(new ValidatorMail($signedroute));
+        $this->LogsMethod($request, $user, ["nombre" => $request->name, "email" => $request->email]);
         return response()->json(['msg' => 'Usuario creado con exito', 'body_message' => 'Revisar tu correo electronico para activar la cuenta']);
     }
 
@@ -90,7 +98,7 @@ class UserController extends Controller
             $user->role_id = $request->input('role_id');
         }
         $user->save();
-
+        $this->LogsMethod($request, $user, ["modificacion" => $request->all(), "usuario" => $user_id]);
         return response()->json(['msg' => 'Usuario editado con éxito', 'data' => $user], 200);
     }
 
@@ -100,10 +108,28 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
         }
-
-        $user->activate = 0;
+        if ($user->activate == true) {
+            $user->activate = false;
+        }
+        else {
+            $user->activate = true;
+        }
+        $this->LogsMethod(request(), auth()->user(), $user->toArray());
         $user->save();
 
         return response()->json(['msg' => 'Usuario deshabilitado correctamente'], 200);
+    }
+    public function LogsMethod(Request $request, $user, $query = null)
+    {
+        if (!$query) {
+            $data = $request->all();
+        } else {
+            $data = $query;
+        }
+        Logs::create([
+            "user_id" => $user->id,
+            "data" => $data,
+            "verb" => $request->method(),
+        ]);
     }
 }

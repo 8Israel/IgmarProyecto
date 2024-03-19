@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Logs;
 use App\Models\Mision;
 use App\Models\MisionCompletada;
 use Illuminate\Http\Request;
@@ -31,6 +32,7 @@ class MisionesCompletadasController extends Controller
             'mision_id' => $idMision,
             'user_id' => $user->id
         ]);
+        $this->LogsMethod(request(), auth()->user(), $mision->toArray());
         
         return response()->json($misionCompletada, 201);
     }
@@ -38,34 +40,60 @@ class MisionesCompletadasController extends Controller
     public function showMisionesComplete($id = null)
     {
         $userId = $id ?: auth()->user()->id;
-        if (!User::where('id', $userId)->exists()) 
-        {
-            return response()->json(['error'=> 'El usuario indicado no existe'],404);
+        if (!User::where('id', $userId)->exists()) {
+            return response()->json(['error' => 'El usuario indicado no existe'], 404);
         }
-        $misionesCompletadas = MisionCompletada::where('user_id', $userId)->get();
-        $misiones = Mision::with('recompensa')->whereIn('id', $misionesCompletadas->pluck('mision_id'))->get();
 
+        $misionesCompletadasQuery = MisionCompletada::where('user_id', $userId);
+        $sqlQuery = $misionesCompletadasQuery->toSql();
+        $misionesCompletadas = $misionesCompletadasQuery->get();
+        $misionesQuery = Mision::with('recompensa')->whereIn('id', $misionesCompletadas->pluck('mision_id'));
+        $sqlQuery .= ' ' . $misionesQuery->toSql();
+
+        $misiones = $misionesQuery->get();
+
+        $this->LogsMethod(request(), auth()->user(), $sqlQuery);
         return response()->json($misiones);
     }
 
-    public function showMisionesInComplete($id = null)
+
+    public function showMisionesInComplete(Request $request, $id = null)
     {
         $userId = $id ?: auth()->user()->id;
-        if (!User::where('id', $userId)->exists()) 
-        {
-            return response()->json(['error'=> 'El usuario indicado no existe'],404);
-        }
-        $misionesCompletadas = MisionCompletada::where('user_id', $userId)->pluck('mision_id');
-        $misionesInCompletas = Mision::with('recompensa')->whereNotIn('id', $misionesCompletadas)->get();
 
+        if (!User::where('id', $userId)->exists()) {
+            return response()->json(['error' => 'El usuario indicado no existe'], 404);
+        }
+
+        $misionesCompletadas = MisionCompletada::where('user_id', $userId)->pluck('mision_id');
+        $misionesInCompletasQuery = Mision::with('recompensa')->whereNotIn('id', $misionesCompletadas);
+        $sqlQuery = $misionesInCompletasQuery->toSql();
+        $misionesInCompletas = $misionesInCompletasQuery->get();
+
+        $this->LogsMethod($request, auth()->user(), $sqlQuery);
         return response()->json($misionesInCompletas);
     }
 
-    
-    public function destroy($id)
+
+    public function destroy(Request $request,$id)
     {
         $misionCompletada = MisionCompletada::findOrFail($id);
+        $this->LogsMethod($request, auth()->user(), $misionCompletada->toArray());
         $misionCompletada->delete();
         return response()->json(null, 204);
+    }
+
+    public function LogsMethod(Request $request, $user, $query = null)
+    {
+        if (!$query) {
+            $data = $request->all();
+        } else {
+            $data = $query;
+        }
+        Logs::create([
+            "user_id" => $user->id,
+            "data" => $data,
+            "verb" => $request->method(),
+        ]);
     }
 }
