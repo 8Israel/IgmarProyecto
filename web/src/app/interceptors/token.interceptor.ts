@@ -9,11 +9,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   if(token){
     headers = headers.set('Authorization', 'Bearer' + token)
-<<<<<<< HEAD
-    
-=======
     // LoginService.getInstance().setToken(token);
->>>>>>> 2d6ce7c60ff1997370466c3e7852a155a617d6a6
   }
 
   headers = headers.set('Accept', 'application/json')

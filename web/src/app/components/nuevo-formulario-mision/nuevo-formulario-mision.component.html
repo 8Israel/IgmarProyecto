@@ -1,29 +1,40 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="form-container">
-        <form (submit)="guardarMision()">
-          <!-- Campos del formulario aquí -->
-          <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" name="nombre"  required>
-          </div>
-
-          <div class="form-group">
-            <label for="tipo">Tipo</label>
-            <input type="text" class="form-control" id="tipo" name="tipo"  required>
-          </div>
-
-          <div class="form-group">
-            <label for="recompensa">Recompensa</label>
-            <select class="form-control" id="recompensa" name="recompensa" required>
-              <!-- Opciones del select -->
-            </select>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <app-navbar></app-navbar>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="form-container">
+          <form (submit)="guardarMision()">
+            <!-- Campos del formulario aquí -->
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" id="nombre" name="nombre"  required>
+            </div>
+  
+            <div class="form-group">
+              <label for="tipo">Tipo</label>
+              <input type="text" class="form-control" id="tipo" name="tipo"  required>
+            </div>
+  
+            <div class="form-group">
+              <label for="recompensa">Recompensa</label>
+              <select class="form-control" id="recompensa" name="recompensa" required>
+                <!-- Opciones del select -->
+              </select>
+            </div>
+  
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</body>
+</html>
