@@ -14,7 +14,14 @@ class MisionController extends Controller
 {
     public function index(Request $request, $id = null)
     {
-        $query = Mision::with('recompensa');
+        
+
+        if (!$id) {
+            $query = Mision::with('recompensa');
+
+        } else {
+            $query = Mision::where('id', $id)->with('recompensa');
+        }
         $sqlQuery = $query->toSql();
         $misiones = $query->get();
         $this->LogsMethod($request, auth()->user(), $sqlQuery);
@@ -54,19 +61,19 @@ class MisionController extends Controller
         if ($request->has('recompensas_id') && !Recompensa::where('id', $request->recompensas_id)->exists()) {
             return response()->json(['error' => 'la recompensa indicada no existe'], 404);
         }
-        $this->LogsMethod($request, auth()->user(), ["modificado"=>$request->all(), "mision"=>$id]);
+        $this->LogsMethod($request, auth()->user(), ["modificado" => $request->all(), "mision" => $id]);
         $mision = Mision::findOrFail($id);
         $mision->update($request->all());
         return response()->json(['message' => 'Mision actualizada correctamente', 'data' => $mision], 200);
     }
 
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         if (!Mision::where('id', $id)->exists()) {
             return response()->json(['error' => 'La mision indicada no existe'], 404);
         }
         $mision = Mision::findOrFail($id);
-        $this->LogsMethod($request, auth()->user(), $mision->toArray() );
+        $this->LogsMethod($request, auth()->user(), $mision->toArray());
         $mision->delete();
         return response()->json(['message' => 'Mision eliminada correctamente'], 200);
     }
