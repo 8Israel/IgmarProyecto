@@ -4,24 +4,29 @@ namespace App\Http\Controllers;
 
 use App\Models\ClanMiembro;
 use App\Models\Clan;
+use App\Models\Logs;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
 
 class ClanMiembroController extends Controller
 {
-    public function index($id)
+    public function index(Request $request, $id)
     {
-        $usuarios = User::whereHas('clanMiembro', function ($query) use ($id) {
+        $query = User::whereHas('clanMiembro', function ($query) use ($id) {
             $query->where('clan_id', $id);
-        })->with('clanMiembro')->get();
+        })->with('clanMiembro');
+        $sqlQuery = $query->toSql();
+        $usuarios = $query->get();
         if ($usuarios->count() == 0) {
+            $this->LogsMethod($request, auth()->user(), $sqlQuery);
             return response()->json(['message' => 'El clan no cuenta con miembros'], 404);
         }
+        $this->LogsMethod($request, auth()->user(), $sqlQuery);
         return response()->json($usuarios);
     }
 
-    public function store($id, $userId = null)
+    public function store(Request $request, $id, $userId = null)
     {
         if (is_null($userId)) {
             $user = auth()->user()->id;
@@ -29,6 +34,7 @@ class ClanMiembroController extends Controller
                 if (ClanMiembro::where('user_id', $user)->where('clan_id', $id)->exists()) {
                     return response()->json(['message' => 'El usuario ya es miembro del clan'], 400);
                 }
+                $this->LogsMethod($request, auth()->user(), ["idClan" => $id]);
                 $nuevo = ClanMiembro::create([
                     'user_id' => $user,
                     'clan_id' => $id,
@@ -44,6 +50,7 @@ class ClanMiembroController extends Controller
                 if (ClanMiembro::where('user_id', $userId)->where('clan_id', $id)->exists()) {
                     return response()->json(['message' => 'El usuario ya es miembro del clan'], 400);
                 }
+                $this->LogsMethod($request, auth()->user(), ["idClan" => $id, "idUsuario" => $userId]);
                 $nuevo = ClanMiembro::create([
                     'user_id' => $userId,
                     'clan_id' => $id,
@@ -72,12 +79,13 @@ class ClanMiembroController extends Controller
         if (!$clanMiembro) {
             return response()->json(['error' => 'El usuario no pertenece a este clan'], 404);
         }
+        $this->LogsMethod($request, auth()->user(), ["rango" => $request->rango, "usuario" => $userId, "clan" => $id]);
         $clanMiembro->rango = $request->rango;
         $clanMiembro->save();
         return response()->json(['message' => 'Rango actualizado correctamente'], 200);
     }
 
-    public function destroy($id, $userId = null)
+    public function destroy(Request $request, $id, $userId = null)
     {
         $userId = $userId ?: auth()->id();
         $clanMiembro = ClanMiembro::where('clan_id', $id)->where('user_id', $userId)->first();
@@ -87,18 +95,42 @@ class ClanMiembroController extends Controller
         if ($clanMiembro->user_id != $userId) {
             return response()->json(['error' => 'No tienes permiso para eliminar este miembro del clan'], 403);
         }
+        $this->LogsMethod($request, auth()->user(), ["clan" => $id, "miembro" => $userId]);
         $clanMiembro->delete();
         return response()->json(['error' => 'Usuario eliminado correctamente del clan'], 200);
     }
-    public function getUserClans($userId=null)
+    public function getUserClans($userId = null)
     {
         $userId = $userId ?: auth()->id();
-        $clanMiembros = ClanMiembro::where('user_id', $userId)->get();
-        if (!$clanMiembros) {
-            return response()->json(['error'=> 'el usuario no pertenece a ningun clan'],404);
+
+        $clanMiembrosQuery = ClanMiembro::where('user_id', $userId);
+        $clanMiembrosSqlQuery = $clanMiembrosQuery->toSql();
+        $clanMiembros = $clanMiembrosQuery->get();
+
+        if ($clanMiembros->isEmpty()) {
+            return response()->json(['error' => 'el usuario no pertenece a ningun clan'], 404);
         }
+        
         $clanIds = $clanMiembros->pluck('clan_id');
-        $clans = Clan::whereIn('id', $clanIds)->get();
+        $clansQuery = Clan::whereIn('id', $clanIds);
+        $clansSqlQuery = $clansQuery->toSql();
+        $clans = $clansQuery->get();
+
+        $this->LogsMethod(request(), auth()->user(), ["user"=>$userId,"Id Miembro"=>$clanMiembrosSqlQuery, "clanes"=>$clansSqlQuery]);
+        
         return response()->json(['clanes' => $clans], 200);
+    }
+    public function LogsMethod(Request $request, $user, $query = null)
+    {
+        if (!$query) {
+            $data = $request->all();
+        } else {
+            $data = $query;
+        }
+        Logs::create([
+            "user_id" => $user->id,
+            "data" => $data,
+            "verb" => $request->method(),
+        ]);
     }
 }
