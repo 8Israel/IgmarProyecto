@@ -48,9 +48,14 @@ export class DashboardComponent implements OnInit {
   public amigos: Friend[] = []
 
   ngOnInit(): void {
-    this.user = this.us.getUser()
-
-    console.log(this.us.getUser())
+    this.us.getUserData().subscribe(
+      (response) => {
+        this.user.data.id = response.id
+        this.user.data.name = response.name
+        this.user.data.email = response.email
+        this.user.data.role_id = response.role_id
+      }
+    )
 
     this.ms.getMisiones().subscribe(
       (response) => {

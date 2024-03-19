@@ -138,7 +138,7 @@ Route::group([
     Route::get('/clan/show/all/{id?}', [ClanController::class, 'index']); // Muestra todos los clanes activos
     Route::get('/armas/index/{id?}', [ArmaController::class, 'index']);// Muestra todas las armas y puedes filtrar por el arma indicada en la ruta
     Route::get('/heroes/index/{id?}', [HeroeController::class, 'index']);// Muestra todoslos herores y puedes filtrar por el heroe indicado en la ruta
-    Route::get('/misiones/show', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
+    Route::get('/misiones/show/{id?}', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
 
 });
 //BASURA
