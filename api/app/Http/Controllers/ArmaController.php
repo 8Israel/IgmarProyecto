@@ -19,6 +19,9 @@ class ArmaController extends Controller
             return response()->json($armas);
         } else {
             $arma = Arma::where('id', $id)->first();
+            if(!$arma){
+                return response()->json(['error'=> 'arma no encontrada'],404);
+            }
             $sqlQuery = Arma::where('id', $id)->toBase()->toSql();
             $this->LogsMethod($request, $user, $sqlQuery);
             return response()->json($arma);
@@ -66,6 +69,7 @@ class ArmaController extends Controller
         $user = auth()->user();
         $arma = Arma::find($id);
         if (!$arma) {
+            $this->LogsMethod($request, $user, $arma->toArray());
             return response()->json(['error' => 'arma no encontrada'], 404);
         }
         $this->LogsMethod($request, $user, $arma->toArray());
