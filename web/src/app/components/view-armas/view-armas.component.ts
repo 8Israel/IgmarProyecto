@@ -7,6 +7,9 @@ import { ArmasService } from '../../services/armas.service';
 import { Armas } from '../../interfaces/armas';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { InventarioService } from '../../services/inventario.service';
+import { Inventario } from '../../interfaces/inventario';
+import { Editinventario } from '../../interfaces/edit-inventario';
 
 @Component({
   selector: 'app-view-armas',
@@ -17,7 +20,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class ViewArmasComponent implements OnInit {
 
-  constructor(public us: UserService, private as: ArmasService, private title: Title) { 
+  arma_id: Number = 0
+  constructor(public us: UserService, private as: ArmasService, private title: Title, private is: InventarioService) { 
     this.title.setTitle('Armas')
   }
 
@@ -31,6 +35,25 @@ export class ViewArmasComponent implements OnInit {
     },
     token: ""
   }
+  public inventario: Inventario = {
+    user: 0,
+    arma: {
+      id: 0,
+      nombre: "",
+      danio_base: 0,
+      rareza: "",
+      tipo: ""
+    },
+    heroe: {
+      id: 0,
+      nombre: "",
+      habilidad_especial: "",
+      rareza: "",
+      tipo: ""
+    }
+  }
+  public editInventario: string|null = null
+  
   selectedArma: Armas = { id: 0, nombre: '', tipo: '', rareza: '', danio_base: 0 };
 
   public armas: Armas[] = []
@@ -49,6 +72,13 @@ export class ViewArmasComponent implements OnInit {
         this.armas = response
       }
     )
+    this.is.getInventarioById(this.user.data.id).subscribe(
+      (response) => {
+        this.inventario.heroe.id = response[0].heroe.id
+
+        console.log(this.inventario)
+      }
+    )
   }
 
   deleteWeapon(id: Number) {
@@ -59,5 +89,16 @@ export class ViewArmasComponent implements OnInit {
       }
     )
   }
+
+  addWeapon(arma_id: Number){
+    console.log(arma_id)
+    this.is.putInventario(arma_id, this.inventario.heroe.id).subscribe(
+      (response) => {
+        this.editInventario = response.message
+      }
+    )
+  }
+
+
 
 }

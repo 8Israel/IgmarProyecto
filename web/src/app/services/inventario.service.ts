@@ -21,6 +21,10 @@ export class InventarioService {
   
   }
 
+  getInventarioById(user_id: Number): Observable<Inventario[]> {
+    return this.http.get<Inventario[]>(this.GetInventarioURL + '/' + user_id)
+  }
+
   putInventario(arma_id:Number,heroe_id:Number): Observable<Editinventario>{
     return this.http.put<Editinventario>(this.PutInventarioURL,{arma_id:arma_id,heroe_id:heroe_id})
   

@@ -52,7 +52,7 @@ Route::group([
     Route::delete('/friends/delete/{id}', [AmigoController::class, 'destroy']);//Elimina amigos del usuario logueado indicando su usuario en la ruta
     Route::post('/friends/agregate/{id}', [AmigoController::class, 'store']);//Agrega al usario indicado en la ruta como amigo del usuario logueado
 
-    Route::get('/inventario', [InventarioJugadorController::class, 'index']);//Edita el inventario del usuario logueado
+    Route::get('/inventario/{id?}', [InventarioJugadorController::class, 'index']);//Edita el inventario del usuario logueado
     Route::put('/inventario/update', [InventarioJugadorController::class, 'update']);//Muestra el inventario del usuario logueado
 
     Route::get('/estadisticas', [EstadisticasController::class, 'index']);//Muestra las estadisticas del usuario logueado
