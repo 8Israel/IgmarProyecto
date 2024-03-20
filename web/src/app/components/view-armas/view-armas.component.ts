@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user';
@@ -10,6 +10,7 @@ import { Title } from '@angular/platform-browser';
 import { InventarioService } from '../../services/inventario.service';
 import { Inventario } from '../../interfaces/inventario';
 import { Editinventario } from '../../interfaces/edit-inventario';
+import { Subscription, interval, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-view-armas',
@@ -18,13 +19,14 @@ import { Editinventario } from '../../interfaces/edit-inventario';
   templateUrl: './view-armas.component.html',
   styleUrl: './view-armas.component.css'
 })
-export class ViewArmasComponent implements OnInit {
+export class ViewArmasComponent implements OnInit, OnDestroy {
 
   arma_id: Number = 0
   constructor(public us: UserService, private as: ArmasService, private title: Title, private is: InventarioService) { 
     this.title.setTitle('Armas')
   }
 
+  private pollingSubscription: Subscription = new Subscription() ;
   public message: string|null = null
   public user: User = {
     data: {
@@ -59,6 +61,17 @@ export class ViewArmasComponent implements OnInit {
   public armas: Armas[] = []
 
   ngOnInit(): void {
+
+    const pollingInterval = 5000
+    this.pollingSubscription = interval(pollingInterval).pipe(
+      switchMap(() => this.as.getArmas())
+    ).subscribe(
+      (response) => {
+        console.log(response)
+        this.armas = response
+      }
+    )
+
     this.us.getUserData().subscribe(
       (response) => {
         this.user.data.id = response.id
@@ -81,11 +94,16 @@ export class ViewArmasComponent implements OnInit {
     )
   }
 
+  ngOnDestroy(): void {
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+    }
+  }
+
   deleteWeapon(id: Number) {
     this.as.deleteArma(id).subscribe(
       (response) => {
         this.message = "Arma eliminada con exito"
-        this.armas = this.armas.filter(arma => arma.id !== this.selectedArma.id);
       }
     )
   }

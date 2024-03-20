@@ -22,6 +22,7 @@ export class ViewMisionesComponent implements OnInit {
     this.title.setTitle("Misiones")
   }
 
+  public message: string|null = null
   public user: User = {
     data: {
       id: 0,
@@ -30,6 +31,17 @@ export class ViewMisionesComponent implements OnInit {
       role_id: 0
     },
     token: ""
+  }
+  selectedMision: Misiones = {
+    id: 0,
+    nombre: "",
+    recompensa_id: 0,
+    tipo: "",
+    recompensa: {
+      id: 0,
+      tipo: "",
+      xp: 0
+    },
   }
   public misiones: Misiones[] = []
 
@@ -48,5 +60,14 @@ export class ViewMisionesComponent implements OnInit {
         console.log("RESPONSE MISIONES", this.misiones);
       }
     );
+  }
+
+  deleteWeapon(id: Number) {
+    this.ms.deleteMisiones(id).subscribe(
+      (response) => {
+        this.message = "Arma eliminada con exito"
+        this.misiones = this.misiones.filter(mision => mision.id !== this.selectedMision.id);
+      }
+    )
   }
 }

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class FormRecompensasComponent {
  public recompensa:Recompensas={
+  id: 0,
   tipo: '',
   xp: 0
  }

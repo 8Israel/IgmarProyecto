@@ -41,7 +41,11 @@ class MisionController extends Controller
         if (!Recompensa::where('id', $request->recompensas_id)->exists()) {
             return response()->json(['error' => 'la recompensa indicada no existe'], 404);
         }
-        $mision = Mision::create($request->all());
+        $mision = new Mision();
+        $mision->nombre = $request->nombre;
+        $mision->tipo = $request->tipo;
+        $mision->recompensas_id = $request->recompensas_id;
+        $mision->save();
         $this->LogsMethod($request, auth()->user());
         return response()->json(['message' => 'Mision creada correctamente', 'data' => $mision], 201);
     }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs</title>
+</head>
+<body>
+    <app-navbar [titulo]="'Logs'"></app-navbar>
+    <div class="container">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Verbo</th>
+                    <th>Datos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let log of logs">
+                    <td> {{ log._id }} </td>
+                    <td> {{ log.user.name }} </td>
+                    <td> {{ log.verb }} </td>
+                    <td> {{ log.data }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

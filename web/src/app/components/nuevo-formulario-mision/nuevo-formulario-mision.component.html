@@ -6,27 +6,31 @@
   <title>Document</title>
 </head>
 <body>
-  <app-navbar></app-navbar>
+  <app-navbar [titulo]="titulo"></app-navbar>
   <div class="container">
+    <div class="alert alert-success  fade show mt-2" role="alert" *ngIf="updateMessage" >
+      {{ updateMessage }} <br>
+      {{ redirectMessage }}
+  </div>
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="form-container">
-          <form (submit)="guardarMision()">
+          <form (submit)="onSubmit()">
             <!-- Campos del formulario aquí -->
             <div class="form-group">
               <label for="nombre">Nombre</label>
-              <input type="text" class="form-control" id="nombre" name="nombre"  required>
+              <input type="text" class="form-control" id="nombre" name="nombre" [(ngModel)]="createMision.nombre" required>
             </div>
   
             <div class="form-group">
               <label for="tipo">Tipo</label>
-              <input type="text" class="form-control" id="tipo" name="tipo"  required>
+              <input type="text" class="form-control" id="tipo" name="tipo" [(ngModel)]="createMision.tipo" required>
             </div>
   
             <div class="form-group">
               <label for="recompensa">Recompensa</label>
-              <select class="form-control" id="recompensa" name="recompensa" required>
-                <!-- Opciones del select -->
+              <select class="form-select" id="recompensa_id" name="recompensa_id" [(ngModel)]="createMision.recompensas_id" required>
+                <option *ngFor="let recompensa of recompensas" [ngValue]="recompensa.id" [selected]="recompensa.id === createMision.recompensas_id">{{ recompensa.tipo }}</option>
               </select>
             </div>
   

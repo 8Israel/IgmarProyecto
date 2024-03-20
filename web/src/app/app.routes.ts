@@ -13,6 +13,7 @@ export const routes: Routes = [
     {path: 'ver-jugadores', loadComponent: () => import('./components/view-usuarios/view-usuarios.component').then(vu => vu.ViewUsuariosComponent), canActivate: [authGuard]},
     {path: 'ver-recompensas', loadComponent: () => import('./components/view-recompensas/view-recompensas.component').then(vr => vr.ViewRecompensasComponent), canActivate: [authGuard]},
     {path: 'ver-armas', loadComponent: () => import('./components/view-armas/view-armas.component').then(va => va.ViewArmasComponent), canActivate: [authGuard]},
+    {path: 'ver-logs', loadComponent: () => import('./components/logs/logs.component').then(lo => lo.LogsComponent), canActivate: [authGuard]},
     {path: 'form-misiones', loadComponent: () => import('./components/nuevo-formulario-mision/nuevo-formulario-mision.component').then(fm => fm.NuevoFormularioMisionComponent), canActivate: [authGuard]},
     {path: 'form-misiones/:id', loadComponent: () => import('./components/nuevo-formulario-mision/nuevo-formulario-mision.component').then(fm => fm.NuevoFormularioMisionComponent), canActivate: [authGuard]},
     {path: 'form-armas', loadComponent: () => import('./components/form-armas/form-armas.component').then(fa => fa.FormArmasComponent), canActivate: [authGuard]},
