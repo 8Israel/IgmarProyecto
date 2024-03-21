@@ -6,7 +6,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(catchError((error: HttpErrorResponse) => {
 
     const errorBody = error.error;
-    console.error('Errores de validación:', errorBody);
 
     return throwError(errorBody);
   }));

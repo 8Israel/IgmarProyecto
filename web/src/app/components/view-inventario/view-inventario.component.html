@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+</head>
+<body>
+    <app-navbar [titulo]="'Inventario'"></app-navbar>
+
+    <div class="contenedor">
+        <div class="arma">
+            <div class="card text-bg-light mt-3" style="max-width: 18rem;">
+                <div class="card-header">Arma</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ inventario[0].arma.nombre }}</h5>
+                    <p class="card-text">Tipo: {{ inventario[0].arma.tipo }}</p>
+                    <p class="card-text">Rareza: {{ inventario[0].arma.rareza }}</p>
+                    <p class="card-text">Daño: {{ inventario[0].arma.danio_base }} de daño</p>
+                    <a routerLink="/ver-armas" class="card-link">Cambiar arma</a>
+                </div>
+            </div>
+        </div>
+        <div class="heroe">
+            <div class="card text-bg-secondary mt-3" style="max-width: 18rem;">
+                <div class="card-header">Heroe</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ inventario[0].heroe.nombre }}</h5>
+                    <p class="card-text">Tipo: {{ inventario[0].heroe.tipo }}</p>
+                    <p class="card-text">Rareza: {{ inventario[0].heroe.rareza }}</p>
+                    <p class="card-text">Habilidad: {{ inventario[0].heroe.habilidad_especial }}</p>
+                    <a routerLink="/ver-heroes" class="card-link">Cambiar heroe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

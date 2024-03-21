@@ -52,7 +52,14 @@ export class VerficarLoginComponent {
 
         },
         (error) => {
-          this.message = error.error.two_factor_code || error.error
+          console.log(error.error.two_factor_code)
+          this.message =  error.error
+          if(error.message == "Unauthenticated."){
+            this.message = "Usuario no autenticado"
+          } 
+          if(error.error.two_factor_code){
+            this.message = "El codigo de autenticación debe ser ingresado"
+          }
         }
     );
 }

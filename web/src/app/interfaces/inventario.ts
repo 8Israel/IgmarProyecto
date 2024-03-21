@@ -1,5 +1,4 @@
 export interface Inventario {
-
     user: Number;
     arma:{
         id: Number;
@@ -8,9 +7,7 @@ export interface Inventario {
 		rareza:string;
 		danio_base:Number;
     }
-
     heroe:{
-
         id:Number;
         nombre:string
         tipo:string
