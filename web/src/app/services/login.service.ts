@@ -10,8 +10,8 @@ import { User } from '../interfaces/user';
 export class LoginService {
 
   // Declaración de variables y endpoints
-  private loginURL = "http://127.0.0.1:8000/api/auth/login";
-  private verificationCodeURL = "http://127.0.0.1:8000/api/auth/verify-two-factor-code"
+  private loginURL = "https://8pxvvgp0-8000.usw3.devtunnels.ms/api/auth/login";
+  private verificationCodeURL = "https://8pxvvgp0-8000.usw3.devtunnels.ms/api/auth/verify-two-factor-code"
   private token: string|null = null;
   private static instance: LoginService
 
@@ -19,7 +19,7 @@ export class LoginService {
   constructor(private http: HttpClient) {
     LoginService.instance = this;
   }
-  public static getInstance(): LoginService{
+  public static getInstance(): LoginService{  
     return LoginService.instance
   }
 

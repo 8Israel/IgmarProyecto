@@ -53,7 +53,7 @@ class MisionController extends Controller
             return response()->json(['error' => 'La mision indicada no existe'], 404);
         }
         $validator = Validator::make($request->all(), [
-            "nombre" => 'string|min:3|max:20|unique:misiones',
+            "nombre" => 'string|min:3|max:20',
             "tipo" => 'string|min:3|max:100',
             'recompensas_id' => 'integer',
         ]);
