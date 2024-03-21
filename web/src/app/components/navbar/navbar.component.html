@@ -17,6 +17,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" routerLink="/ver-inventario" *ngIf="user.data.role_id != 3">Inventario</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" routerLink="/ver-armas">Armas</a>
+                    </li>
                     <li class="nav-item" *ngIf="user.data.role_id == 1">
                         <a class="nav-link active" aria-current="page" routerLink="/ver-jugadores">Usuarios</a>
                     </li>
@@ -30,13 +33,13 @@
                         </ul>
                         </li>
                     <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" routerLink="/ver-clanes">Clanes</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link active" aria-current="page" routerLink="/ver-misiones">Misiones</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" routerLink="/ver-recompensas">Recompensas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" routerLink="/ver-armas">Armas</a>
                     </li>
                     <li class="nav-item" *ngIf="user.data.role_id == 1">
                         <a class="nav-link active" aria-current="page" routerLink="/ver-logs">Logs</a>

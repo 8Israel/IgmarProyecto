@@ -11,6 +11,7 @@ export const routes: Routes = [
     {path: 'ver-inventario', loadComponent: () => import('./components/view-inventario/view-inventario.component').then(vi => vi.ViewInventarioComponent), canActivate: [authGuard]},
     {path: 'ver-misiones', loadComponent: () => import('./components/view-misiones/view-misiones.component').then(vm => vm.ViewMisionesComponent), canActivate: [authGuard]},
     {path: 'ver-jugadores', loadComponent: () => import('./components/view-usuarios/view-usuarios.component').then(vu => vu.ViewUsuariosComponent), canActivate: [authGuard]},
+    {path: 'ver-clanes', loadComponent: () => import('./components/view-clanes/view-clanes.component').then(vc => vc.ViewClanesComponent), canActivate: [authGuard]},
     {path: 'ver-recompensas', loadComponent: () => import('./components/view-recompensas/view-recompensas.component').then(vr => vr.ViewRecompensasComponent), canActivate: [authGuard]},
     {path: 'ver-armas', loadComponent: () => import('./components/view-armas/view-armas.component').then(va => va.ViewArmasComponent), canActivate: [authGuard]},
     {path: 'ver-logs', loadComponent: () => import('./components/logs/logs.component').then(lo => lo.LogsComponent), canActivate: [authGuard]},
