@@ -122,16 +122,19 @@ class ClanController extends Controller
         return response()->json(['message' => 'Clan actualizado correctamente'], 200);
     }
 
-    public function LogsMethod(Request $request, $user, $query = null){
-        if(!$query){
+    public function LogsMethod(Request $request, $user, $query = null)
+    {
+        if (!$query) {
             $data = $request->all();
-        }else{
+        } else {
             $data = $query;
         }
+       
         Logs::create([
-            "user_id"=> $user->id,
-            "data"=> $data,
-            "verb"=>$request->method(),
+            "user_id" => $user->id,
+            "date"=> now()->toString(),
+            "data" =>  json_encode($data),
+            "verb" => $request->method(),
         ]);
     }
 }

@@ -10,6 +10,6 @@ class Logs extends Model
 {
     protected $connection = 'mongodb';
     protected $collection = 'Logs';
-    protected $fillable = ['user_id', 'data', 'verb'] ;
+    protected $fillable = ['user_id', 'date', 'data', 'verb'] ;
 
 }

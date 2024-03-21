@@ -14,8 +14,6 @@ class MisionController extends Controller
 {
     public function index(Request $request, $id = null)
     {
-        
-
         if (!$id) {
             $query = Mision::with('recompensa');
 
@@ -84,10 +82,13 @@ class MisionController extends Controller
         } else {
             $data = $query;
         }
+       
         Logs::create([
             "user_id" => $user->id,
-            "data" => $data,
+            "date"=> now()->toString(),
+            "data" =>  json_encode($data),
             "verb" => $request->method(),
         ]);
     }
+    
 }

@@ -82,9 +82,11 @@ class HeroeController extends Controller
         } else {
             $data = $query;
         }
+       
         Logs::create([
             "user_id" => $user->id,
-            "data" => $data,
+            "date"=> now()->toString(),
+            "data" =>  json_encode($data),
             "verb" => $request->method(),
         ]);
     }
