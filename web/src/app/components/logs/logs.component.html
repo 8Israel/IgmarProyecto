@@ -12,6 +12,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Fecha</th>
                     <th>Usuario</th>
                     <th>Verbo</th>
                     <th>Datos</th>
@@ -20,6 +21,7 @@
             <tbody>
                 <tr *ngFor="let log of logs">
                     <td> {{ log._id }} </td>
+                    <td> {{ log.date }} </td>
                     <td> {{ log.user.name }} </td>
                     <td> {{ log.verb }} </td>
                     <td> {{ log.data }} </td>

@@ -7,5 +7,6 @@ export interface Logs {
         role_id: Number
     }
     verb: string;
-    data: any
+    data: any;
+    date: string;
 }

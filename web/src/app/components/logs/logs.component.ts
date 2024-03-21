@@ -21,6 +21,7 @@ export class LogsComponent implements OnInit {
   ngOnInit(): void {
     this.ls.getLogs().subscribe(
       (response) => {
+        console.log(response[0])
         this.logs = response
       }
     )
