@@ -18,7 +18,6 @@ class ValidatorMail extends Mailable
     {
         $this->signedroute=$signedroute;
         $this->subject('Activa tu cuenta');
-        
     }
     public function envelope(){
         return new Envelope(

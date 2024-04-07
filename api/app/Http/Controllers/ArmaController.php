@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NuevaArma;
 use App\Models\Arma;
 use App\Models\Logs;
 use Illuminate\Http\Request;
@@ -41,6 +42,9 @@ class ArmaController extends Controller
         }
         $this->LogsMethod($request, $user);
         $arma = Arma::create($request->all());
+        
+        event(new NuevaArma($arma));
+
         return response()->json(['mesagge' => 'Arma creada correctamente', 'data' => $arma], 201);
     }
     public function update(Request $request, $id)
