@@ -23,6 +23,7 @@ class MisionController extends Controller
         }
         $sqlQuery = $query->toSql();
         $misiones = $query->get();
+        event(new NuevaMision($misiones));
         $this->LogsMethod($request, auth()->user(), $sqlQuery);
         return response()->json($misiones);
     }
