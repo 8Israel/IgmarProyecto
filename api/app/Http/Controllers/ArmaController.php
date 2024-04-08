@@ -43,7 +43,7 @@ class ArmaController extends Controller
         $this->LogsMethod($request, $user);
         $arma = Arma::create($request->all());
         
-        event(new NuevaArma($arma));
+        
 
         return response()->json(['mesagge' => 'Arma creada correctamente', 'data' => $arma], 201);
     }
