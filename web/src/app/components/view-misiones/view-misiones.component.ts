@@ -66,7 +66,6 @@ export class ViewMisionesComponent implements OnInit {
     this.ms.deleteMisiones(id).subscribe(
       (response) => {
         this.message = "Arma eliminada con exito"
-        this.misiones = this.misiones.filter(mision => mision.id !== this.selectedMision.id);
       }
     )
   }

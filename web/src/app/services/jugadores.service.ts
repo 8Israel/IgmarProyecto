@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { api } from '../interfaces/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JugadoresService {
 
-  private getJugadoresURL = "http://127.0.0.1:8000/api/auth/"
+  private getJugadoresURL = `${api}/api/auth/`
 
   constructor(private http: HttpClient) { }
 

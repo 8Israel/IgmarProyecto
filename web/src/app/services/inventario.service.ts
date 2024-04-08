@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Inventario } from '../interfaces/inventario';
 import { Editinventario } from '../interfaces/edit-inventario';
+import { api } from '../interfaces/env';
 
 
 
@@ -11,8 +12,8 @@ import { Editinventario } from '../interfaces/edit-inventario';
 })
 export class InventarioService {
 
-  private PutInventarioURL = 'http://127.0.0.1:8000/api/user/inventario/update'
-  private GetInventarioURL = 'http://127.0.0.1:8000/api/user/inventario'
+  private PutInventarioURL = `${api}/api/user/inventario/update`
+  private GetInventarioURL = `${api}/api/user/inventario`
 
   constructor(private http:HttpClient) { }
 

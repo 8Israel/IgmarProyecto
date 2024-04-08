@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Recompensas } from '../interfaces/recompensas';
 import { RecompensaResponse } from '../interfaces/recompensa-response';
+import { api } from '../interfaces/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecompensasService {
 
-  private getRecompensasURL = 'http://127.0.0.1:8000/api/user/recompensas/index'
-  private postRecompensasURL = 'http://127.0.0.1:8000/api/user/recompensas/create'
+  private getRecompensasURL = `${api}/api/user/recompensas/index`
+  private postRecompensasURL = `${api}/api/user/recompensas/create`
   constructor(private http:HttpClient) { }
   
   getRecompensas(): Observable<Recompensas[]> {

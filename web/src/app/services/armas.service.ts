@@ -2,16 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Armas } from '../interfaces/armas';
+import { api } from '../interfaces/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArmasService {
 
-  private getarmasURL = 'http://127.0.0.1:8000/api/user/armas/index'
-  private updateArmasURL = 'http://127.0.0.1:8000/api/user/armas/update/'
-  private createArmasURL = 'http://127.0.0.1:8000/api/user/armas/create'
-  private deleteArmaURL = 'http://127.0.0.1:8000/api/user/armas/delete/'
+  private getarmasURL = `${api}/api/user/armas/index`
+  private updateArmasURL = `${api}/api/user/armas/update/`
+  private createArmasURL = `${api}/api/user/armas/create`
+  private deleteArmaURL = `${api}/api/user/armas/delete/`
 
   constructor(private http:HttpClient) { }
 

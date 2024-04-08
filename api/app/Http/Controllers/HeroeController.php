@@ -41,7 +41,7 @@ class HeroeController extends Controller
         }
         $this->LogsMethod($request, auth()->user());
         $heroe = Heroe::create($request->all());
-        return response()->json(['mesagge'=>'Heroe creada correctamente', 'data' => $heroe], 200);
+        return response()->json(['message'=>'Heroe creada correctamente', 'data' => $heroe], 200);
     }
 
     public function update(Request $request, $id)

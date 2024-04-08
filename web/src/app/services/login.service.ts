@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Login } from '../interfaces/login';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user';
+import { api } from '../interfaces/env';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,8 @@ import { User } from '../interfaces/user';
 export class LoginService {
 
   // Declaración de variables y endpoints
-  private loginURL = "http://127.0.0.1:8000/api/auth/login";
-  private verificationCodeURL = "http://127.0.0.1:8000/api/auth/verify-two-factor-code"
+  private loginURL = `${api}/api/auth/login`;
+  private verificationCodeURL = `${api}/api/auth/verify-two-factor-code`
   private token: string|null = null;
   private static instance: LoginService
 
@@ -41,7 +42,7 @@ export class LoginService {
   }
 
   VerificarAutenticacion(): Observable<any> {
-    let url = 'http://127.0.0.1:8000/api/user/me'
+    let url = `${api}/api/user/me`
     return this.http.get<any>(url)
   }
 

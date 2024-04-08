@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,9 @@ import { FormsModule } from '@angular/forms';
 import { Recompensas } from '../../interfaces/recompensas';
 import { RecompensasService } from '../../services/recompensas.service';
 import { CreateMision } from '../../interfaces/create-mision';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+(window as any).Pusher = Pusher
 
 @Component({
   selector: 'app-nuevo-formulario-mision',
@@ -17,7 +20,7 @@ import { CreateMision } from '../../interfaces/create-mision';
   templateUrl: './nuevo-formulario-mision.component.html',
   styleUrl: './nuevo-formulario-mision.component.css'
 })
-export class NuevoFormularioMisionComponent implements OnInit {
+export class NuevoFormularioMisionComponent implements OnInit, OnDestroy {
   recompensaId: number = 0; 
   public mision_id: number = 0;
   public message: string|null = null
@@ -25,6 +28,15 @@ export class NuevoFormularioMisionComponent implements OnInit {
   public updateMessage: string|null = null
   public redirectMessage: string|null = null
 
+  echo: Echo = new Echo({
+    broadcaster:'pusher',
+    key:'123',
+    cluster:'mt1',
+    wsHost:'127.0.0.1',
+    wsPort:6001,
+    forceTLS:false,
+    disableStatus:true,
+  })
 
   constructor(private route: ActivatedRoute, private router: Router, private ms: MisionesService, private rs: RecompensasService) { }
   public mision: Misiones = {
@@ -46,7 +58,14 @@ export class NuevoFormularioMisionComponent implements OnInit {
   }
   public recompensas: Recompensas[] = []
 
+  websocket() {
+    this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
+      console.log(res)
+    })
+  }
+
   ngOnInit(): void {
+    this.websocket()
     const params = this.route.snapshot.params;
     if (params['id']) {
       this.mision_id = + params['id']; 
@@ -65,7 +84,7 @@ export class NuevoFormularioMisionComponent implements OnInit {
         )
       }
       else{
-        this.titulo = "Crear arma"
+        this.titulo = "Crear Mision"
       }
       this.rs.getRecompensas().subscribe(
         (response) => {
@@ -91,8 +110,8 @@ export class NuevoFormularioMisionComponent implements OnInit {
     else {
       this.ms.createMisiones(this.createMision).subscribe(
         (response) => {
-          this.updateMessage = "Arma creada con exito"
-          this.redirectMessage = "Redireccionando a la lista de armas"
+          this.updateMessage = "Mision creada con exito"
+          this.redirectMessage = "Redireccionando a la lista de misiones"
           setTimeout(() => {
             this.router.navigate(['/ver-misiones'])
           }, 2000)
@@ -102,5 +121,9 @@ export class NuevoFormularioMisionComponent implements OnInit {
         }
       )
     }
+  }
+
+  ngOnDestroy(): void {
+    this.echo.disconnect()
   }
 }

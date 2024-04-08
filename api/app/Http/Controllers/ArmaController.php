@@ -45,7 +45,7 @@ class ArmaController extends Controller
         
         
 
-        return response()->json(['mesagge' => 'Arma creada correctamente', 'data' => $arma], 201);
+        return response()->json(['message' => 'Arma creada correctamente', 'data' => $arma], 201);
     }
     public function update(Request $request, $id)
     {

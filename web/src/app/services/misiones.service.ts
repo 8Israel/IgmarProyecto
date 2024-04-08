@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Misiones } from '../interfaces/misiones-recompensas';
 import { CreateMision } from '../interfaces/create-mision';
 import { MisionResponse } from '../interfaces/mision-response';
+import { api } from '../interfaces/env';
 
 
 @Injectable({
@@ -11,10 +12,10 @@ import { MisionResponse } from '../interfaces/mision-response';
 })
 export class MisionesService {
 
-  private getMisionesURL =    'http://127.0.0.1:8000/api/user/misiones/show'
-  private createMisionesURL = 'http://127.0.0.1:8000/api/user/misiones/create'
-  private updateMisionesURL = 'http://127.0.0.1:8000/api/user/misiones/update/'
-  private deleteMisionesURL = 'http://127.0.0.1:8000/api/user/misiones/delete/'
+  private getMisionesURL =    `${api}/api/user/misiones/show`
+  private createMisionesURL = `${api}/api/user/misiones/create`
+  private updateMisionesURL = `${api}/api/user/misiones/update/`
+  private deleteMisionesURL = `${api}/api/user/misiones/delete/`
 
   constructor(private http: HttpClient) { }
 

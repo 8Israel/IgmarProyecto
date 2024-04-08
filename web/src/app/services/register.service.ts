@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Register } from '../interfaces/register';
 import { Observable } from 'rxjs';
 import { User } from '../interfaces/user';
+import { api } from '../interfaces/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
 
-  private registerURL = 'http://127.0.0.1:8000/api/auth/register'
+  private registerURL = `${api}/api/auth/register`
   constructor(private http: HttpClient) { }
 
   Register(user: Register){

@@ -8,18 +8,19 @@ import { UserById } from '../interfaces/user-by-id';
 import { Roles } from '../interfaces/roles';
 import { UserUpdate } from '../interfaces/user-update';
 import { Me } from '../interfaces/me';
+import { api } from '../interfaces/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private GetUsersURL = 'http://127.0.0.1:8000/api/user/index'
-  private me = 'http://127.0.0.1:8000/api/user/me'
-  private getUserURL = 'http://127.0.0.1:8000/api/user/index/'
-  private updateUserURL = 'http://127.0.0.1:8000/api/user/update/'
-  private deleteUserURL = 'http://127.0.0.1:8000/api/user/delete/'
-  private getRolesURL = 'http://127.0.0.1:8000/api/user/roles'
+  private GetUsersURL = `${api}/api/user/index`
+  private me = `${api}/api/user/me`
+  private getUserURL = `${api}/api/user/index/`
+  private updateUserURL = `${api}/api/user/update/`
+  private deleteUserURL = `${api}/api/user/delete/`
+  private getRolesURL = `${api}/api/user/roles`
 
 
   private user: User = {

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { api } from '../interfaces/env';
 
 @Injectable({
   providedIn: 'root'
@@ -7,5 +8,5 @@ import { Injectable } from '@angular/core';
 export class MisionesCompletadasService {
 
   constructor(private http: HttpClient) { }
-  private completarMisionURL = 'http://127.0.0.1:8000/user/misiones/completar'
+  private completarMisionURL = `${api}/user/misiones/completar`
 }
