@@ -143,3 +143,8 @@ Route::group([
 });
 //BASURA
 Route::resource('misiones-completadas', MisionesCompletadasController::class);
+
+Route::get('test', function(){
+    event(new App\Events\testEvent());
+    return "null";
+});

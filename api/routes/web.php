@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\NuevaMision;
+use App\Events\testEvent;
 use App\Http\Controllers\MisionController;
 use App\Http\Controllers\testwebsoket;
 use Illuminate\Support\Facades\Route;
@@ -19,5 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', [testwebsoket::class,'test']);//Mostrar todas las misiones, User, Admin,Guest
-
+Route::get('test', function(){
+    event(new App\Events\testEvent());
+    return "null";
+});

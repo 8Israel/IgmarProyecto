@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NuevaMision implements ShouldBroadcast
+class testEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,10 +19,9 @@ class NuevaMision implements ShouldBroadcast
      *
      * @return void
      */
-    public $mision;
     public function __construct()
     {
-        //$this->mision = $mision;
+        //
     }
 
     /**
@@ -32,6 +31,6 @@ class NuevaMision implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('nuevaMision.public.1');
+        return new Channel('test.public.1');
     }
 }
