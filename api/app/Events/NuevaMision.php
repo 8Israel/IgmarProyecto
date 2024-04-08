@@ -32,6 +32,6 @@ class NuevaMision implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('nuevaMision');
+        return new Channel('nuevaMision');
     }
 }

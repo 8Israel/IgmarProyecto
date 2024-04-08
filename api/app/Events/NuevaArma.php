@@ -19,9 +19,9 @@ class NuevaArma
      * @return void
      */
     public $arma;
-    public function __construct($arma)
+    public function __construct()//$arma)
     {
-        $this->arma = $arma;
+        //$this->arma = $arma;
     }
 
     /**
