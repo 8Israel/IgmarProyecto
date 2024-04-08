@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MisionController;
+use App\Http\Controllers\testwebsoket;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/test', [testwebsoket::class,'test']);//Mostrar todas las misiones, User, Admin,Guest
+
