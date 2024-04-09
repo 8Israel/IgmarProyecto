@@ -62,7 +62,10 @@ export class NuevoFormularioMisionComponent implements OnInit, OnDestroy {
     this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
       console.log(res)
   });
+  console.log(this.echo)
+  this.echo.connect()
   }
+
 
   ngOnInit(): void {
     const params = this.route.snapshot.params;
