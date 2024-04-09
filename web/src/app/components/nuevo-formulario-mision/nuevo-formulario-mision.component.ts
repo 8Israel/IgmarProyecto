@@ -21,6 +21,7 @@ import Pusher from 'pusher-js';
   styleUrl: './nuevo-formulario-mision.component.css'
 })
 export class NuevoFormularioMisionComponent implements OnInit, OnDestroy {
+  public misiones: Misiones[] = [];
   recompensaId: number = 0; 
   public mision_id: number = 0;
   public message: string|null = null
@@ -61,6 +62,7 @@ export class NuevoFormularioMisionComponent implements OnInit, OnDestroy {
   websocket() {
     this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
       console.log(res)
+      this.misiones.push(res.mision);
   });
   console.log(this.echo)
   this.echo.connect()
