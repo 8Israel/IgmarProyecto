@@ -12,21 +12,22 @@ class SSEController extends Controller
     public function streamClanes()
     {
         $response = new StreamedResponse(function () {
-            while (true) {
                 $ultimoClan = Clan::latest()->first();
-                $sseMessage = "data: " . json_encode($ultimoClan) . "\n\n";
-
-                echo $sseMessage;
+                if(!$ultimoClan)
+                {
+                    $sseMessage = "data: " . json_encode($ultimoClan) . "\n\n";
+                    echo $sseMessage;
+                }
+                else
+                {
+                    echo "\n\n";
+                }               
                 ob_flush();
                 flush();
-                usleep(200000);
-            }
         });
-
         $response->headers->set('Content-Type', 'text/event-stream');
         $response->headers->set('Cache-Control', 'no-cache');
         $response->headers->set('Connection', 'keep-alive');
-
         return $response;
     }
 }
