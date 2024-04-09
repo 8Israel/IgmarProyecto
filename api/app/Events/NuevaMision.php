@@ -20,9 +20,9 @@ class NuevaMision implements ShouldBroadcast
      * @return void
      */
     public $mision;
-    public function __construct()
+    public function __construct($mision)
     {
-        //$this->mision = $mision;
+        $this->mision = $mision;
     }
 
     /**
