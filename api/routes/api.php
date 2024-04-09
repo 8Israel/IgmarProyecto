@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\LogsController;
+use App\Http\Controllers\SSEController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -101,7 +102,7 @@ Route::group([
 
     Route::get('/misiones/index', [MisionController::class,'index']);
     Route::post('/misiones/create', [MisionController::class,'store']);//Crear misiones
-    
+
     Route::put('/misiones/update/{id}', [MisionController::class,'update']);//actualizar misiones
     Route::delete('/misiones/delete/{id}', [MisionController::class,'destroy']);//Eliminar misiones
     
@@ -142,7 +143,9 @@ Route::group([
     
     Route::get('/misiones/show/{id?}', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
 
+    Route::get('/stream-misiones', 'App\Http\Controllers\SSEController@streamMisiones');
+
 });
 //BASURA
 Route::resource('misiones-completadas', MisionesCompletadasController::class);
-
+Route::get('/stream-clan', [SSEController::class,'streamClanes']);
