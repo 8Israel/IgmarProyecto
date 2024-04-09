@@ -10,10 +10,14 @@ import { HttpClient } from '@angular/common/http';
 export class ClanesService {
 
   private getClanesURL = `${api}/api/user/clan/show/all`
+  private deleteClanURL = `${api}/api/user/clan/delete/`
 
   constructor( private http: HttpClient ) { }
 
-  getClanes(): Observable<Clanes> {
-    return this.http.get<Clanes>(this.getClanesURL);
+  getClanes(): Observable<Clanes[]> {
+    return this.http.get<Clanes[]>(this.getClanesURL);
+  }
+  deleteClan(id: Number) {
+    return this.http.delete(this.deleteClanURL + id)
   }
 }

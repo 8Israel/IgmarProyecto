@@ -3,5 +3,6 @@ export interface Clanes {
     lider: Number;
     nombre: string;
     nivel_clan: Number;
-    activate: boolean
+    activate: boolean;
+    name: string;
 }
