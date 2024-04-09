@@ -60,7 +60,7 @@ export class NuevoFormularioMisionComponent implements OnInit, OnDestroy {
 
   websocket() {
     this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
-      console.log(res)
+      console.log("WEBSOCKET",res)
     })
   }
 

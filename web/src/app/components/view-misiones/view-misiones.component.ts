@@ -7,6 +7,9 @@ import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MisionesService } from '../../services/misiones.service';
 import { Misiones } from '../../interfaces/misiones-recompensas';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+(window as any).Pusher = Pusher
 
 @Component({
   selector: 'app-view-misiones',
@@ -43,9 +46,24 @@ export class ViewMisionesComponent implements OnInit {
       xp: 0
     },
   }
+  echo: Echo = new Echo({
+    broadcaster:'pusher',
+    key:'123',
+    cluster:'mt1',
+    wsHost:'127.0.0.1',
+    wsPort:6001,
+    forceTLS:false,
+    disableStatus:true,
+  })
+  websocket() {
+    this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
+      console.log("WEBSOCKET",res)
+    })
+  }
   public misiones: Misiones[] = []
 
   ngOnInit(): void {
+    this.websocket()
     this.us.getUserData().subscribe(
       (response) => {
         this.user.data.id = response.id
