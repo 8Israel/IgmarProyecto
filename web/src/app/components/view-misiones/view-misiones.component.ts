@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user';
@@ -18,7 +18,7 @@ import Pusher from 'pusher-js';
   templateUrl: './view-misiones.component.html',
   styleUrl: './view-misiones.component.css'
 })
-export class ViewMisionesComponent implements OnInit {
+export class ViewMisionesComponent implements OnInit, OnDestroy {
 
 
   constructor (private us: UserService, private title: Title, private ms: MisionesService) { 
@@ -57,13 +57,16 @@ export class ViewMisionesComponent implements OnInit {
   })
   websocket() {
     this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
-      console.log("WEBSOCKET",res)
+      console.log(res)
     })
+    console.log(this.echo)
+    this.echo.connect()
   }
+
   public misiones: Misiones[] = []
 
   ngOnInit(): void {
-    this.websocket()
+    // this.websocket()
     this.us.getUserData().subscribe(
       (response) => {
         this.user.data.id = response.id
@@ -75,7 +78,7 @@ export class ViewMisionesComponent implements OnInit {
     this.ms.getMisiones().subscribe(
       (response) => {
         this.misiones = response; // Limitando a las primeras 3 misiones
-        console.log("RESPONSE MISIONES", this.misiones);
+        // console.log("RESPONSE MISIONES", this.misiones);
       }
     );
   }
@@ -86,5 +89,8 @@ export class ViewMisionesComponent implements OnInit {
         this.message = "Arma eliminada con exito"
       }
     )
+  }
+  ngOnDestroy(): void {
+    this.echo.disconnect()
   }
 }

@@ -60,12 +60,11 @@ export class NuevoFormularioMisionComponent implements OnInit, OnDestroy {
 
   websocket() {
     this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
-      console.log("WEBSOCKET",res)
-    })
+      console.log(res)
+  });
   }
 
   ngOnInit(): void {
-    this.websocket()
     const params = this.route.snapshot.params;
     if (params['id']) {
       this.mision_id = + params['id']; 
@@ -95,6 +94,7 @@ export class NuevoFormularioMisionComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
+    this.websocket()
     const params = this.route.snapshot.params;
     if (params['id']) {
       this.ms.updateMisiones(this.createMision).subscribe(
