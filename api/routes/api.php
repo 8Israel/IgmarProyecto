@@ -101,6 +101,7 @@ Route::group([
 
     Route::get('/misiones/index', [MisionController::class,'index']);
     Route::post('/misiones/create', [MisionController::class,'store']);//Crear misiones
+    
     Route::put('/misiones/update/{id}', [MisionController::class,'update']);//actualizar misiones
     Route::delete('/misiones/delete/{id}', [MisionController::class,'destroy']);//Eliminar misiones
     
@@ -139,7 +140,6 @@ Route::group([
     Route::get('/armas/index/{id?}', [ArmaController::class, 'index']);// Muestra todas las armas y puedes filtrar por el arma indicada en la ruta
     Route::get('/heroes/index/{id?}', [HeroeController::class, 'index']);// Muestra todoslos herores y puedes filtrar por el heroe indicado en la ruta
     
-    //Websoket
     Route::get('/misiones/show/{id?}', [MisionController::class,'index']);//Mostrar todas las misiones, User, Admin,Guest
 
 });
