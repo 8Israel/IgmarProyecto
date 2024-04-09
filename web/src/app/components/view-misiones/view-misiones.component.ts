@@ -55,18 +55,23 @@ export class ViewMisionesComponent implements OnInit, OnDestroy {
     forceTLS:false,
     disableStatus:true,
   })
+  
+  public misiones: Misiones[] = []
   websocket() {
-    this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
-      console.log(res)
+    this.echo.channel('nuevaMision').listen('NuevaMision', (res: Misiones) => {
+      this.misiones[this.misiones.length].nombre = res.nombre
+      this.misiones[this.misiones.length].tipo = res.tipo
+      this.misiones[this.misiones.length].recompensa_id = res.recompensa_id
+      this.misiones[this.misiones.length].recompensa.tipo = res.recompensa.tipo
+      this.misiones[this.misiones.length].recompensa.id = res.recompensa.id
+      this.misiones[this.misiones.length].recompensa.xp = res.recompensa.xp
     })
     console.log(this.echo)
     this.echo.connect()
   }
 
-  public misiones: Misiones[] = []
-
   ngOnInit(): void {
-    // this.websocket()
+    this.websocket()
     this.us.getUserData().subscribe(
       (response) => {
         this.user.data.id = response.id
@@ -78,6 +83,7 @@ export class ViewMisionesComponent implements OnInit, OnDestroy {
     this.ms.getMisiones().subscribe(
       (response) => {
         this.misiones = response; // Limitando a las primeras 3 misiones
+        console.log(this.misiones)
         // console.log("RESPONSE MISIONES", this.misiones);
       }
     );
