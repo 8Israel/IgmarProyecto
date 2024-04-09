@@ -45,6 +45,7 @@ class MisionController extends Controller
         $mision->tipo = $request->tipo;
         $mision->recompensas_id = $request->recompensas_id;
         $mision->save();
+        event(new NuevaMision());
         
         $this->LogsMethod($request, auth()->user());
         return response()->json(['message' => 'Mision creada correctamente', 'data' => $mision], 201);
