@@ -9,6 +9,7 @@ import { MisionesService } from '../../services/misiones.service';
 import { Misiones } from '../../interfaces/misiones-recompensas';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import { RecompensasService } from '../../services/recompensas.service';
 (window as any).Pusher = Pusher
 
 @Component({
@@ -21,7 +22,7 @@ import Pusher from 'pusher-js';
 export class ViewMisionesComponent implements OnInit, OnDestroy {
 
 
-  constructor (private us: UserService, private title: Title, private ms: MisionesService) { 
+  constructor (private us: UserService, private title: Title, private ms: MisionesService, private rs: RecompensasService) { 
     this.title.setTitle("Misiones")
   }
 
@@ -55,18 +56,30 @@ export class ViewMisionesComponent implements OnInit, OnDestroy {
     forceTLS:false,
     disableStatus:true,
   })
+  
+  public misiones: Misiones[] = []
   websocket() {
     this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
-      console.log(res)
+      // this.misiones.push(res.mision)
+      this.misiones[this.misiones.length].nombre = res.nombre
+      this.misiones[this.misiones.length].tipo = res.tipo
+      this.misiones[this.misiones.length].recompensa_id = res.recompensa_id
+
+      this.rs.getRecompensa(res.recompensa_id).subscribe(
+        (response) => {
+          response.id = res.recompensa.id
+          response.tipo = res.recompensa.tipo
+          response.xp = res.recompensa.xp
+        }
+      )
+
     })
     console.log(this.echo)
     this.echo.connect()
   }
 
-  public misiones: Misiones[] = []
-
   ngOnInit(): void {
-    // this.websocket()
+    this.websocket()
     this.us.getUserData().subscribe(
       (response) => {
         this.user.data.id = response.id
@@ -78,6 +91,7 @@ export class ViewMisionesComponent implements OnInit, OnDestroy {
     this.ms.getMisiones().subscribe(
       (response) => {
         this.misiones = response; // Limitando a las primeras 3 misiones
+        console.log(this.misiones)
         // console.log("RESPONSE MISIONES", this.misiones);
       }
     );

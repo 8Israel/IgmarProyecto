@@ -1,0 +1,58 @@
+.jugadorDiv {
+    width: 80%;
+    height: 50px;
+    margin: auto;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: space-between;
+    border: solid black 1px;
+    font-size: 24px;
+    border-radius: 15px;
+    background-color: #343a64;
+    color: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    /* padding: 10px; */
+}
+
+.nombre {
+    width: 20%;
+    text-align: center;
+    border-right: solid black 1px;
+}
+.nivel {
+    width: 20%;
+    text-align: center;
+    border-right: solid black 1px;
+}
+.experiencia {
+    width: 20%;
+    text-align: center;
+    border-right: solid black 1px;
+}
+.puntuacion {
+    width: 20%;
+    text-align: center;
+    border-right: solid black 1px;
+}
+.acciones {
+    width: 20%;
+    text-align: center;
+}
+
+.acciones button{
+    margin: 5px;
+}
+
+.contenedorBoton {
+    width: 50%;
+    margin: auto;
+}
+
+.btn-block {
+    width: 100%;
+    font-size: 20px;
+    /* margin: auto; */
+}

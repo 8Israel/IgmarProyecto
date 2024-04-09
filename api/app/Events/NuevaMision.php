@@ -22,7 +22,7 @@ class NuevaMision implements ShouldBroadcast
     public $mision;
     public function __construct($mision)
     {
-        $this->mision = "hola";
+        $this->mision = $mision;
     }
 
     /**

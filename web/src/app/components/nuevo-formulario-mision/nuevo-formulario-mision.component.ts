@@ -64,7 +64,10 @@ export class NuevoFormularioMisionComponent implements OnInit, OnDestroy {
       console.log(res)
       this.misiones.push(res.mision);
   });
+  console.log(this.echo)
+  this.echo.connect()
   }
+
 
   ngOnInit(): void {
     const params = this.route.snapshot.params;
