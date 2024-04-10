@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RecompensasService } from '../../services/recompensas.service';
 import { Recompensas } from '../../interfaces/recompensas';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ignoreElements } from 'rxjs';
 
 @Component({
   selector: 'app-form-recompensas',
@@ -11,14 +12,22 @@ import { Router } from '@angular/router';
   templateUrl: './form-recompensas.component.html',
   styleUrl: './form-recompensas.component.css'
 })
-export class FormRecompensasComponent {
+export class FormRecompensasComponent implements OnInit {
  public recompensa:Recompensas={
   id: 0,
   tipo: '',
   xp: 0
  }
 
-  constructor(private rs:RecompensasService, private router: Router) { }
+  constructor(private rs:RecompensasService, private router: Router, private route: ActivatedRoute) { }
+
+
+  ngOnInit(): void {
+    const params = this.route.snapshot.params
+    if(params) {
+      
+    }
+  }
 
   guardarRecompensa() {
    this.rs.createRecompensas(this.recompensa).subscribe(
