@@ -25,4 +25,5 @@ export const routes: Routes = [
     {path: 'form-clanes/:id', loadComponent: () => import('./components/form-clanes/form-clanes.component').then(fc => fc.FormClanesComponent), canActivate: [authGuard]},
     {path: 'editar-inventario', loadComponent: () => import('./components/form-inventario/form-inventario.component').then(fi => fi.FormInventarioComponent), canActivate: [authGuard]},
     {path: 'editar-usuario/:id', loadComponent: () => import('./components/editar-usuario/editar-usuario.component').then(eu => eu.EditarUsuarioComponent), canActivate: [authGuard]}
+
 ];

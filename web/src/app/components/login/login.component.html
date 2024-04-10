@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body class="background-gradient">
-        <div class="header">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="background-gradient">
+    <div class="header"></div>
+    <div class="login">
+        <div class="form-container" [ngClass]="{ 'loading': isLoading }">
+            <h1 style="width: 50%; margin: auto; text-align: center;">BIENVENIDO</h1>
 
-        </div>
-        <div class="login">
-            <div class="form-container">
-                <h1 style="width: 50%; margin: auto; text-align: center;">BIENVENIDO</h1>
-                <form class="form" [formGroup]="formGroup" (submit)="onSubmit($event)">
-                    <div class="mb-3">
-                        <label for="">Correo</label>
-                        <input type="email" formControlName="email" name="email" id="email" class="form-control" [class.is-invalid]="email.invalid && (email.dirty || email.touched)">
-                        <div [hidden]="email.valid || email.pristine">
-                            <span class="text-danger" *ngIf="email.errors?.['required']">El correo es obligatorio</span>
-                            <span class="text-danger" *ngIf="email.errors?.['email']">El formato del correo no es valido</span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="">Contraseña</label>
-                        <input type="password" formControlName="password" name="password" id="password" class="form-control" [class.is-invalid]="password.invalid && (password.dirty || password.touched)">
-                        <div [hidden]="password.valid || password.pristine">
-                            <span class="text-danger" *ngIf="password.errors?.['required']">El contraseña es obligatoria</span>
-                            <span class="text-danger" *ngIf="password.errors?.['minlength']">La contraseña debe ser de minimo 8 caracteres</span>
-                        </div>
-                    </div>
+            <!-- Spinner de carga -->
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
-                    <button type="submit" class="btn" [disabled]="formGroup.invalid">INICIAR SESIÓN</button>
-                    <p>No tienes cuenta? <a routerLink="/registrar">Registrate</a></p>
-                </form>
-            </div>
+            <form class="form" [formGroup]="formGroup" (submit)="onSubmit($event)" [class.disabled]="isLoading">
+                <div class="mb-3">
+                    <label for="">Correo</label>
+                    <input type="email" formControlName="email" name="email" id="email" class="form-control" [class.is-invalid]="email.invalid && (email.dirty || email.touched)" [disabled]="isLoading">
+                    <div [hidden]="email.valid || email.pristine">
+                        <span class="text-danger" *ngIf="email.errors?.['required']">El correo es obligatorio</span>
+                        <span class="text-danger" *ngIf="email.errors?.['email']">El formato del correo no es valido</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="">Contraseña</label>
+                    <input type="password" formControlName="password" name="password" id="password" class="form-control" [class.is-invalid]="password.invalid && (password.dirty || password.touched)" [disabled]="isLoading">
+                    <div [hidden]="password.valid || password.pristine">
+                        <span class="text-danger" *ngIf="password.errors?.['required']">La contraseña es obligatoria</span>
+                        <span class="text-danger" *ngIf="password.errors?.['minlength']">La contraseña debe ser de mínimo 8 caracteres</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" [disabled]="formGroup.invalid || isLoading">INICIAR SESIÓN</button>
+                <p>No tienes cuenta? <a routerLink="/registrar">Registrate</a></p>
+            </form>
         </div>
-    </body>
+    </div>
+</body>
 </html>
