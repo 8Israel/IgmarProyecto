@@ -26,7 +26,7 @@ export class ViewArmasComponent implements OnInit, OnDestroy {
     this.title.setTitle('Armas')
   }
 
-  private pollingSubscription: Subscription = new Subscription() ;
+  private pollingSubscription: Subscription = new Subscription();
   public message: string|null = null
   public user: User = {
     data: {

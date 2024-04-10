@@ -6,11 +6,12 @@ import { LoginService } from '../../services/login.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
+import {LoadingSpinnerComponent} from '../loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-verficar-login',
   standalone: true,
-  imports: [RouterModule, FormsModule, CommonModule],
+  imports: [RouterModule, FormsModule, CommonModule, LoadingSpinnerComponent],
   templateUrl: './verficar-login.component.html',
   styleUrl: './verficar-login.component.css'
 })
@@ -30,10 +31,12 @@ export class VerficarLoginComponent {
     },
     token: ""
   }
+  public isLoading: boolean = false;
 
   user_id: Number = 0
   onSubmit(codigo: string) {
     const codigoEntero: number = parseInt(codigo);
+    this.isLoading = true;  
 
     this.ls.VerificarCodigo(codigoEntero).subscribe(
         (response) => {
@@ -49,6 +52,7 @@ export class VerficarLoginComponent {
             localStorage.setItem('token', response.token)
 
             this.router.navigate(['dashboard'])
+            this.isLoading = false;
 
         },
         (error) => {
@@ -56,9 +60,11 @@ export class VerficarLoginComponent {
           this.message =  error.error
           if(error.message == "Unauthenticated."){
             this.message = "Usuario no autenticado"
+            this.isLoading = false;  
           } 
           if(error.error.two_factor_code){
             this.message = "El codigo de autenticación debe ser ingresado"
+            this.isLoading = false;
           }
         }
     );
