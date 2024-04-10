@@ -149,4 +149,5 @@ Route::group([
 });
 //BASURA
 Route::resource('misiones-completadas', MisionesCompletadasController::class);
+
 Route::get('/stream-clan', [SSEController::class,'streamClanes']);

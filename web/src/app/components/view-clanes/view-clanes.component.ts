@@ -5,6 +5,8 @@ import { Clanes } from '../../interfaces/clanes';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { User } from '../../interfaces/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-view-clanes',
@@ -15,7 +17,7 @@ import { RouterLink } from '@angular/router';
 })
 export class ViewClanesComponent implements OnInit {
 
-  constructor(private cs: ClanesService) { }
+  constructor(private cs: ClanesService, private us: UserService) { }
 
   public clanes: Clanes[] = []
   public selectedClan: Clanes = {
@@ -26,8 +28,25 @@ export class ViewClanesComponent implements OnInit {
     nivel_clan: 0,
     nombre: ''
   }
+  public user: User = {
+    data: {
+      id: 0,
+      name: "",
+      email: "",
+      role_id: 0
+    },
+    token: ""
+  }
 
   ngOnInit(): void {
+    this.us.getUserData().subscribe(
+      (response) => {
+        this.user.data.id = response.id
+        this.user.data.name = response.name
+        this.user.data.email = response.email
+        this.user.data.role_id = response.role_id
+      }
+    )
       this.cs.getClanes().subscribe(
         (response) => {
           this.clanes = response

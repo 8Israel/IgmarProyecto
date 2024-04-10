@@ -8,10 +8,12 @@ import { Title } from '@angular/platform-browser';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 
+import {LoadingSpinnerComponent} from '../loading-spinner/loading-spinner.component';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [RouterOutlet, RouterModule, FormsModule, CommonModule, ReactiveFormsModule, LoadingSpinnerComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -26,7 +28,7 @@ export class LoginComponent {
     msg: "",
     token: ""
   }
-  
+  public isLoading: boolean = false;
 
   formGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -40,11 +42,9 @@ export class LoginComponent {
   get password() {
     return this.formGroup.get('password') as FormControl
   }
-
-
-
   onSubmit(event: Event) {
     event.preventDefault();
+    this.isLoading = true;
 
     this.ls.LogIn(this.email.value, this.password.value).subscribe(
       (response) => {
@@ -55,11 +55,13 @@ export class LoginComponent {
         localStorage.setItem('token', response.token)
 
         this.router.navigate(['verificar'])
+        this.isLoading = false;
 
       },
       (error) => {
         
         this.errorMessage = error.msg || error.message
+        this.isLoading = false;
       }
     )
   } 

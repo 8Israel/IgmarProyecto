@@ -12,7 +12,7 @@ export const routes: Routes = [
     {path: 'ver-misiones', loadComponent: () => import('./components/view-misiones/view-misiones.component').then(vm => vm.ViewMisionesComponent), canActivate: [authGuard]},
     {path: 'ver-jugadores', loadComponent: () => import('./components/view-usuarios/view-usuarios.component').then(vu => vu.ViewUsuariosComponent), canActivate: [authGuard]},
     {path: 'ver-clanes', loadComponent: () => import('./components/view-clanes/view-clanes.component').then(vc => vc.ViewClanesComponent), canActivate: [authGuard]},
-    {path: 'ver-recompensas', loadComponent: () => import('./components/view-recompensas/view-recompensas.component').then(vr => vr.ViewRecompensasComponent), canActivate: [authGuard]},
+    {path: 'ver-recompensas', loadComponent: () => import('./components/view-recompensas/view-recompensas.component').then(m => m.RecompensasComponent), canActivate: [authGuard]},
     {path: 'ver-armas', loadComponent: () => import('./components/view-armas/view-armas.component').then(va => va.ViewArmasComponent), canActivate: [authGuard]},
     {path: 'ver-logs', loadComponent: () => import('./components/logs/logs.component').then(lo => lo.LogsComponent), canActivate: [authGuard]},
     {path: 'form-misiones', loadComponent: () => import('./components/nuevo-formulario-mision/nuevo-formulario-mision.component').then(fm => fm.NuevoFormularioMisionComponent), canActivate: [authGuard]},
@@ -22,7 +22,9 @@ export const routes: Routes = [
     {path: 'form-heroes', loadComponent: () => import('./components/form-heroes/form-heroes.component').then(fh => fh.FormHeroesComponent), canActivate: [authGuard]},
     {path: 'form-inventario', loadComponent: () => import('./components/form-inventario/form-inventario.component').then(fi => fi.FormInventarioComponent), canActivate: [authGuard]},
     {path: 'form-recompensas', loadComponent: () => import('./components/form-recompensas/form-recompensas.component').then(fr => fr.FormRecompensasComponent), canActivate: [authGuard]},
+    {path: 'form-clanes', loadComponent: () => import('./components/form-clanes/form-clanes.component').then(fc => fc.FormClanesComponent), canActivate: [authGuard]},
     {path: 'form-clanes/:id', loadComponent: () => import('./components/form-clanes/form-clanes.component').then(fc => fc.FormClanesComponent), canActivate: [authGuard]},
     {path: 'editar-inventario', loadComponent: () => import('./components/form-inventario/form-inventario.component').then(fi => fi.FormInventarioComponent), canActivate: [authGuard]},
     {path: 'editar-usuario/:id', loadComponent: () => import('./components/editar-usuario/editar-usuario.component').then(eu => eu.EditarUsuarioComponent), canActivate: [authGuard]}
+
 ];
