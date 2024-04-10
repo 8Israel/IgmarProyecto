@@ -19,6 +19,12 @@ class RecompensaController extends Controller
         return response()->json($recompensas);
     }
 
+    public function show($id){
+        $recompensa = Recompensa::find($id);
+        $this->LogsMethod(request(), auth()->user(), $recompensa);
+        return response()->json($recompensa);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

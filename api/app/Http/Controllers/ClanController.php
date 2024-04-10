@@ -16,7 +16,7 @@ class ClanController extends Controller
     {
         $user = auth()->user();
         if (!$id) {
-            $clanes = Clan::where('activate', true)->get();
+            $clanes = Clan::join('users', 'users.id', '=', 'clan.lider')->where('clan.activate', true)->get();
             $sqlQuery = Clan::toBase()->toSql();
             $this->LogsMethod($request, $user, $sqlQuery);
             return response()->json($clanes);
