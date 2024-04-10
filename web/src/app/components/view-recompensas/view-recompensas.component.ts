@@ -1,14 +1,23 @@
-import { Component } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { RecompensasService } from './../../services/recompensas.service';
+import { Recompensas } from '../../interfaces/recompensas';
+
+
+
 
 @Component({
-  selector: 'app-view-recompensas',
-  standalone: true,
-  imports: [NavbarComponent, RouterModule],
-  templateUrl: './view-recompensas.component.html',
-  styleUrl: './view-recompensas.component.css'
-})
-export class ViewRecompensasComponent {
+  selector: 'app-recompensas',
+  templateUrl: 'view-recompensas.component.html',
+  styleUrls: ['view-recompensas.component.css']
 
+})
+export class RecompensasComponent implements OnInit {
+  recompensas$: Observable<Recompensas[]> = new Observable<Recompensas[]>();
+
+  constructor(private recompensaService: RecompensasService) { }
+
+  ngOnInit() {
+    this.recompensas$ = this.recompensaService.getRecompensas();
+  }
 }

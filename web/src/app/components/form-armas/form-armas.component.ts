@@ -24,6 +24,7 @@ export class FormArmasComponent implements OnInit {
     id: 0,
     nombre: "",
     tipo: "",
+    
     rareza: "",
     danio_base: 0,
   }

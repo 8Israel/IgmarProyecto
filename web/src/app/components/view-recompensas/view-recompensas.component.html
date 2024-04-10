@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <app-navbar [titulo]="'recompensas'"></app-navbar>
+ 
     <table></table>
     <div class="jugadorDiv">
       
@@ -15,8 +15,13 @@
         </div>
         <div class="contenedor" >
             <br>
-            <div class="tipo">destruye la tormenta</div>
-            <div class="xp">10</div>
+            <table>
+                <tr *ngFor="let recompensa of recompensas$ | async">
+                  <td>{{ recompensa.nombre }}</td>
+                  <td>{{ recompensa.xp }}</td>
+                  <!-- Agrega más celdas aquí para otros campos de recompensa -->
+                </tr>
+              </table>
            
             <div class="acciones">
                 <button class="btn btn-primary" > 
