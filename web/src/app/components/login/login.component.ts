@@ -9,6 +9,9 @@ import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 
 import {LoadingSpinnerComponent} from '../loading-spinner/loading-spinner.component';
+import { catchError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-login',
@@ -51,16 +54,18 @@ export class LoginComponent {
         console.log(response)
         this.login.msg = response.msg
         this.login.token = response.token
-        
         localStorage.setItem('token', response.token)
-
         this.router.navigate(['verificar'])
         this.isLoading = false;
-
       },
       (error) => {
-        
-        this.errorMessage = error.msg || error.message
+        this.errorMessage = error.error || error.error;
+        Swal.fire({
+          title: 'Error!',
+          text: this.errorMessage||"",
+          icon: 'error',
+          confirmButtonText: 'Cool'
+        });
         this.isLoading = false;
       }
     )

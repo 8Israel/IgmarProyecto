@@ -125,7 +125,7 @@ Route::group([
 ], function ($router) {
     Route::put('/clan/update/{id}', [ClanController::class, 'update']);//actualiza el nombre del clan
     Route::get('/clan/miembros/index/{id}', [ClanMiembroController::class,'index']);// Muestra a los miembros del clan indicado en la ruta
-    Route::get('/index/{id?}', [UserController::class, 'index']);// Muestra a todos los usuario con la oportunidad de diltrar por el usuario indicado en la ruta
+    Route::get('/index/{id?}', [UserController::class, 'index']);// Muestra a todos los usuario con la oportunidad de filtrar por el usuario indicado en la ruta
 });
 
 //  RUTAS GLOBALES

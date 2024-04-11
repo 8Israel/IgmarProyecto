@@ -21,7 +21,6 @@ class Activate2
         if ($user && $user->activate) {
             return $next($request);
         }
-
-        abort(403, 'Unauthorized');
+        return response()->json(['error' => 'Unauthorized puto'], 401);
     }
 }

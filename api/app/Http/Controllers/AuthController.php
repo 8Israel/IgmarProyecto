@@ -30,10 +30,13 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        $credentials = $request->only('email', 'password');
+
+    // Intentar autenticar al usuario
+    if (!$token = auth()->attempt($credentials)) {
+        // Si las credenciales no son válidas, devolver error
+        return response()->json(['error' => 'Unauthorized puto'], 401);
+    }
         $user = auth()->user(); 
         if (!$user) {
             return response()->json(["msg" => "Usuario no encontrado"], 404);
@@ -44,11 +47,9 @@ class AuthController extends Controller
         $user->codigoVerificado = false;
         if ($user->codigoVerificado == false) {
             $this->sendTwoFactorCodeByEmail($user);
-
             return response()->json(['msg' => 'Redireccionando a la autenticación de dos factores', "token" => $token], 200);
         }           
         $this->sendTwoFactorCodeByEmail($user);
-        
         return response()->json(['msg' => 'Inicio de sesión correcto', 'data' => $user, 'token' => $token], 200);
     }
 

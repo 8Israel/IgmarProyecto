@@ -20,7 +20,6 @@ import { Subscription, interval, switchMap } from 'rxjs';
   styleUrl: './view-armas.component.css'
 })
 export class ViewArmasComponent implements OnInit, OnDestroy {
-
   arma_id: Number = 0
   constructor(public us: UserService, private as: ArmasService, private title: Title, private is: InventarioService) { 
     this.title.setTitle('Armas')

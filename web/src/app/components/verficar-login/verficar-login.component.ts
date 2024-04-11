@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
 import {LoadingSpinnerComponent} from '../loading-spinner/loading-spinner.component';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-verficar-login',
@@ -57,15 +58,16 @@ export class VerficarLoginComponent {
         },
         (error) => {
           console.log(error.error.two_factor_code)
-          this.message =  error.error
+          
+          this.message = error.error
           if(error.message == "Unauthenticated."){
             this.message = "Usuario no autenticado"
-            this.isLoading = false;  
+            
           } 
           if(error.error.two_factor_code){
             this.message = "El codigo de autenticación debe ser ingresado"
-            this.isLoading = false;
           }
+          this.isLoading = false;  
         }
     );
 }

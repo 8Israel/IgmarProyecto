@@ -26,6 +26,4 @@ export class RecompensasService {
     return this.http.post<RecompensaResponse>(this.postRecompensasURL,recompensa)
 
   }
-
-
 }
