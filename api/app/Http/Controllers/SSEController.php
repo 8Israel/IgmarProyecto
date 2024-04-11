@@ -25,7 +25,7 @@ class SSEController extends Controller
                 }               
                 ob_flush();
                 flush();
-        });
+        }); 
         $response->headers->set('Content-Type', 'text/event-stream');
         $response->headers->set('Cache-Control', 'no-cache');
         $response->headers->set('Connection', 'keep-alive');

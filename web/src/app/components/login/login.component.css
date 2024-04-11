@@ -41,4 +41,30 @@
     background-image: linear-gradient(to right, #e5f0b8, #ddb1ff, #e25bff);
     width: 100%;
 }
+<<<<<<< HEAD
 
+=======
+h1{
+    text-align: center;
+}
+.loading {
+    pointer-events: none; /* Evita que se puedan hacer clics en los elementos */
+}
+
+.disabled {
+    opacity: 0.5; /* Estilo opaco para los elementos */
+}
+
+.super-contenedor {
+    position: relative;
+}
+
+.loading-spinner {
+    /* Estilos para el spinner */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Asegúrate de que esté por encima de todos los demás elementos */
+}
+>>>>>>> 3d9601fc249bc3bbb4fa679d94dcf4defec15678
