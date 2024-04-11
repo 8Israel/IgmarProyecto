@@ -35,7 +35,7 @@ class AuthController extends Controller
     // Intentar autenticar al usuario
     if (!$token = auth()->attempt($credentials)) {
         // Si las credenciales no son válidas, devolver error
-        return response()->json(['error' => 'Unauthorized puto'], 401);
+        return response()->json(['error' => 'Credenciales incorrectas'], 401);
     }
         $user = auth()->user(); 
         if (!$user) {

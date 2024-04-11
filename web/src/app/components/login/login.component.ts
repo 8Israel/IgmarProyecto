@@ -64,7 +64,7 @@ export class LoginComponent {
           title: 'Error!',
           text: this.errorMessage||"",
           icon: 'error',
-          confirmButtonText: 'Cool'
+          confirmButtonText: 'Ok'
         });
         this.isLoading = false;
       }

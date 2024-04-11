@@ -21,6 +21,6 @@ class Activate2
         if ($user && $user->activate) {
             return $next($request);
         }
-        return response()->json(['error' => 'Unauthorized puto'], 401);
+        return response()->json(['error' => 'Credenciales incorrectas'], 401);
     }
 }
