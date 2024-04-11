@@ -47,12 +47,12 @@ export class ViewClanesComponent implements OnInit {
         this.user.data.role_id = response.role_id
       }
     )
-      this.cs.getClanes().subscribe(
-        (response) => {
-          this.clanes = response
-          console.log(response)
-        }
-      )
+    this.cs.serverClanes().subscribe(
+      (response) => {
+        this.clanes = response
+        console.log(response)
+      }
+    )
   }
 
   deleteClan(id: Number){

@@ -11,6 +11,7 @@ export class ClanesService {
 
   private getClanesURL = `${api}/api/user/clan/show/all`
   private deleteClanURL = `${api}/api/user/clan/delete/`
+  private serverSent = `${api}/api/stream-clan`
 
   constructor( private http: HttpClient ) { }
 
@@ -19,5 +20,9 @@ export class ClanesService {
   }
   deleteClan(id: Number) {
     return this.http.delete(this.deleteClanURL + id)
+  }
+
+  serverClanes(): Observable<Clanes[]> {
+    return this.http.get<Clanes[]>(this.serverSent)
   }
 }
