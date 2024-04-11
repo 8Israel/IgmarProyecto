@@ -67,6 +67,17 @@
                 </div>
             </div>
 
+            <div class="encabezado">
+                <h3>CLAN</h3> 
+                <div class="contenedor-link">
+                    <a routerLink="/ver-clanes">Cambiar de clan</a>
+                </div>
+            </div>
+            <div>
+                <div *ngIf="user.data.role_id == 2" class="heroes">
+                </div>
+            </div>
+
         </div>
 </body>
 </html>

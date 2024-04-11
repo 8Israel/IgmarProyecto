@@ -5,7 +5,7 @@ import { User } from '../../interfaces/user';
 import { CommonModule } from '@angular/common';
 import { ArmasService } from '../../services/armas.service';
 import { Armas } from '../../interfaces/armas';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { InventarioService } from '../../services/inventario.service';
 import { Inventario } from '../../interfaces/inventario';
@@ -21,7 +21,7 @@ import { Subscription, interval, switchMap } from 'rxjs';
 })
 export class ViewArmasComponent implements OnInit, OnDestroy {
   arma_id: Number = 0
-  constructor(public us: UserService, private as: ArmasService, private title: Title, private is: InventarioService) { 
+  constructor(public us: UserService, private as: ArmasService, private title: Title, private is: InventarioService, private router: Router) { 
     this.title.setTitle('Armas')
   }
 
@@ -86,7 +86,7 @@ export class ViewArmasComponent implements OnInit, OnDestroy {
     )
     this.is.getInventarioById(this.user.data.id).subscribe(
       (response) => {
-        this.inventario.heroe.id = response[0].heroe.id
+        this.inventario.heroe.id = response.heroe.id
 
         console.log(this.inventario)
       }
@@ -112,6 +112,10 @@ export class ViewArmasComponent implements OnInit, OnDestroy {
     this.is.putInventario(arma_id, this.inventario.heroe.id).subscribe(
       (response) => {
         this.editInventario = response.message
+
+        setTimeout(() => {
+          this.router.navigate(['ver-inventario']);
+        }, 1500)
       }
     )
   }
