@@ -55,6 +55,7 @@ class ClanController extends Controller
             ]);
             $admin= auth()->user();
             $user = User::find($id);
+            
             $this->LogsMethod($request, $admin, ["lider"=>$user->toArray(), "nombreClan"=>$request->all()]);
             return response()->json(["message" => "Clan creado Correctamente", "data" => $newClan, 'lider' => $user], 200);
         }
