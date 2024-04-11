@@ -49,6 +49,9 @@ export class UserService {
   getUserData(): Observable<Me> {
     return this.http.get<Me>(this.me)
   }
+  getDataGuard(): Observable<any> {
+    return this.http.get<any>(this.me)
+  }
 
   getUsers(): Observable<UsersResponse> {
     return this.http.get<UsersResponse>(this.GetUsersURL)

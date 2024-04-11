@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Clanes</title>
 </head>
 <body>
     <app-navbar [titulo]="'Clanes'"></app-navbar>
@@ -13,7 +13,7 @@
             {{ editInventario }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div> -->
-        <div class="contenedorBoton">
+        <div class="contenedorBoton" *ngIf="user.data.role_id == 1">
             <button class="btn btn-success btn-block mb-3 mt-2"  routerLink="/form-clanes">Crear clanes</button>
         </div>
         <div class="contenedor" *ngFor="let clan of clanes">

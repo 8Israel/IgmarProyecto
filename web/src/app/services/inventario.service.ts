@@ -17,13 +17,13 @@ export class InventarioService {
 
   constructor(private http:HttpClient) { }
 
-  getInventario(): Observable<Inventario[]>{
-    return this.http.get<Inventario[]>(this.GetInventarioURL)
+  getInventario(): Observable<Inventario>{
+    return this.http.get<Inventario>(this.GetInventarioURL)
   
   }
 
-  getInventarioById(user_id: Number): Observable<Inventario[]> {
-    return this.http.get<Inventario[]>(this.GetInventarioURL + '/' + user_id)
+  getInventarioById(user_id: Number): Observable<Inventario> {
+    return this.http.get<Inventario>(this.GetInventarioURL + '/' + user_id)
   }
 
   putInventario(arma_id:Number,heroe_id:Number): Observable<Editinventario>{

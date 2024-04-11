@@ -6,6 +6,8 @@ import { RouterLink } from '@angular/router';
 import { HeroeResponse } from '../../interfaces/heroe-response';
 import { HeroesService } from '../../services/heroes.service';
 import { Heroes } from '../../interfaces/heroes';
+import { User } from '../../interfaces/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-view-heroes',
@@ -18,9 +20,27 @@ export class ViewHeroesComponent {
 
   public heroes: Heroes[] = [];
 
-  constructor(private heroesService: HeroesService) { }
+  public user: User = {
+    data: {
+      id: 0,
+      name: "",
+      email: "",
+      role_id: 0
+    },
+    token: ""
+  }
+
+  constructor(private heroesService: HeroesService, private us: UserService) { }
 
   ngOnInit() {
+    this.us.getUserData().subscribe(
+      (response) => {
+        this.user.data.email = response.email
+        this.user.data.id = response.id
+        this.user.data.name = response.name
+        this.user.data.role_id = response.role_id
+      }
+    )
     this.heroesService.getHeroes().subscribe(
       (response) => {
         this.heroes = response;

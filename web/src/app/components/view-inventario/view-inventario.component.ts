@@ -26,7 +26,23 @@ export class ViewInventarioComponent implements OnInit {
     },
     token: ""
   }
-  public inventario: Inventario[] = []
+  public inventario: Inventario = {
+    arma: {
+      id: 0,
+      danio_base: 0,
+      nombre: "",
+      rareza: "",
+      tipo: "",
+    },
+    heroe: {
+      id: 0,
+      habilidad_especial: "",
+      nombre: "",
+      rareza: "",
+      tipo: ""
+    },
+    user: 0
+  }
 
   ngOnInit(): void {
     this.us.getUserData().subscribe(
@@ -39,7 +55,18 @@ export class ViewInventarioComponent implements OnInit {
     )
     this.is.getInventarioById(this.user.data.id).subscribe(
       (response) => {
-        this.inventario[0] = response[0]
+        this.inventario.user = response.user
+        this.inventario.arma.id = response.arma.id
+        this.inventario.arma.danio_base = response.arma.danio_base
+        this.inventario.arma.nombre = response.arma.nombre
+        this.inventario.arma.rareza = response.arma.rareza
+        this.inventario.arma.tipo = response.arma.tipo
+
+        this.inventario.heroe.habilidad_especial = response.heroe.habilidad_especial
+        this.inventario.heroe.id = response.heroe.id
+        this.inventario.heroe.nombre = response.heroe.nombre
+        this.inventario.heroe.rareza = response.heroe.rareza
+        this.inventario.heroe.tipo = response.heroe.tipo
 
         console.log("INVENTARIO", this.inventario)
       }
