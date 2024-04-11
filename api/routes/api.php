@@ -107,6 +107,7 @@ Route::group([
     Route::delete('/misiones/delete/{id}', [MisionController::class,'destroy']);//Eliminar misiones
     
     Route::get('/recompensas/index', [RecompensaController::class,'index']);// Muestra las recompensas
+    Route::get('/recompensas/show/{id}', [RecompensaController::class,'show']);// Muestra las recompensas
     Route::post('/recompensas/create', [RecompensaController::class,'store']);// Crea recompensas
     Route::put('/recompensas/update/{id}', [RecompensaController::class,'update']);// Actualiza recompensas
     Route::delete('/recompensas/delete/{id}', [RecompensaController::class,'destroy']);// Borra recompensas

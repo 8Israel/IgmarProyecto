@@ -56,22 +56,41 @@ export class ViewMisionesComponent implements OnInit, OnDestroy {
     forceTLS:false,
     disableStatus:true,
   })
+  public nuevaMision: Misiones = {
+    id: 0,
+    nombre: "",
+    recompensa_id: 0,
+    tipo: "",
+    recompensa: {
+      id: 0,
+      tipo: "",
+      xp: 0
+    },
+  }
   
   public misiones: Misiones[] = []
   websocket() {
     this.echo.channel('nuevaMision').listen('NuevaMision', (res: any) => {
       // this.misiones.push(res.mision)
-      this.misiones[this.misiones.length].nombre = res.nombre
-      this.misiones[this.misiones.length].tipo = res.tipo
-      this.misiones[this.misiones.length].recompensa_id = res.recompensa_id
+      this.nuevaMision.id = res.mision.id
+      this.nuevaMision.nombre = res.mision.nombre
+      this.nuevaMision.recompensa = res.mision.recompensa
+      this.nuevaMision.tipo = res.mision.tipo
+      this.nuevaMision.recompensa_id = res.mision.recompensas_id
+      console.log("MISION", res)
 
-      this.rs.getRecompensa(res.recompensa_id).subscribe(
+      this.rs.getRecompensa(res.mision.recompensas_id).subscribe(
         (response) => {
-          response.id = res.recompensa.id
-          response.tipo = res.recompensa.tipo
-          response.xp = res.recompensa.xp
+          console.log("RECOMPENSA", response)
+          this.nuevaMision.recompensa.id = response.id
+          this.nuevaMision.recompensa.tipo = response.tipo
+          this.nuevaMision.recompensa.xp = response.xp
         }
       )
+
+      this.misiones.push(this.nuevaMision)
+
+      console.log(this.nuevaMision)
 
     })
     console.log(this.echo)
