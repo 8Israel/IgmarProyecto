@@ -10,8 +10,7 @@
     <div class="login">
         <div class="form-container" [ngClass]="{ 'loading': isLoading }">
             <h1 style="width: 50%; margin: auto; text-align: center;">BIENVENIDO</h1>
-
-            <!-- Spinner de carga -->
+            
             <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
             <form class="form" [formGroup]="formGroup" (submit)="onSubmit($event)" [class.disabled]="isLoading">
@@ -39,7 +38,3 @@
     </div>
 </body>
 </html>
-
-@if(errorMessage){
-    <p> {{errorMessage}}</p>
-} 

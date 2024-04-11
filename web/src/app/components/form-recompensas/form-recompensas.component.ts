@@ -25,7 +25,6 @@ export class FormRecompensasComponent implements OnInit {
   ngOnInit(): void {
     const params = this.route.snapshot.params
     if(params) {
-      
     }
   }
 

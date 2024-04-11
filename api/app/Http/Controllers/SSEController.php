@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clan;
+use App\Models\Heroe;
 use App\Models\Mision;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -13,7 +14,7 @@ class SSEController extends Controller
     {
         $response = new StreamedResponse(function () {
                 $ultimoClan = Clan::latest()->first();
-                if(!$ultimoClan)
+                if($ultimoClan)
                 {
                     $sseMessage = "data: " . json_encode($ultimoClan) . "\n\n";
                     echo $sseMessage;
